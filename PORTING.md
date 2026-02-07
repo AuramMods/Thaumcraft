@@ -127,11 +127,14 @@ Phase 3 status:
 - [x] Added reloadable data-driven aspect object registry (`data/*/thaumcraft/aspects/*.json`) with exact item, item-tag, and path selector rules
 - [x] Expanded `AspectType` to full legacy tag catalog so registry data can represent legacy aspect families directly
 - [x] Seeded first data pack for aspect object mappings (`data/thaumcraft/thaumcraft/aspects/base.json`) plus initial item aspect tag groups
+- [x] Added `path_contains_all` selector support to aspect data loading for stricter legacy object-tag matching
+- [x] Imported a large parseable subset of legacy `ConfigAspects` into data (`legacy_config_aspects.json`: 18 exact item entries + 80 strict path rules) and removed duplicate broad path fallback rules from `base.json`
 - [x] Hooked crucible baseline processing to generate flux into chunk aura
 - [x] Hooked crucible baseline processing to derive essentia from aspect totals instead of generic item heuristics
 - [x] Added first Salis Mundus progression trigger scaffold (RMB crafting table -> arcane workbench conversion)
 - [x] Added player knowledge persistence baseline (`PlayerKnowledgeSavedData`) and first thaumometer scan hook for block scanning
-- [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (current JSON set is seeded, not complete)
+- [x] Expanded thaumometer scanning baseline to entity and item surfaces, including persisted unique scan tracking for blocks/items/entities
+- [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
 - [ ] Salis Mundus trigger set is still incomplete (only initial crafting-table conversion exists)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
 

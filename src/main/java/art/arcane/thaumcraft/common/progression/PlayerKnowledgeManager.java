@@ -37,6 +37,34 @@ public final class PlayerKnowledgeManager {
         );
     }
 
+    public static ScanResult recordItemScan(ServerPlayer player, ResourceLocation itemId, AspectList aspects) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+
+        boolean firstScan = data.markItemScanned(player.getUUID(), itemId);
+        int newAspects = data.discoverAspects(player.getUUID(), aspects);
+
+        return new ScanResult(
+                firstScan,
+                data.getScanCount(player.getUUID()),
+                newAspects,
+                data.getDiscoveredAspectCount(player.getUUID())
+        );
+    }
+
+    public static ScanResult recordEntityScan(ServerPlayer player, ResourceLocation entityId, AspectList aspects) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+
+        boolean firstScan = data.markEntityScanned(player.getUUID(), entityId);
+        int newAspects = data.discoverAspects(player.getUUID(), aspects);
+
+        return new ScanResult(
+                firstScan,
+                data.getScanCount(player.getUUID()),
+                newAspects,
+                data.getDiscoveredAspectCount(player.getUUID())
+        );
+    }
+
     private static PlayerKnowledgeSavedData getData(ServerLevel level) {
         ServerLevel overworld = level.getServer().overworld();
         return overworld.getDataStorage().computeIfAbsent(PlayerKnowledgeSavedData::load, PlayerKnowledgeSavedData::new, DATA_ID);

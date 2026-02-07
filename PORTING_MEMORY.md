@@ -150,6 +150,12 @@ This file captures migration state so work can continue safely after context com
   - `AspectType` enum for core/practical aspect keys
   - `AspectList` value container with optional NBT read/write helpers
   - `AspectRegistry` with exact-item overrides and path/trait fallback heuristics
+- Expanded data-driven aspect selector support:
+  - `AspectObjectRegistry` now supports strict `path_contains_all` matching in addition to exact item/tag/path-any selectors
+- Imported a large parseable subset of legacy `ConfigAspects` into data:
+  - generated `data/thaumcraft/thaumcraft/aspects/legacy_config_aspects.json`
+  - includes 18 exact Thaumcraft item mappings and 80 strict legacy path rules
+  - removed duplicate broad `path_contains_any` fallback rules from `base.json` to avoid double-counting with the imported legacy rules
 - Added first Salis Mundus trigger scaffold:
   - right-clicking a vanilla crafting table with `salis_mundus` converts it into `arcane_workbench`
 - Added player knowledge persistence baseline:
@@ -158,13 +164,18 @@ This file captures migration state so work can continue safely after context com
 - Added first thaumometer scan hook:
   - right-click block with thaumometer to record scan and discover aspect tags from scanned block item
   - scan usage is currently gated behind Salis Mundus unlock baseline
+- Expanded thaumometer scan surfaces:
+  - added entity scan hook (`EntityInteract`) with spawn-egg/fallback aspect derivation
+  - added item scan hook (`RightClickItem`) for offhand item scanning while holding thaumometer
+  - extended `PlayerKnowledgeSavedData` to persist unique scanned item/entity IDs in addition to block IDs
+  - added `PlayerKnowledgeManager` APIs for item/entity scan recording
 - Wired crucible processing into aura:
   - each processed crucible input now adds a small amount of chunk flux
 - Wired crucible baseline processing into aspects:
   - item essentia gain now comes from `AspectRegistry` total values instead of generic per-item placeholder math
 - Notes:
   - this is persistence/API scaffolding, not final aura simulation behavior
-  - aspect mappings are still broad heuristics and must be replaced with full legacy object-aspect data
+  - legacy aspect coverage is now substantially expanded but not complete; direct vanilla `ItemStack(...)` mappings and final parity review still remain
   - aura generation curves, regen, spread, and flux events are still pending
 
 ## Overall Plan (Condensed)
@@ -180,7 +191,8 @@ This file captures migration state so work can continue safely after context com
 
 ## Immediate Next Steps
 
-- Replace heuristic `AspectRegistry` mappings with full legacy object-aspect assignments from `ConfigAspects`.
+- Finish remaining `ConfigAspects` migration gaps:
+  - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:
   - crystal/vis cost parity tuning against legacy behavior
 - Start infusion world-state baseline:
@@ -188,7 +200,6 @@ This file captures migration state so work can continue safely after context com
   - explicit instability event effects (item drops, taint-style side effects, etc.)
 - Expand Salis Mundus interactions beyond crafting-table conversion and begin tying them to research/player progression gates.
 - Expand thaumometer/scanning beyond block-right-click baseline:
-  - entity/item scanning surfaces
   - proper scan UI/feedback
   - tie discoveries into research unlock graph
 

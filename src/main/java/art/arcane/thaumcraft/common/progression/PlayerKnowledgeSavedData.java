@@ -21,6 +21,8 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String SALIS_UNLOCKED_TAG = "salis_unlocked";
     private static final String SCAN_COUNT_TAG = "scan_count";
     private static final String SCANNED_BLOCKS_TAG = "scanned_blocks";
+    private static final String SCANNED_ITEMS_TAG = "scanned_items";
+    private static final String SCANNED_ENTITIES_TAG = "scanned_entities";
     private static final String DISCOVERED_ASPECTS_TAG = "discovered_aspects";
 
     private final Map<UUID, PlayerKnowledgeEntry> players = new HashMap<>();
@@ -78,12 +80,17 @@ public final class PlayerKnowledgeSavedData extends SavedData {
 
     public boolean markBlockScanned(UUID playerId, ResourceLocation blockId) {
         PlayerKnowledgeEntry entry = getOrCreate(playerId);
-        boolean added = entry.scannedBlocks.add(blockId.toString());
-        if (added) {
-            entry.scanCount++;
-            setDirty();
-        }
-        return added;
+        return markScanned(entry, entry.scannedBlocks, blockId.toString());
+    }
+
+    public boolean markItemScanned(UUID playerId, ResourceLocation itemId) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        return markScanned(entry, entry.scannedItems, itemId.toString());
+    }
+
+    public boolean markEntityScanned(UUID playerId, ResourceLocation entityId) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        return markScanned(entry, entry.scannedEntities, entityId.toString());
     }
 
     public int discoverAspects(UUID playerId, AspectList aspects) {
@@ -115,10 +122,21 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return this.players.computeIfAbsent(playerId, id -> new PlayerKnowledgeEntry());
     }
 
+    private boolean markScanned(PlayerKnowledgeEntry entry, Set<String> targetSet, String id) {
+        boolean added = targetSet.add(id);
+        if (added) {
+            entry.scanCount++;
+            setDirty();
+        }
+        return added;
+    }
+
     private static final class PlayerKnowledgeEntry {
         private boolean salisUnlocked;
         private int scanCount;
         private final Set<String> scannedBlocks = new HashSet<>();
+        private final Set<String> scannedItems = new HashSet<>();
+        private final Set<String> scannedEntities = new HashSet<>();
         private final Set<String> discoveredAspects = new HashSet<>();
 
         private CompoundTag toTag() {
@@ -133,6 +151,22 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 scannedTag.add(blockTag);
             }
             tag.put(SCANNED_BLOCKS_TAG, scannedTag);
+
+            ListTag scannedItemsTag = new ListTag();
+            for (String itemId : this.scannedItems) {
+                CompoundTag itemTag = new CompoundTag();
+                itemTag.putString("id", itemId);
+                scannedItemsTag.add(itemTag);
+            }
+            tag.put(SCANNED_ITEMS_TAG, scannedItemsTag);
+
+            ListTag scannedEntitiesTag = new ListTag();
+            for (String entityId : this.scannedEntities) {
+                CompoundTag entityTag = new CompoundTag();
+                entityTag.putString("id", entityId);
+                scannedEntitiesTag.add(entityTag);
+            }
+            tag.put(SCANNED_ENTITIES_TAG, scannedEntitiesTag);
 
             ListTag aspectTag = new ListTag();
             for (String aspect : this.discoveredAspects) {
@@ -155,6 +189,22 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 String blockId = scannedTag.getCompound(i).getString("id");
                 if (!blockId.isEmpty()) {
                     entry.scannedBlocks.add(blockId);
+                }
+            }
+
+            ListTag scannedItemsTag = tag.getList(SCANNED_ITEMS_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < scannedItemsTag.size(); i++) {
+                String itemId = scannedItemsTag.getCompound(i).getString("id");
+                if (!itemId.isEmpty()) {
+                    entry.scannedItems.add(itemId);
+                }
+            }
+
+            ListTag scannedEntitiesTag = tag.getList(SCANNED_ENTITIES_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < scannedEntitiesTag.size(); i++) {
+                String entityId = scannedEntitiesTag.getCompound(i).getString("id");
+                if (!entityId.isEmpty()) {
+                    entry.scannedEntities.add(entityId);
                 }
             }
 

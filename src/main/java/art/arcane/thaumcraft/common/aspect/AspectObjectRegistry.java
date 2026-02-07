@@ -71,6 +71,18 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
                 resolved.addAll(rule.aspects());
             }
         }
+        for (PathAllRule rule : current.pathAllRules()) {
+            boolean matches = true;
+            for (String needle : rule.pathContainsAll()) {
+                if (!path.contains(needle)) {
+                    matches = false;
+                    break;
+                }
+            }
+            if (matches) {
+                resolved.addAll(rule.aspects());
+            }
+        }
 
         return resolved;
     }
@@ -80,6 +92,7 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
         Map<ResourceLocation, AspectList> itemAspects = new LinkedHashMap<>();
         List<TagRule> tagRules = new ArrayList<>();
         List<PathRule> pathRules = new ArrayList<>();
+        List<PathAllRule> pathAllRules = new ArrayList<>();
 
         List<Map.Entry<ResourceLocation, JsonElement>> sortedEntries = new ArrayList<>(objects.entrySet());
         sortedEntries.sort(Comparator.comparing(entry -> entry.getKey().toString()));
@@ -119,7 +132,7 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
                 if (entry.has("path_contains")) {
                     String needle = GsonHelper.getAsString(entry, "path_contains");
                     if (!needle.isBlank()) {
-                        pathRules.add(new PathRule(needle, aspects.copy()));
+                        pathRules.add(new PathRule(needle.toLowerCase(), aspects.copy()));
                     }
                     continue;
                 }
@@ -128,8 +141,22 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
                     for (int j = 0; j < needles.size(); j++) {
                         String needle = GsonHelper.convertToString(needles.get(j), "path_contains_any[" + j + "]");
                         if (!needle.isBlank()) {
-                            pathRules.add(new PathRule(needle, aspects.copy()));
+                            pathRules.add(new PathRule(needle.toLowerCase(), aspects.copy()));
                         }
+                    }
+                    continue;
+                }
+                if (entry.has("path_contains_all")) {
+                    JsonArray needles = GsonHelper.getAsJsonArray(entry, "path_contains_all");
+                    List<String> required = new ArrayList<>();
+                    for (int j = 0; j < needles.size(); j++) {
+                        String needle = GsonHelper.convertToString(needles.get(j), "path_contains_all[" + j + "]");
+                        if (!needle.isBlank()) {
+                            required.add(needle.toLowerCase());
+                        }
+                    }
+                    if (!required.isEmpty()) {
+                        pathAllRules.add(new PathAllRule(List.copyOf(required), aspects.copy()));
                     }
                     continue;
                 }
@@ -138,9 +165,14 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
             }
         }
 
-        this.snapshot = new Snapshot(Map.copyOf(itemAspects), List.copyOf(tagRules), List.copyOf(pathRules));
-        LOGGER.info("Loaded aspect registry: {} exact item entries, {} tag rules, {} path rules",
-                itemAspects.size(), tagRules.size(), pathRules.size());
+        this.snapshot = new Snapshot(
+                Map.copyOf(itemAspects),
+                List.copyOf(tagRules),
+                List.copyOf(pathRules),
+                List.copyOf(pathAllRules)
+        );
+        LOGGER.info("Loaded aspect registry: {} exact item entries, {} tag rules, {} path-any rules, {} path-all rules",
+                itemAspects.size(), tagRules.size(), pathRules.size(), pathAllRules.size());
     }
 
     private static AspectList parseAspectList(JsonObject entry, String context) {
@@ -191,11 +223,15 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
     private record PathRule(String pathContains, AspectList aspects) {
     }
 
+    private record PathAllRule(List<String> pathContainsAll, AspectList aspects) {
+    }
+
     private record Snapshot(Map<ResourceLocation, AspectList> itemAspects,
                             List<TagRule> tagRules,
-                            List<PathRule> pathRules) {
+                            List<PathRule> pathRules,
+                            List<PathAllRule> pathAllRules) {
         private static Snapshot empty() {
-            return new Snapshot(new HashMap<>(), List.of(), List.of());
+            return new Snapshot(new HashMap<>(), List.of(), List.of(), List.of());
         }
     }
 }

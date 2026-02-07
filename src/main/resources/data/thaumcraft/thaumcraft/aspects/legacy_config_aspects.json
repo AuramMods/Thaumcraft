@@ -1,0 +1,930 @@
+{
+  "entries": [
+    {
+      "item": "thaumcraft:amber",
+      "aspects": {
+        "vinculum": 10,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:baubles",
+      "aspects": {
+        "auram": 5,
+        "metallum": 5,
+        "praecantatio": 20
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_boots",
+      "aspects": {
+        "alienis": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_plate_chest",
+      "aspects": {
+        "alienis": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_plate_helm",
+      "aspects": {
+        "alienis": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_plate_legs",
+      "aspects": {
+        "alienis": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_praetor_chest",
+      "aspects": {
+        "alienis": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_praetor_helm",
+      "aspects": {
+        "alienis": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_praetor_legs",
+      "aspects": {
+        "alienis": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_robe_chest",
+      "aspects": {
+        "alienis": 5,
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_robe_helm",
+      "aspects": {
+        "alienis": 5,
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_robe_legs",
+      "aspects": {
+        "alienis": 5,
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "thaumcraft:ore_amber",
+      "aspects": {
+        "terra": 5,
+        "vinculum": 10,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:ore_cinnabar",
+      "aspects": {
+        "alkimia": 5,
+        "metallum": 10,
+        "mortuus": 5,
+        "terra": 5
+      }
+    },
+    {
+      "item": "thaumcraft:ore_quartz",
+      "aspects": {
+        "terra": 5,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:quicksilver",
+      "aspects": {
+        "alkimia": 5,
+        "metallum": 10,
+        "mortuus": 5
+      }
+    },
+    {
+      "item": "thaumcraft:table_stone",
+      "aspects": {
+        "instrumentum": 1
+      }
+    },
+    {
+      "item": "thaumcraft:table_wood",
+      "aspects": {
+        "instrumentum": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "bone"
+      ],
+      "aspects": {
+        "mortuus": 5,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cactus"
+      ],
+      "aspects": {
+        "aqua": 5,
+        "aversio": 1,
+        "herba": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "carrot"
+      ],
+      "aspects": {
+        "herba": 5,
+        "sensus": 5,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "cinnabar"
+      ],
+      "aspects": {
+        "alkimia": 5,
+        "metallum": 15,
+        "mortuus": 5,
+        "ordo": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "copper"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "ordo": 5,
+        "permutatio": 10,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "gold"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "metallum": 15,
+        "ordo": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "iron"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "ordo": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "lead"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "ordo": 15,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "silver"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "metallum": 15,
+        "ordo": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "cluster",
+        "tin"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "ordo": 5,
+        "terra": 5,
+        "vitreus": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "cobble",
+        "stone"
+      ],
+      "aspects": {
+        "perditio": 1,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "dirt"
+      ],
+      "aspects": {
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "drop",
+        "uranium"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "mortuus": 5,
+        "potentia": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "brass"
+      ],
+      "aspects": {
+        "instrumentum": 5,
+        "metallum": 10,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "bronze"
+      ],
+      "aspects": {
+        "instrumentum": 5,
+        "metallum": 10,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "copper"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "perditio": 1,
+        "permutatio": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "glowstone"
+      ],
+      "aspects": {
+        "lux": 10,
+        "sensus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "gold"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "metallum": 10,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "iron"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "lead"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "ordo": 5,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "redstone"
+      ],
+      "aspects": {
+        "potentia": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "silver"
+      ],
+      "aspects": {
+        "desiderium": 5,
+        "metallum": 10,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "dust",
+        "tin"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "perditio": 1,
+        "vitreus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "egg"
+      ],
+      "aspects": {
+        "bestia": 5,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ender",
+        "pearl"
+      ],
+      "aspects": {
+        "alienis": 10,
+        "motus": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "endstone"
+      ],
+      "aspects": {
+        "tenebrae": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "feather"
+      ],
+      "aspects": {
+        "aer": 5,
+        "volatus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "gear"
+      ],
+      "aspects": {
+        "machina": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "diamond"
+      ],
+      "aspects": {
+        "desiderium": 15,
+        "vitreus": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "emerald"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "vitreus": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "green",
+        "sapphire"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "vitreus": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "quartz"
+      ],
+      "aspects": {
+        "vitreus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "ruby"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "vitreus": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "gem",
+        "sapphire"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "vitreus": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "glass"
+      ],
+      "aspects": {
+        "vitreus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "grass"
+      ],
+      "aspects": {
+        "herba": 2,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "gravel"
+      ],
+      "aspects": {
+        "perditio": 2,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "gunpowder"
+      ],
+      "aspects": {
+        "alkimia": 5,
+        "ignis": 10,
+        "perditio": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "brass"
+      ],
+      "aspects": {
+        "instrumentum": 5,
+        "metallum": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "brick",
+        "nether"
+      ],
+      "aspects": {
+        "ignis": 1,
+        "ordo": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "bronze"
+      ],
+      "aspects": {
+        "instrumentum": 5,
+        "metallum": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "copper"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "permutatio": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "gold"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "metallum": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "iron"
+      ],
+      "aspects": {
+        "metallum": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "lead"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "ordo": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "silver"
+      ],
+      "aspects": {
+        "desiderium": 5,
+        "metallum": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "steel"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "ordo": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "tin"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "vitreus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ingot",
+        "uranium"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "mortuus": 5,
+        "potentia": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "leaf"
+      ],
+      "aspects": {
+        "herba": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "leather"
+      ],
+      "aspects": {
+        "bestia": 5,
+        "praemunio": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "log"
+      ],
+      "aspects": {
+        "herba": 20
+      }
+    },
+    {
+      "path_contains_all": [
+        "nether",
+        "star"
+      ],
+      "aspects": {
+        "alienis": 10,
+        "auram": 10,
+        "ordo": 20,
+        "praecantatio": 20
+      }
+    },
+    {
+      "path_contains_all": [
+        "nether",
+        "wart"
+      ],
+      "aspects": {
+        "alkimia": 5,
+        "herba": 5,
+        "ignis": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "netherrack"
+      ],
+      "aspects": {
+        "ignis": 2,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "obsidian"
+      ],
+      "aspects": {
+        "ignis": 5,
+        "tenebrae": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "copper"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "permutatio": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "diamond"
+      ],
+      "aspects": {
+        "desiderium": 15,
+        "terra": 5,
+        "vitreus": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "emerald"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "terra": 5,
+        "vitreus": 15
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "gold"
+      ],
+      "aspects": {
+        "desiderium": 10,
+        "metallum": 10,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "iron"
+      ],
+      "aspects": {
+        "metallum": 15,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "lapis"
+      ],
+      "aspects": {
+        "sensus": 15,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "lead"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "ordo": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "redstone"
+      ],
+      "aspects": {
+        "potentia": 15,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "silver"
+      ],
+      "aspects": {
+        "desiderium": 5,
+        "metallum": 10,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "tin"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "terra": 5,
+        "vitreus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "ore",
+        "uranium"
+      ],
+      "aspects": {
+        "metallum": 10,
+        "mortuus": 5,
+        "potentia": 10
+      }
+    },
+    {
+      "path_contains_all": [
+        "potato"
+      ],
+      "aspects": {
+        "herba": 5,
+        "terra": 5,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "rubber"
+      ],
+      "aspects": {
+        "instrumentum": 5,
+        "motus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "sand"
+      ],
+      "aspects": {
+        "perditio": 5,
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "sapling"
+      ],
+      "aspects": {
+        "herba": 15,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "slime",
+        "ball"
+      ],
+      "aspects": {
+        "alkimia": 1,
+        "aqua": 5,
+        "victus": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "stone"
+      ],
+      "aspects": {
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "stone",
+        "andesite"
+      ],
+      "aspects": {
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "stone",
+        "diorite"
+      ],
+      "aspects": {
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "stone",
+        "granite"
+      ],
+      "aspects": {
+        "terra": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "string"
+      ],
+      "aspects": {
+        "bestia": 5,
+        "fabrico": 1
+      }
+    },
+    {
+      "path_contains_all": [
+        "sugar",
+        "cane"
+      ],
+      "aspects": {
+        "aer": 2,
+        "aqua": 3,
+        "herba": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "vine"
+      ],
+      "aspects": {
+        "herba": 5
+      }
+    },
+    {
+      "path_contains_all": [
+        "wheat"
+      ],
+      "aspects": {
+        "herba": 5,
+        "victus": 5
+      }
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,13 +37,13 @@ public final class ThaumometerScanEvents {
             return;
         }
 
-        RegistryObject<Item> thaumometerObject = ModItems.ITEMS_BY_ID.get(THAUMOMETER_ID);
-        if (thaumometerObject == null) {
+        Item thaumometer = getThaumometerItem();
+        if (thaumometer == null) {
             return;
         }
 
         ItemStack held = event.getItemStack();
-        if (!held.is(thaumometerObject.get())) {
+        if (!held.is(thaumometer)) {
             return;
         }
 
@@ -79,6 +80,121 @@ public final class ThaumometerScanEvents {
 
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.SUCCESS);
+    }
+
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getLevel().isClientSide || event.getHand() != InteractionHand.MAIN_HAND) {
+            return;
+        }
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        Item thaumometer = getThaumometerItem();
+        if (thaumometer == null || !event.getItemStack().is(thaumometer)) {
+            return;
+        }
+
+        if (!PlayerKnowledgeManager.hasSalisMundusUnlocked(player)) {
+            player.displayClientMessage(Component.literal("You cannot decipher these readings yet."), true);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+
+        ResourceLocation entityId = ForgeRegistries.ENTITY_TYPES.getKey(event.getTarget().getType());
+        if (entityId == null) {
+            return;
+        }
+
+        ItemStack scanStack = event.getTarget().getPickResult();
+        if (scanStack.isEmpty()) {
+            SpawnEggItem spawnEgg = SpawnEggItem.byId(event.getTarget().getType());
+            if (spawnEgg != null) {
+                scanStack = new ItemStack(spawnEgg);
+            }
+        }
+
+        AspectList aspects = scanStack.isEmpty() ? new AspectList() : AspectRegistry.getAspects(scanStack);
+        if (aspects.isEmpty()) {
+            aspects.add(AspectType.COGNITIO, 4);
+        }
+
+        PlayerKnowledgeManager.ScanResult result = PlayerKnowledgeManager.recordEntityScan(player, entityId, aspects);
+        String aspectSummary = formatAspectSummary(aspects);
+        if (result.firstScan()) {
+            player.displayClientMessage(
+                    Component.literal("Scanned entity " + entityId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans() + " | Discovered Aspects " + result.totalAspects()),
+                    true
+            );
+        } else {
+            player.displayClientMessage(
+                    Component.literal("Known entity: " + entityId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans()),
+                    true
+            );
+        }
+
+        event.setCanceled(true);
+        event.setCancellationResult(InteractionResult.SUCCESS);
+    }
+
+    @SubscribeEvent
+    public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+        if (event.getLevel().isClientSide || event.getHand() != InteractionHand.MAIN_HAND) {
+            return;
+        }
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        Item thaumometer = getThaumometerItem();
+        if (thaumometer == null || !event.getItemStack().is(thaumometer)) {
+            return;
+        }
+
+        if (!PlayerKnowledgeManager.hasSalisMundusUnlocked(player)) {
+            player.displayClientMessage(Component.literal("You cannot decipher these readings yet."), true);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+
+        ItemStack target = player.getItemInHand(InteractionHand.OFF_HAND);
+        if (target.isEmpty() || target.is(thaumometer)) {
+            return;
+        }
+
+        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(target.getItem());
+        if (itemId == null) {
+            return;
+        }
+
+        AspectList aspects = AspectRegistry.getAspects(target);
+        PlayerKnowledgeManager.ScanResult result = PlayerKnowledgeManager.recordItemScan(player, itemId, aspects);
+        String aspectSummary = formatAspectSummary(aspects);
+        if (result.firstScan()) {
+            player.displayClientMessage(
+                    Component.literal("Scanned item " + itemId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans() + " | Discovered Aspects " + result.totalAspects()),
+                    true
+            );
+        } else {
+            player.displayClientMessage(
+                    Component.literal("Known item: " + itemId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans()),
+                    true
+            );
+        }
+
+        event.setCanceled(true);
+        event.setCancellationResult(InteractionResult.SUCCESS);
+    }
+
+    private static Item getThaumometerItem() {
+        RegistryObject<Item> thaumometerObject = ModItems.ITEMS_BY_ID.get(THAUMOMETER_ID);
+        if (thaumometerObject == null) {
+            return null;
+        }
+        return thaumometerObject.get();
     }
 
     private static String formatAspectSummary(AspectList aspects) {
