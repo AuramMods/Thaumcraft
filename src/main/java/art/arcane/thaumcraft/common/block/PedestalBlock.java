@@ -18,6 +18,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlock extends BaseEntityBlock {
+    // TODO(port): Match legacy BlockPedestal behavior:
+    // TODO(port): support infusion-triggered event signaling (client FX + server events) and non-player insertion/removal paths.
+    // TODO(port): add richer synchronization hooks for matrix-driven transforms when infusion parity work advances.
 
     public PedestalBlock(BlockBehaviour.Properties properties) {
         super(properties);

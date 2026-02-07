@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class ModItems {
+    // TODO(port): replace generic placeholder Item registrations with functional item classes (thaumometer, thaumonomicon, phials, scribing tools, foci, etc.).
+    // TODO(port): migrate legacy sub-item/meta behavior into explicit item/data-component models for 1.20.1 parity.
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Thaumcraft.MODID);
     public static final Map<String, RegistryObject<Item>> BLOCK_ITEMS_BY_ID = new LinkedHashMap<>();

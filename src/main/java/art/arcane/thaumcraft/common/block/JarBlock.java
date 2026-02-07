@@ -30,6 +30,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class JarBlock extends BaseEntityBlock {
+    // TODO(port): Bring jar block parity up to legacy behavior:
+    // TODO(port): add label/filter interactions and variant-specific behavior (normal/void/brain) tied to block state or block entity mode.
+    // TODO(port): add automation-facing interaction/sync pathways once essentia transport/tubes are ported.
 
     private static final String PHIAL_ITEM_ID = "phial";
     private static final String PHIAL_ASPECT_TAG = "Aspect";

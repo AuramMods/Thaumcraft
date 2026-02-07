@@ -31,6 +31,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public class CrucibleBlockEntity extends StationBlockEntity {
+    // TODO(port): Restore legacy crucible instability handling from TileCrucible:
+    // TODO(port): over-capacity and long-boil behavior should spill random aspects into flux over time instead of only controlled dump behavior.
+    // TODO(port): bind crucible recipe execution to research unlock requirements once the knowledge system is fully ported.
 
     public static final int MAX_WATER = 1000;
     public static final int MAX_HEAT = 200;
@@ -304,7 +307,7 @@ public class CrucibleBlockEntity extends StationBlockEntity {
     }
 
     private void dissolveStack(ItemStack consumed, ServerLevel serverLevel) {
-        AspectList aspects = AspectRegistry.getAspects(consumed);
+        AspectList aspects = AspectRegistry.getAspects(serverLevel, consumed);
         addAspectsClamped(aspects);
 
         this.waterAmount = Math.max(0, this.waterAmount - WATER_COST_PER_ITEM);

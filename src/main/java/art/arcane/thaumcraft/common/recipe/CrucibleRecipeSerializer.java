@@ -17,6 +17,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 public class CrucibleRecipeSerializer implements RecipeSerializer<CrucibleRecipe> {
+    // TODO(port): parse/store additional legacy fields (research requirement and any special flags) once progression-gated crafting is wired.
+    // TODO(port): keep backward-compatible defaults so existing baseline JSON remains valid during schema expansion.
 
     private static final int DEFAULT_WATER_COST = 50;
 

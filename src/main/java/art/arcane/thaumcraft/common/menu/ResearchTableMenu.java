@@ -16,6 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class ResearchTableMenu extends AbstractStationMenu {
+    // TODO(port): add action channels for theorycraft cards/notes and sync outputs once ResearchTableData gameplay is ported.
 
     private static final int SLOT_COUNT = 2;
 

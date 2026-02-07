@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener {
+    // TODO(port): Complete legacy ConfigAspects coverage:
+    // TODO(port): support selectors equivalent to direct ItemStack registrations (metadata-sensitive and wildcard entries), not only id/tag/path heuristics.
+    // TODO(port): add optional NBT-sensitive matching for edge-case object tags used by legacy complex registrations.
 
     private static final Gson GSON = new GsonBuilder().create();
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -171,6 +174,7 @@ public final class AspectObjectRegistry extends SimpleJsonResourceReloadListener
                 List.copyOf(pathRules),
                 List.copyOf(pathAllRules)
         );
+        AspectRegistry.invalidateCaches();
         LOGGER.info("Loaded aspect registry: {} exact item entries, {} tag rules, {} path-any rules, {} path-all rules",
                 itemAspects.size(), tagRules.size(), pathRules.size(), pathAllRules.size());
     }

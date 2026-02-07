@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Map;
 
 public class InfusionMatrixBlockEntity extends StationBlockEntity {
+    // TODO(port): Reach legacy TileInfusionMatrix parity:
+    // TODO(port): consume required essentia aspects during craft cycles (via jars/transport network) instead of vis-only draining.
+    // TODO(port): gate recipes by research and support advanced outputs (NBT/object outputs, infusion enchantments, XP-aware variants).
+    // TODO(port): expand instability event table (ejection, zaps, explosions, warp side effects) and visual/network FX parity.
 
     public static final int MATRIX_SLOT = 0;
     private static final int CAPTURE_SLOT_START = 1;

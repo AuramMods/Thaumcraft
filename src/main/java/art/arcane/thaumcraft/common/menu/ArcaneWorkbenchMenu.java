@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class ArcaneWorkbenchMenu extends AbstractStationMenu {
+    // TODO(port): wire menu-side hints/validation for final arcane recipe parity (research lock messaging and precise vis/crystal requirements per recipe type).
 
     private static final int SLOT_COUNT = ArcaneWorkbenchBlockEntity.TOTAL_SLOTS;
 

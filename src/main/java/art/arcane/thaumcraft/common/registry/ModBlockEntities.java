@@ -14,6 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public final class ModBlockEntities {
+    // TODO(port): register additional block entities as placeholder blocks are promoted (thaumatorium, golem builder, infernal furnace, essentia transport line, etc.).
+    // TODO(port): split shared jar registration if variant-specific behavior/state requires distinct block entity types for parity.
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Thaumcraft.MODID);
     public static final RegistryObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH = BLOCK_ENTITIES.register("arcane_workbench",

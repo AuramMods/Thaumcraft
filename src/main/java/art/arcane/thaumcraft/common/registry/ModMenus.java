@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public final class ModMenus {
+    // TODO(port): add dedicated menu types for newly functional stations (thaumatorium, golem builder, etc.) as their block entities are ported.
+    // TODO(port): keep menu ids aligned with legacy naming where possible to ease recipe/research/UI migration.
 
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Thaumcraft.MODID);
     public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = MENUS.register("arcane_workbench",

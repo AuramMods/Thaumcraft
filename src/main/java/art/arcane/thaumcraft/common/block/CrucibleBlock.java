@@ -22,6 +22,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.Map;
 
 public class CrucibleBlock extends StationBlock {
+    // TODO(port): Align interaction feedback/effects with legacy crucible block:
+    // TODO(port): add full particle/sound event parity for smelting, spills, and boil state transitions.
+    // TODO(port): preserve thrower/context metadata for recipe ownership/research attribution where needed by progression.
 
     public static final BooleanProperty WATER = BooleanProperty.create("water");
     public static final BooleanProperty HEATED = BooleanProperty.create("heated");

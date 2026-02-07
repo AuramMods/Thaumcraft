@@ -27,6 +27,9 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class SalisMundusEvents {
+    // TODO(port): Finish legacy dust-trigger parity from ConfigRecipes/DustTriggerMultiblock:
+    // TODO(port): add infusion altar ancient/eldritch material variants and placeholder-to-target conversion semantics where needed.
+    // TODO(port): move trigger gating from temporary Salis-unlock checks to exact research-key requirements matching legacy progression keys.
 
     private static final String SALIS_MUNDUS_ID = "salis_mundus";
     private static final List<Vec3i> ALTAR_CORNER_OFFSETS = List.of(

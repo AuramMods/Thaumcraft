@@ -15,6 +15,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class PlayerKnowledgeSavedData extends SavedData {
+    // TODO(port): Expand this baseline data model to legacy IPlayerKnowledge parity:
+    // TODO(port): persist research entries with stage/flags, category-based observation/theory totals, and warp data (permanent/normal/temporary).
+    // TODO(port): keep backward compatibility migration paths for current simplified scan/salis fields when introducing the richer schema.
 
     private static final String PLAYERS_TAG = "players";
     private static final String UUID_TAG = "uuid";

@@ -15,6 +15,8 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class InfusionRecipe implements Recipe<Container> {
+    // TODO(port): extend recipe model to legacy infusion semantics:
+    // TODO(port): research requirement, essentia aspect costs, optional XP cost, and advanced output forms (NBT/object/enchantment outcomes).
 
     private final ResourceLocation id;
     private final Ingredient catalyst;

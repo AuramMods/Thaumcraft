@@ -7,6 +7,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
 public final class AuraManager {
+    // TODO(port): Reintroduce legacy aura simulation behavior (regen/decay, vis-flux balancing, neighboring chunk interactions, and flux event triggers).
+    // TODO(port): add preserve/drain policy hooks used by legacy mechanics that conditionally protect low-vis chunks from depletion.
 
     public static final int AURA_CEILING = 500;
     public static final int DEFAULT_BASE = 200;

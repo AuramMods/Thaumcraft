@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfusionRecipeSerializer implements RecipeSerializer<InfusionRecipe> {
+    // TODO(port): parse/serialize legacy infusion fields beyond baseline (research, aspect costs, optional XP, and non-ItemStack output encodings).
+    // TODO(port): add schema version handling for future compatibility as infusion JSON grows toward parity.
 
     private static final int DEFAULT_INSTABILITY = 1;
     private static final float DEFAULT_VIS_COST = 50.0F;

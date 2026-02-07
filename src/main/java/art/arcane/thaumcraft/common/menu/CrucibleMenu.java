@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.Level;
 
 public class CrucibleMenu extends AbstractStationMenu {
+    // TODO(port): either remove this temporary container path or align it with final crucible UX once in-world-only interactions are finalized.
 
     private static final int SLOT_COUNT = 1;
 

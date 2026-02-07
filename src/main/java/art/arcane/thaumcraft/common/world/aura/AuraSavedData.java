@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class AuraSavedData extends SavedData {
+    // TODO(port): persist additional aura runtime state needed for simulation parity (dirty chunk queues, taint trigger markers, and any per-dimension control flags).
+    // TODO(port): add migration/version tags for future schema updates as aura threading/simulation state is expanded.
 
     private static final String CHUNKS_TAG = "chunks";
     private static final String CHUNK_X_TAG = "x";

@@ -14,6 +14,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 public class CrucibleRecipe implements Recipe<Container> {
+    // TODO(port): include legacy research key gating and optional catalyst metadata matching nuances used by old CrucibleRecipe definitions.
+    // TODO(port): support richer outputs where needed (e.g., NBT-specialized results) to match legacy alchemy edge cases.
 
     private final ResourceLocation id;
     private final Ingredient catalyst;

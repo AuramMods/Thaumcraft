@@ -27,6 +27,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
+    // TODO(port): Match legacy TileArcaneWorkbench charger behavior:
+    // TODO(port): when arcane_workbench_charger is above this block, pull vis from the surrounding 3x3 chunk area instead of only local chunk aura.
+    // TODO(port): Replace generic vanilla RecipeType.CRAFTING gating with real arcane recipe parity (research stage checks, exact vis costs, and crystal requirements per recipe definition).
 
     public static final int OUTPUT_SLOT = 0;
     public static final int INPUT_SLOT_START = 1;
@@ -260,7 +263,7 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
             occupied++;
             ItemStack single = stack.copy();
             single.setCount(1);
-            totalAspects += AspectRegistry.getTotalAspectValue(single);
+            totalAspects += AspectRegistry.getTotalAspectValue(this.level, single);
         }
 
         int baseline = Math.max(1, totalAspects / 2);
@@ -278,7 +281,7 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
 
             ItemStack single = stack.copy();
             single.setCount(1);
-            AspectList aspects = AspectRegistry.getAspects(single);
+            AspectList aspects = AspectRegistry.getAspects(this.level, single);
             for (Map.Entry<AspectType, Integer> entry : aspects.asMap().entrySet()) {
                 totals.merge(entry.getKey(), entry.getValue(), Integer::sum);
             }

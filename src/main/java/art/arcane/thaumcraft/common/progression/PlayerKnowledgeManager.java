@@ -7,6 +7,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 public final class PlayerKnowledgeManager {
+    // TODO(port): Add legacy research/knowledge API surface (progress research, set/clear research flags, category knowledge gain, warp integration).
+    // TODO(port): reintroduce player sync packet flow once research UI/thaumonomicon and server-authoritative progression are ported.
 
     private static final String DATA_ID = Thaumcraft.MODID + "_player_knowledge";
 

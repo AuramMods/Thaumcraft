@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public final class ModRecipes {
+    // TODO(port): add remaining legacy recipe families (arcane crafting, full infusion variants, and research-gated recipe metadata integration).
+    // TODO(port): register/bridge recipe types that depend on progression state so lookup can enforce research requirements at craft time.
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Thaumcraft.MODID);

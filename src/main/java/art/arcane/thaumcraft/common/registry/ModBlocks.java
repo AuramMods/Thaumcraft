@@ -22,6 +22,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class ModBlocks {
+    // TODO(port): Replace remaining placeholder `new Block(...)` registrations with dedicated block classes as each legacy system is implemented.
+    // TODO(port): split variant-heavy legacy ids (e.g., metadata-driven stone/pillar families) into explicit 1.20.1 blockstate/property models where parity needs it.
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Thaumcraft.MODID);
     public static final Map<String, RegistryObject<Block>> BLOCKS_BY_ID = new LinkedHashMap<>();

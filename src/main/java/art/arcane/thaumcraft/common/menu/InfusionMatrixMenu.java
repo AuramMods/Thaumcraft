@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.Level;
 
 public class InfusionMatrixMenu extends AbstractStationMenu {
+    // TODO(port): extend menu with infusion state visibility (selected recipe, instability, essentia demands, progress events) for debugging and player UX parity.
 
     private static final int SLOT_COUNT = 1;
 

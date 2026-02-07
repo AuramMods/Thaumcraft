@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public class JarBlockEntity extends BlockEntity {
+    // TODO(port): Match legacy jar semantics (TileJarFillable/TileJarFillableVoid/TileJarBrain):
+    // TODO(port): enforce single-aspect storage with optional aspect filter labels, add void overflow handling, and implement brain jar special behavior.
+    // TODO(port): add essentia transport suction/input-output rules so jars participate in tube/alembic automation.
 
     public static final int MAX_ESSENTIA = 250;
 

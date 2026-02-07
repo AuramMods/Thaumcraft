@@ -22,6 +22,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ThaumometerScanEvents {
+    // TODO(port): Replace baseline scan counters with legacy-style ScanningManager behavior:
+    // TODO(port): scans should unlock research keys, grant category-specific observation knowledge, and distinguish unknown vs known targets by research state.
+    // TODO(port): expand scan surface parity (inventory contents, special block/entity handlers, and richer client feedback/UI hooks).
 
     private static final String THAUMOMETER_ID = "thaumometer";
 
@@ -61,7 +64,7 @@ public final class ThaumometerScanEvents {
         }
 
         ItemStack scanStack = new ItemStack(state.getBlock().asItem());
-        AspectList aspects = AspectRegistry.getAspects(scanStack);
+        AspectList aspects = AspectRegistry.getAspects(event.getLevel(), scanStack);
 
         PlayerKnowledgeManager.ScanResult result = PlayerKnowledgeManager.recordBlockScan(player, blockId, aspects);
         String aspectSummary = formatAspectSummary(aspects);
@@ -116,7 +119,7 @@ public final class ThaumometerScanEvents {
             }
         }
 
-        AspectList aspects = scanStack.isEmpty() ? new AspectList() : AspectRegistry.getAspects(scanStack);
+        AspectList aspects = scanStack.isEmpty() ? new AspectList() : AspectRegistry.getAspects(event.getLevel(), scanStack);
         if (aspects.isEmpty()) {
             aspects.add(AspectType.COGNITIO, 4);
         }
@@ -170,7 +173,7 @@ public final class ThaumometerScanEvents {
             return;
         }
 
-        AspectList aspects = AspectRegistry.getAspects(target);
+        AspectList aspects = AspectRegistry.getAspects(event.getLevel(), target);
         PlayerKnowledgeManager.ScanResult result = PlayerKnowledgeManager.recordItemScan(player, itemId, aspects);
         String aspectSummary = formatAspectSummary(aspects);
         if (result.firstScan()) {

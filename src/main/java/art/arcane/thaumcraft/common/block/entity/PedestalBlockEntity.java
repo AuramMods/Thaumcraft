@@ -11,6 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class PedestalBlockEntity extends net.minecraft.world.level.block.entity.BlockEntity implements Container {
+    // TODO(port): Add legacy pedestal parity hooks:
+    // TODO(port): support infusion-specific set/remove paths with dedicated FX/event signaling and sided insertion/extraction behavior used by automation.
+    // TODO(port): expose comparator or state sync hooks once pedestal participation in infusion automation becomes player-visible.
 
     private NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
 

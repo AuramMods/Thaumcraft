@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class StationBlockEntity extends BlockEntity implements Container, MenuProvider, TickingStationBlockEntity {
+    // TODO(port): replace generic serverTicks/activity sync fields with per-station container data contracts once each station UI reaches feature parity.
+    // TODO(port): evaluate capability-based inventory exposure per station instead of uniform Container behavior for automation compatibility.
 
     private NonNullList<ItemStack> items;
     private final int slotCount;
