@@ -1,0 +1,238 @@
+# Legacy Migration Manifest
+
+Generated from `old-1.12.2` registration and asset roots for Phase 0 planning.
+
+## Inventory Counts
+
+- Java files (`old-1.12.2/thaumcraft`): 823
+- Legacy blockstate json files: 119
+- Legacy item model json files: 126
+- Legacy block textures: 187
+- Legacy item textures: 215
+- Legacy block ids: 97 (94 init + 3 fluid-style)
+- Legacy item handles: 99
+- Legacy research json files: 7
+
+## Legacy Block IDs
+
+- `activator_rail`
+- `alembic`
+- `ancient_stairs`
+- `arcane_brick_stairs`
+- `arcane_ear`
+- `arcane_stairs`
+- `arcane_workbench`
+- `arcane_workbench_charger`
+- `banner`
+- `barrier`
+- `bellows`
+- `brain_box`
+- `candle`
+- `centrifuge`
+- `cinderpearl`
+- `crucible`
+- `crystal_aer`
+- `crystal_aqua`
+- `crystal_ignis`
+- `crystal_ordo`
+- `crystal_perditio`
+- `crystal_terra`
+- `crystal_vitium`
+- `dioptra`
+- `effect`
+- `essentia_input`
+- `essentia_output`
+- `everfull_urn`
+- `flesh_block`
+- `golem_builder`
+- `grass_ambient`
+- `greatwood_stairs`
+- `hole`
+- `hungry_chest`
+- `infernal_furnace`
+- `infusion_matrix`
+- `jar_brain`
+- `jar_normal`
+- `jar_void`
+- `lamp_arcane`
+- `lamp_fertility`
+- `lamp_growth`
+- `leaf`
+- `levitator`
+- `log`
+- `loot_crate`
+- `loot_urn`
+- `metal`
+- `mirror`
+- `mirror_essentia`
+- `nitor`
+- `ore_amber`
+- `ore_cinnabar`
+- `ore_quartz`
+- `pattern_crafter`
+- `paving_stone`
+- `pedestal`
+- `pillar`
+- `placeholder`
+- `plank`
+- `recharge_pedestal`
+- `redstone_relay`
+- `research_table`
+- `sapling`
+- `shimmerleaf`
+- `silverwood_stairs`
+- `slab_stone`
+- `slab_stone_double`
+- `slab_wood`
+- `slab_wood_double`
+- `smelter_aux`
+- `smelter_basic`
+- `smelter_thaumium`
+- `smelter_vent`
+- `smelter_void`
+- `spa`
+- `stone`
+- `table_stone`
+- `table_wood`
+- `taint`
+- `taint_feature`
+- `taint_fibre`
+- `taint_log`
+- `thaumatorium`
+- `thaumatorium_top`
+- `translucent`
+- `tube`
+- `tube_buffer`
+- `tube_filter`
+- `tube_oneway`
+- `tube_restrict`
+- `tube_valve`
+- `vishroom`
+- `wand_workbench`
+- `flux_goo`
+- `liquid_death`
+- `purifying_fluid`
+
+## Legacy Item Handles (ItemsTC fields)
+
+- `alumentum`
+- `amber`
+- `amuletVis`
+- `bathSalts`
+- `baubles`
+- `bottleTaint`
+- `brain`
+- `bucketDeath`
+- `bucketPure`
+- `casterBasic`
+- `charmVerdant`
+- `chunks`
+- `clothBoots`
+- `clothChest`
+- `clothLegs`
+- `clusters`
+- `creativeFluxSponge`
+- `creativePlacer`
+- `crimsonBlade`
+- `crimsonBoots`
+- `crimsonPlateChest`
+- `crimsonPlateHelm`
+- `crimsonPlateLegs`
+- `crimsonPraetorChest`
+- `crimsonPraetorHelm`
+- `crimsonPraetorLegs`
+- `crimsonRobeChest`
+- `crimsonRobeHelm`
+- `crimsonRobeLegs`
+- `crystalEssence`
+- `curio`
+- `elementalAxe`
+- `elementalHoe`
+- `elementalPick`
+- `elementalShovel`
+- `elementalSword`
+- `fabric`
+- `filter`
+- `focus`
+- `focusBlank`
+- `focusPouch`
+- `fortressChest`
+- `fortressHelm`
+- `fortressLegs`
+- `gear`
+- `goggles`
+- `golemBell`
+- `golemPlacer`
+- `handMirror`
+- `ingots`
+- `jarBrace`
+- `label`
+- `lootBag`
+- `mind`
+- `mirroredGlass`
+- `modules`
+- `morphicResonator`
+- `nuggets`
+- `pechWand`
+- `phial`
+- `plate`
+- `primalCrusher`
+- `primordialPearl`
+- `quicksilver`
+- `resonator`
+- `salisMundus`
+- `sanityChecker`
+- `sanitySoap`
+- `scribingTools`
+- `seals`
+- `tallow`
+- `thaumiumAxe`
+- `thaumiumBoots`
+- `thaumiumChest`
+- `thaumiumHelm`
+- `thaumiumHoe`
+- `thaumiumLegs`
+- `thaumiumPick`
+- `thaumiumShovel`
+- `thaumiumSword`
+- `thaumometer`
+- `thaumonomicon`
+- `travellerBoots`
+- `tripleMeatTreat`
+- `turretPlacer`
+- `visResonator`
+- `voidAxe`
+- `voidBoots`
+- `voidChest`
+- `voidHelm`
+- `voidHoe`
+- `voidLegs`
+- `voidPick`
+- `voidRobeChest`
+- `voidRobeHelm`
+- `voidRobeLegs`
+- `voidSeed`
+- `voidShovel`
+- `voidSword`
+
+## Legacy Research JSON
+
+- `alchemy.json`
+- `artifice.json`
+- `basics.json`
+- `eldritch.json`
+- `golemancy.json`
+- `scans.json`
+- `thaumaturgy.json`
+
+## Phase 1 Priority Seeds
+
+- Ores and crystals: `ore_amber`, `ore_cinnabar`, `ore_quartz`, `crystal_*`
+- Natural blocks: `log`, `leaf`, `sapling`, `plank`, `stone`, `translucent`
+- Structural variants: `*_stairs`, `slab_*`, `pillar`, `table_*`, `paving_stone`
+- Core resources: `amber`, `quicksilver`, `ingots`, `nuggets`, `clusters`, `gear`, `plate`, `salisMundus`
+
+## Notes
+
+- Item list is based on `ItemsTC` static registrations in legacy `ConfigItems` and is used as migration handles.
+- Some final 1.20.1 registry IDs may diverge from handle names once item classes are ported.
