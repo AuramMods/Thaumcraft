@@ -1,0 +1,438 @@
+{
+  "entries": [
+    {
+      "item": "thaumcraft:salis_mundus",
+      "aspects": {
+        "praecantatio": 8,
+        "ordo": 4,
+        "aer": 1,
+        "aqua": 1,
+        "ignis": 1,
+        "terra": 1,
+        "perditio": 1
+      }
+    },
+    {
+      "item": "thaumcraft:alumentum",
+      "aspects": {
+        "ignis": 6,
+        "perditio": 2
+      }
+    },
+    {
+      "item": "thaumcraft:thaumometer",
+      "aspects": {
+        "cognitio": 6,
+        "praecantatio": 2,
+        "sensus": 10,
+        "auram": 10
+      }
+    },
+    {
+      "item": "thaumcraft:thaumonomicon",
+      "aspects": {
+        "cognitio": 8,
+        "praecantatio": 2
+      }
+    },
+    {
+      "item": "thaumcraft:scribing_tools",
+      "aspects": {
+        "cognitio": 3,
+        "ordo": 1
+      }
+    },
+    {
+      "item": "thaumcraft:phial",
+      "aspects": {
+        "vacuos": 3
+      }
+    },
+    {
+      "item": "thaumcraft:triple_meat_treat",
+      "aspects": {
+        "victus": 10,
+        "desiderium": 10
+      }
+    },
+    {
+      "item": "thaumcraft:bucket_pure",
+      "aspects": {
+        "cognitio": 15,
+        "ordo": 15
+      }
+    },
+    {
+      "item": "thaumcraft:brain",
+      "aspects": {
+        "victus": 5,
+        "cognitio": 20,
+        "exanimis": 10
+      }
+    },
+    {
+      "item": "thaumcraft:loot_bag",
+      "aspects": {
+        "desiderium": 20
+      }
+    },
+    {
+      "item": "thaumcraft:chunks",
+      "aspects": {
+        "victus": 5,
+        "perditio": 1
+      }
+    },
+    {
+      "item": "thaumcraft:curio",
+      "aspects": {
+        "cognitio": 15,
+        "praecantatio": 15
+      }
+    },
+    {
+      "item": "thaumcraft:primordial_pearl",
+      "aspects": {
+        "auram": 20,
+        "praecantatio": 20,
+        "alkimia": 20
+      }
+    },
+    {
+      "item": "thaumcraft:goggles",
+      "aspects": {
+        "sensus": 10,
+        "auram": 10
+      }
+    },
+    {
+      "item": "thaumcraft:amulet_vis",
+      "aspects": {
+        "auram": 20,
+        "metallum": 5,
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crimson_blade",
+      "aspects": {
+        "alienis": 10,
+        "mortuus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:arcane_workbench",
+      "aspects": {
+        "fabrico": 20,
+        "praecantatio": 5,
+        "auram": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crucible",
+      "aspects": {
+        "fabrico": 20,
+        "alkimia": 20
+      }
+    },
+    {
+      "item": "thaumcraft:pedestal",
+      "aspects": {
+        "praecantatio": 3,
+        "aer": 3
+      }
+    },
+    {
+      "item": "thaumcraft:arcane_ear",
+      "aspects": {
+        "sensus": 20
+      }
+    },
+    {
+      "item": "thaumcraft:candle",
+      "aspects": {
+        "lux": 5
+      }
+    },
+    {
+      "item": "thaumcraft:grass_ambient",
+      "aspects": {
+        "lux": 5
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_aer",
+      "aspects": {
+        "aer": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_ignis",
+      "aspects": {
+        "ignis": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_aqua",
+      "aspects": {
+        "aqua": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_terra",
+      "aspects": {
+        "terra": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_ordo",
+      "aspects": {
+        "ordo": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_perditio",
+      "aspects": {
+        "perditio": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:crystal_vitium",
+      "aspects": {
+        "vitium": 15,
+        "vitreus": 10
+      }
+    },
+    {
+      "item": "thaumcraft:taint_fibre",
+      "aspects": {
+        "herba": 5,
+        "vitium": 10
+      }
+    },
+    {
+      "item": "thaumcraft:taint",
+      "aspects": {
+        "auram": 5,
+        "vitium": 10
+      }
+    },
+    {
+      "item": "thaumcraft:taint_feature",
+      "aspects": {
+        "auram": 5,
+        "bestia": 5,
+        "vitium": 10
+      }
+    },
+    {
+      "item": "thaumcraft:taint_log",
+      "aspects": {
+        "herba": 5,
+        "vitium": 5
+      }
+    },
+    {
+      "item": "thaumcraft:log",
+      "aspects": {
+        "herba": 20,
+        "victus": 5
+      }
+    },
+    {
+      "item": "thaumcraft:leaf",
+      "aspects": {
+        "herba": 5
+      }
+    },
+    {
+      "item": "thaumcraft:sapling",
+      "aspects": {
+        "herba": 15,
+        "victus": 5
+      }
+    },
+    {
+      "item": "thaumcraft:shimmerleaf",
+      "aspects": {
+        "herba": 5,
+        "auram": 10,
+        "potentia": 5
+      }
+    },
+    {
+      "item": "thaumcraft:cinderpearl",
+      "aspects": {
+        "herba": 5,
+        "auram": 5,
+        "ignis": 10
+      }
+    },
+    {
+      "item": "thaumcraft:vishroom",
+      "aspects": {
+        "herba": 2,
+        "mortuus": 1,
+        "praecantatio": 1,
+        "perditio": 1
+      }
+    },
+    {
+      "item": "thaumcraft:stone",
+      "aspects": {
+        "terra": 5,
+        "potentia": 5
+      }
+    },
+    {
+      "item": "thaumcraft:loot_urn",
+      "aspects": {
+        "desiderium": 20,
+        "terra": 2
+      }
+    },
+    {
+      "item": "thaumcraft:loot_crate",
+      "aspects": {
+        "desiderium": 20,
+        "herba": 2
+      }
+    },
+    {
+      "item": "thaumcraft:banner",
+      "aspects": {
+        "alienis": 5
+      }
+    },
+    {
+      "tag": "thaumcraft:aspect/metal_items",
+      "aspects": {
+        "metallum": 2,
+        "ordo": 1
+      }
+    },
+    {
+      "tag": "thaumcraft:aspect/wood_items",
+      "aspects": {
+        "herba": 2
+      }
+    },
+    {
+      "tag": "thaumcraft:aspect/void_items",
+      "aspects": {
+        "vitium": 3,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_any": [
+        "ore",
+        "stone",
+        "pillar",
+        "slab"
+      ],
+      "aspects": {
+        "terra": 2
+      }
+    },
+    {
+      "path_contains_any": [
+        "ingot",
+        "nugget",
+        "plate",
+        "metal"
+      ],
+      "aspects": {
+        "metallum": 2,
+        "ordo": 1
+      }
+    },
+    {
+      "path_contains_any": [
+        "plank",
+        "log",
+        "leaf",
+        "sapling",
+        "vishroom",
+        "shimmerleaf",
+        "cinderpearl"
+      ],
+      "aspects": {
+        "herba": 2
+      }
+    },
+    {
+      "path_contains_any": [
+        "flux",
+        "taint",
+        "void",
+        "vitium"
+      ],
+      "aspects": {
+        "vitium": 3,
+        "perditio": 1
+      }
+    },
+    {
+      "path_contains_any": [
+        "alumentum",
+        "fire",
+        "lava"
+      ],
+      "aspects": {
+        "ignis": 2
+      }
+    },
+    {
+      "path_contains_any": [
+        "bucket",
+        "aqua",
+        "water"
+      ],
+      "aspects": {
+        "aqua": 2
+      }
+    },
+    {
+      "path_contains_any": [
+        "thaumometer",
+        "thaumonomicon",
+        "mind",
+        "research"
+      ],
+      "aspects": {
+        "cognitio": 3,
+        "praecantatio": 1
+      }
+    },
+    {
+      "path_contains_any": [
+        "salis_mundus",
+        "focus",
+        "wand",
+        "vis"
+      ],
+      "aspects": {
+        "praecantatio": 2
+      }
+    },
+    {
+      "path_contains_any": [
+        "tube",
+        "relay",
+        "lever",
+        "matrix",
+        "golem"
+      ],
+      "aspects": {
+        "motus": 1
+      }
+    }
+  ]
+}

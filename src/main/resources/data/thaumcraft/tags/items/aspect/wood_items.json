@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:plank",
+    "thaumcraft:log",
+    "thaumcraft:leaf",
+    "thaumcraft:sapling",
+    "thaumcraft:table_wood",
+    "thaumcraft:greatwood_stairs",
+    "thaumcraft:silverwood_stairs",
+    "thaumcraft:loot_crate",
+    "thaumcraft:cinderpearl",
+    "thaumcraft:shimmerleaf",
+    "thaumcraft:vishroom"
+  ]
+}

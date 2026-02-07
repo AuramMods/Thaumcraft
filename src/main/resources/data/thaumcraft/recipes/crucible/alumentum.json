@@ -1,0 +1,14 @@
+{
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "item": "thaumcraft:alumentum"
+  },
+  "aspects": {
+    "ignis": 6,
+    "perditio": 2
+  },
+  "water": 50
+}

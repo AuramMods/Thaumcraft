@@ -1,0 +1,25 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "thaumcraft:block/crucible"
+      }
+    },
+    {
+      "when": {
+        "water": "true"
+      },
+      "apply": {
+        "model": "thaumcraft:block/crucible_water_overlay"
+      }
+    },
+    {
+      "when": {
+        "heated": "true"
+      },
+      "apply": {
+        "model": "thaumcraft:block/crucible_heat_overlay"
+      }
+    }
+  ]
+}

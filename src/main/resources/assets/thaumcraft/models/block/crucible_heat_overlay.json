@@ -1,0 +1,20 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "heat": "minecraft:block/glowstone"
+  },
+  "elements": [
+    {
+      "from": [7, 7, 7],
+      "to": [9, 9, 9],
+      "faces": {
+        "up": { "texture": "#heat" },
+        "down": { "texture": "#heat" },
+        "north": { "texture": "#heat" },
+        "south": { "texture": "#heat" },
+        "west": { "texture": "#heat" },
+        "east": { "texture": "#heat" }
+      }
+    }
+  ]
+}

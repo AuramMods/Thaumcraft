@@ -1,0 +1,19 @@
+{
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "item": "minecraft:quartz"
+  },
+  "result": {
+    "item": "thaumcraft:salis_mundus"
+  },
+  "aspects": {
+    "praecantatio": 6,
+    "ordo": 4,
+    "aer": 1,
+    "aqua": 1,
+    "ignis": 1,
+    "terra": 1,
+    "perditio": 1
+  },
+  "water": 75
+}

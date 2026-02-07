@@ -1,0 +1,15 @@
+{
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "item": "minecraft:glowstone_dust"
+  },
+  "result": {
+    "item": "thaumcraft:nitor"
+  },
+  "aspects": {
+    "ignis": 4,
+    "praecantatio": 4,
+    "ordo": 2
+  },
+  "water": 50
+}
