@@ -98,6 +98,9 @@ This file captures migration state so work can continue safely after context com
     - required crystal type is derived from dominant ingredient aspects
     - craft output is gated by both vis availability and required crystal presence
     - one crystal is consumed per successful craft
+  - added parity-tuning pass for generic crafting behavior:
+    - vis/crystal costs now apply only when crafted output belongs to `thaumcraft` namespace
+    - non-Thaumcraft crafting no longer hard-requires vis/crystal and behaves as normal 3x3 crafting
 - Added Research Table baseline slot rules:
   - slot 0 accepts `scribing_tools` only (single-stack)
   - slot 1 accepts `paper` only
@@ -120,11 +123,11 @@ This file captures migration state so work can continue safely after context com
   - cycle start is requested by placing an item in matrix slot (`MATRIX_SLOT`)
   - while active, cycle drains vis periodically from local chunk aura
   - low-vis or broken structure aborts the cycle and adds flux penalty
-  - cycle completion currently returns captured items to pedestals (safe baseline behavior)
+  - cycle completion now consumes matrix/captured ingredients and emits a result on the center pedestal (placeholder output baseline)
 - Added initial infusion stability hooks:
   - stability score is computed from altar layout symmetry and pedestal coverage
   - active cycles roll periodic instability failure checks using effective stability
-  - failed instability checks abort the cycle and spill additional flux
+  - failed instability checks now spill captured items, add flux, and abort the cycle
 - Promoted `pedestal` from placeholder block to functional block entity:
   - single-slot persisted inventory (`PedestalBlockEntity`)
   - right-click interaction to place/retrieve one item
@@ -158,6 +161,15 @@ This file captures migration state so work can continue safely after context com
   - removed duplicate broad `path_contains_any` fallback rules from `base.json` to avoid double-counting with the imported legacy rules
 - Added first Salis Mundus trigger scaffold:
   - right-clicking a vanilla crafting table with `salis_mundus` converts it into `arcane_workbench`
+- Expanded Salis Mundus simple triggers with progression gating:
+  - bookshelf grants `thaumonomicon` and unlocks first Salis/knowledge state
+  - crafting table conversion to `arcane_workbench` now requires unlocked baseline knowledge
+  - cauldron conversion to `crucible` now requires unlocked baseline knowledge
+- Added first-pass Salis Mundus multiblock trigger handling:
+  - `infusion_matrix` + stone ring now assembles baseline infusion altar pieces (`pillar` corners + center `pedestal`)
+  - `crucible` + `metal` stack now assembles `thaumatorium` + `thaumatorium_top`
+  - infernal furnace blueprint baseline now converts valid lava-core structures into `infernal_furnace`
+  - golem press blueprint baseline now converts valid piston-core structures into `golem_builder` (with iron bars cap)
 - Added player knowledge persistence baseline:
   - `PlayerKnowledgeSavedData` stores per-player unlock flags, scanned blocks, and discovered aspects
   - `PlayerKnowledgeManager` provides server-side read/write API
@@ -195,10 +207,11 @@ This file captures migration state so work can continue safely after context com
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:
   - crystal/vis cost parity tuning against legacy behavior
-- Start infusion world-state baseline:
-  - pedestal item consumption/output transforms for successful cycles
-  - explicit instability event effects (item drops, taint-style side effects, etc.)
-- Expand Salis Mundus interactions beyond crafting-table conversion and begin tying them to research/player progression gates.
+- Port remaining Salis Mundus trigger parity from legacy dust triggers:
+  - complete variant/semantic parity (`infusion` ancient/eldritch material variants and legacy placeholder transformation behavior)
+- Implement infusion recipe resolution:
+  - add infusion recipe type/serializer and bind cycle outputs to real recipe matching
+  - expand instability events beyond item spill + flux baseline (effects and broader failure outcomes)
 - Expand thaumometer/scanning beyond block-right-click baseline:
   - proper scan UI/feedback
   - tie discoveries into research unlock graph

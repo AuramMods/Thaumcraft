@@ -1,110 +1,110 @@
-[06Feb2026 21:36:56.502] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, /Users/cyberpwn/.gradle/caches/forge_gradle/assets, --gameDir, ., --fml.forgeVersion, 47.4.10, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, thaumcraft, --all, --output, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/generated/resources, --existing, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/main/resources]
-[06Feb2026 21:36:56.504] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.17 by Eclipse Adoptium; OS Mac OS X arch aarch64 version 26.2
-[06Feb2026 21:36:56.550] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[06Feb2026 21:36:56.569] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/Users/cyberpwn/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23121!/ Service=ModLauncher Env=CLIENT
-[06Feb2026 21:36:56.692] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.10/ccc533c7dd67e0983217197d7549c8b49e7ab453/javafmllanguage-1.20.1-47.4.10.jar is missing mods.toml file
-[06Feb2026 21:36:56.692] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.20.1-47.4.10/e9a2879fe3612ea34b9728ec2633304a1e67d480/lowcodelanguage-1.20.1-47.4.10.jar is missing mods.toml file
-[06Feb2026 21:36:56.693] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.20.1-47.4.10/ec5cefbbc65c67302b8fac317010faab85fa14b9/mclanguage-1.20.1-47.4.10.jar is missing mods.toml file
-[06Feb2026 21:36:56.694] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.10/94dae566be650566ea9115a1414ab76bfcf5a804/fmlcore-1.20.1-47.4.10.jar is missing mods.toml file
-[06Feb2026 21:36:56.820] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[06Feb2026 21:36:57.581] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[06Feb2026 21:36:57.583] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, /Users/cyberpwn/.gradle/caches/forge_gradle/assets, --assetIndex, 5, --mod, thaumcraft, --all, --output, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/generated/resources, --existing, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/main/resources]
-[06Feb2026 21:36:57.684] [main/INFO] [mixin/]: Remapping refMap architectury-forge-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
-[06Feb2026 21:36:57.684] [main/INFO] [mixin/]: Remapping refMap architectury-common-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
-[06Feb2026 21:36:57.685] [main/INFO] [mixin/]: Remapping refMap ftb-library-common-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
-[06Feb2026 21:36:57.686] [main/INFO] [mixin/]: Remapping refMap ae2.mixins.refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
-[06Feb2026 21:36:57.686] [main/INFO] [mixin/]: Remapping refMap mixins.cofhcore.refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
-[06Feb2026 21:36:58.059] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [thaumcraft]
-[06Feb2026 21:36:59.456] [main/WARN] [AE2:C/]: Unable to find class com.simibubi.create.foundation.ponder.PonderWorld. Integration with PonderJS disabled.
-[06Feb2026 21:36:59.718] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.10, for MC 1.20.1 with MCP 20230612.114412
-[06Feb2026 21:36:59.720] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.10 Initialized
-[06Feb2026 21:36:59.720] [modloading-worker-0/INFO] [art.arcane.thaumcraft.Thaumcraft/]: Thaumcraft bootstrap initialized
-[06Feb2026 21:36:59.741] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id architectury:sync_ids
-[06Feb2026 21:36:59.742] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id architectury:sync_ids
-[06Feb2026 21:36:59.742] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:edit_nbt
-[06Feb2026 21:36:59.743] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftblibrary:edit_nbt_response
-[06Feb2026 21:36:59.743] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:sync_known_server_registries
-[06Feb2026 21:36:59.743] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:edit_config
-[06Feb2026 21:36:59.800] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:sync_teams
-[06Feb2026 21:36:59.801] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:sync_message_history
-[06Feb2026 21:36:59.805] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:open_gui
-[06Feb2026 21:36:59.804] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_quests
-[06Feb2026 21:36:59.807] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_team_data
-[06Feb2026 21:36:59.807] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:update_task_progress
-[06Feb2026 21:36:59.807] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:open_my_team_gui
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:update_settings
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:submit_task
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_reward
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:update_settings_response
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:send_message
-[06Feb2026 21:36:59.808] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:claim_reward_response
-[06Feb2026 21:36:59.809] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_editing_mode
-[06Feb2026 21:36:59.809] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:send_message_response
-[06Feb2026 21:36:59.809] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:get_emergency_items
-[06Feb2026 21:36:59.810] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:update_presence
-[06Feb2026 21:36:59.810] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:create_party
-[06Feb2026 21:36:59.811] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:player_gui_operation
-[06Feb2026 21:36:59.812] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:create_other_team_data
-[06Feb2026 21:36:59.814] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_all_rewards
-[06Feb2026 21:36:59.814] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_choice_reward
-[06Feb2026 21:36:59.814] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_completion_toast
-[06Feb2026 21:36:59.814] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_reward_toast
-[06Feb2026 21:36:59.814] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_item_reward_toast
-[06Feb2026 21:36:59.815] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_pinned
-[06Feb2026 21:36:59.817] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:toggle_pinned_response
-[06Feb2026 21:36:59.817] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_chapter_pinned
-[06Feb2026 21:36:59.818] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:toggle_chapter_pinned_response
-[06Feb2026 21:36:59.829] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_editing_mode
-[06Feb2026 21:36:59.829] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:force_save
-[06Feb2026 21:36:59.830] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:update_team_data
-[06Feb2026 21:36:59.830] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:set_custom_image
-[06Feb2026 21:36:59.831] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_started
-[06Feb2026 21:36:59.831] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_completed
-[06Feb2026 21:36:59.832] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_started_reset
-[06Feb2026 21:36:59.832] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_completed_reset
-[06Feb2026 21:36:59.833] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_lock
-[06Feb2026 21:36:59.833] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:reset_reward
-[06Feb2026 21:36:59.833] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:team_data_changed
-[06Feb2026 21:36:59.833] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:task_screen_config_req
-[06Feb2026 21:36:59.834] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:task_screen_config_resp
-[06Feb2026 21:36:59.834] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:change_progress
-[06Feb2026 21:36:59.834] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:create_object
-[06Feb2026 21:36:59.834] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:create_object_response
-[06Feb2026 21:36:59.835] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:create_task_at
-[06Feb2026 21:36:59.836] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:delete_object
-[06Feb2026 21:36:59.836] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:delete_object_response
-[06Feb2026 21:36:59.837] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:edit_object
-[06Feb2026 21:36:59.837] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:edit_object_response
-[06Feb2026 21:36:59.838] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_chapter
-[06Feb2026 21:36:59.839] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_chapter_response
-[06Feb2026 21:36:59.840] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_quest
-[06Feb2026 21:36:59.841] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_quest_response
-[06Feb2026 21:36:59.841] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:change_chapter_group
-[06Feb2026 21:36:59.842] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:change_chapter_group_response
-[06Feb2026 21:36:59.843] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_chapter_group
-[06Feb2026 21:36:59.843] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_chapter_group_response
-[06Feb2026 21:36:59.844] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_reward_blocking
-[06Feb2026 21:36:59.849] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:copy_quest
-[06Feb2026 21:36:59.854] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:copy_chapter_image
-[06Feb2026 21:36:59.854] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:sync_structures_request
-[06Feb2026 21:36:59.855] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_structures_response
-[06Feb2026 21:36:59.856] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:request_team_data
-[06Feb2026 21:36:59.857] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_editor_permission
-[06Feb2026 21:36:59.857] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:open_quest_book
-[06Feb2026 21:36:59.858] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:clear_display_cache
-[06Feb2026 21:36:59.954] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
-[06Feb2026 21:36:59.958] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 3.072 ms
-[06Feb2026 21:37:00.683] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/Users/cyberpwn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.10_mapped_official_1.20.1/forge-1.20.1-47.4.10_mapped_official_1.20.1.jar%23184!/assets/.mcassetsroot' uses unexpected schema
-[06Feb2026 21:37:00.683] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/Users/cyberpwn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.10_mapped_official_1.20.1/forge-1.20.1-47.4.10_mapped_official_1.20.1.jar%23184!/data/.mcassetsroot' uses unexpected schema
-[06Feb2026 21:37:00.763] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: thaumcraft
-[06Feb2026 21:37:00.784] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: thaumcraft finished after 20 ms
-[06Feb2026 21:37:00.784] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: thaumcraft
-[06Feb2026 21:37:00.792] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: thaumcraft finished after 7 ms
-[06Feb2026 21:37:00.792] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
-[06Feb2026 21:37:00.793] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 0 ms
-[06Feb2026 21:37:00.793] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id thaumcraft
-[06Feb2026 21:37:00.842] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id thaumcraft finished after 49 ms
-[06Feb2026 21:37:00.843] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[06Feb2026 21:37:00.843] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 0 ms
-[06Feb2026 21:37:00.843] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 79 ms
-[06Feb2026 21:37:00.847] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 370, old count: 370, new count: 371, removed stale: 0, written: 0
+[07Feb2026 00:51:23.210] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, /Users/cyberpwn/.gradle/caches/forge_gradle/assets, --gameDir, ., --fml.forgeVersion, 47.4.10, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, thaumcraft, --all, --output, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/generated/resources, --existing, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/main/resources]
+[07Feb2026 00:51:23.214] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.17 by Eclipse Adoptium; OS Mac OS X arch aarch64 version 26.2
+[07Feb2026 00:51:23.255] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[07Feb2026 00:51:23.275] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/Users/cyberpwn/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23121!/ Service=ModLauncher Env=CLIENT
+[07Feb2026 00:51:23.401] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.10/ccc533c7dd67e0983217197d7549c8b49e7ab453/javafmllanguage-1.20.1-47.4.10.jar is missing mods.toml file
+[07Feb2026 00:51:23.401] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.20.1-47.4.10/e9a2879fe3612ea34b9728ec2633304a1e67d480/lowcodelanguage-1.20.1-47.4.10.jar is missing mods.toml file
+[07Feb2026 00:51:23.402] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.20.1-47.4.10/ec5cefbbc65c67302b8fac317010faab85fa14b9/mclanguage-1.20.1-47.4.10.jar is missing mods.toml file
+[07Feb2026 00:51:23.403] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /Users/cyberpwn/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.10/94dae566be650566ea9115a1414ab76bfcf5a804/fmlcore-1.20.1-47.4.10.jar is missing mods.toml file
+[07Feb2026 00:51:23.529] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[07Feb2026 00:51:24.265] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[07Feb2026 00:51:24.266] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, /Users/cyberpwn/.gradle/caches/forge_gradle/assets, --assetIndex, 5, --mod, thaumcraft, --all, --output, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/generated/resources, --existing, /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/src/main/resources]
+[07Feb2026 00:51:24.375] [main/INFO] [mixin/]: Remapping refMap architectury-forge-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
+[07Feb2026 00:51:24.376] [main/INFO] [mixin/]: Remapping refMap architectury-common-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
+[07Feb2026 00:51:24.376] [main/INFO] [mixin/]: Remapping refMap ftb-library-common-refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
+[07Feb2026 00:51:24.377] [main/INFO] [mixin/]: Remapping refMap ae2.mixins.refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
+[07Feb2026 00:51:24.377] [main/INFO] [mixin/]: Remapping refMap mixins.cofhcore.refmap.json using /Users/cyberpwn/development/workspace/AuramMods/Thaumcraft/build/createSrgToMcp/output.srg
+[07Feb2026 00:51:24.710] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [thaumcraft]
+[07Feb2026 00:51:26.088] [main/WARN] [AE2:C/]: Unable to find class com.simibubi.create.foundation.ponder.PonderWorld. Integration with PonderJS disabled.
+[07Feb2026 00:51:26.316] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.10, for MC 1.20.1 with MCP 20230612.114412
+[07Feb2026 00:51:26.317] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.10 Initialized
+[07Feb2026 00:51:26.342] [modloading-worker-0/INFO] [art.arcane.thaumcraft.Thaumcraft/]: Thaumcraft bootstrap initialized
+[07Feb2026 00:51:26.369] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id architectury:sync_ids
+[07Feb2026 00:51:26.371] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id architectury:sync_ids
+[07Feb2026 00:51:26.371] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:edit_nbt
+[07Feb2026 00:51:26.374] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftblibrary:edit_nbt_response
+[07Feb2026 00:51:26.374] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:sync_known_server_registries
+[07Feb2026 00:51:26.375] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftblibrary:edit_config
+[07Feb2026 00:51:26.441] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:sync_teams
+[07Feb2026 00:51:26.441] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:sync_message_history
+[07Feb2026 00:51:26.442] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:open_gui
+[07Feb2026 00:51:26.444] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_quests
+[07Feb2026 00:51:26.444] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:open_my_team_gui
+[07Feb2026 00:51:26.445] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_team_data
+[07Feb2026 00:51:26.445] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:update_task_progress
+[07Feb2026 00:51:26.445] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:update_settings
+[07Feb2026 00:51:26.445] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:submit_task
+[07Feb2026 00:51:26.446] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:update_settings_response
+[07Feb2026 00:51:26.446] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_reward
+[07Feb2026 00:51:26.446] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:claim_reward_response
+[07Feb2026 00:51:26.446] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:send_message
+[07Feb2026 00:51:26.447] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:send_message_response
+[07Feb2026 00:51:26.447] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_editing_mode
+[07Feb2026 00:51:26.448] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:get_emergency_items
+[07Feb2026 00:51:26.448] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbteams:update_presence
+[07Feb2026 00:51:26.448] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:create_party
+[07Feb2026 00:51:26.449] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:create_other_team_data
+[07Feb2026 00:51:26.449] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbteams:player_gui_operation
+[07Feb2026 00:51:26.449] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_all_rewards
+[07Feb2026 00:51:26.449] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:claim_choice_reward
+[07Feb2026 00:51:26.450] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_completion_toast
+[07Feb2026 00:51:26.450] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_reward_toast
+[07Feb2026 00:51:26.451] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:display_item_reward_toast
+[07Feb2026 00:51:26.451] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_pinned
+[07Feb2026 00:51:26.451] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:toggle_pinned_response
+[07Feb2026 00:51:26.452] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_chapter_pinned
+[07Feb2026 00:51:26.453] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:toggle_chapter_pinned_response
+[07Feb2026 00:51:26.453] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:toggle_editing_mode
+[07Feb2026 00:51:26.454] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:force_save
+[07Feb2026 00:51:26.454] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:update_team_data
+[07Feb2026 00:51:26.455] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:set_custom_image
+[07Feb2026 00:51:26.455] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_started
+[07Feb2026 00:51:26.455] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_completed
+[07Feb2026 00:51:26.455] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_started_reset
+[07Feb2026 00:51:26.456] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:object_completed_reset
+[07Feb2026 00:51:26.456] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_lock
+[07Feb2026 00:51:26.457] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:reset_reward
+[07Feb2026 00:51:26.458] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:team_data_changed
+[07Feb2026 00:51:26.459] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:task_screen_config_req
+[07Feb2026 00:51:26.460] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:task_screen_config_resp
+[07Feb2026 00:51:26.460] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:change_progress
+[07Feb2026 00:51:26.460] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:create_object
+[07Feb2026 00:51:26.461] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:create_object_response
+[07Feb2026 00:51:26.462] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:create_task_at
+[07Feb2026 00:51:26.463] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:delete_object
+[07Feb2026 00:51:26.463] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:delete_object_response
+[07Feb2026 00:51:26.463] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:edit_object
+[07Feb2026 00:51:26.464] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:edit_object_response
+[07Feb2026 00:51:26.468] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_chapter
+[07Feb2026 00:51:26.468] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_chapter_response
+[07Feb2026 00:51:26.469] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_quest
+[07Feb2026 00:51:26.469] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_quest_response
+[07Feb2026 00:51:26.470] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:change_chapter_group
+[07Feb2026 00:51:26.470] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:change_chapter_group_response
+[07Feb2026 00:51:26.471] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:move_chapter_group
+[07Feb2026 00:51:26.471] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:move_chapter_group_response
+[07Feb2026 00:51:26.472] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_reward_blocking
+[07Feb2026 00:51:26.472] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:copy_quest
+[07Feb2026 00:51:26.473] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:copy_chapter_image
+[07Feb2026 00:51:26.473] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:sync_structures_request
+[07Feb2026 00:51:26.475] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_structures_response
+[07Feb2026 00:51:26.476] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id ftbquests:request_team_data
+[07Feb2026 00:51:26.476] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:sync_editor_permission
+[07Feb2026 00:51:26.477] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:open_quest_book
+[07Feb2026 00:51:26.478] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id ftbquests:clear_display_cache
+[07Feb2026 00:51:26.584] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
+[07Feb2026 00:51:26.587] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 2.194 ms
+[07Feb2026 00:51:27.294] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/Users/cyberpwn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.10_mapped_official_1.20.1/forge-1.20.1-47.4.10_mapped_official_1.20.1.jar%23184!/assets/.mcassetsroot' uses unexpected schema
+[07Feb2026 00:51:27.294] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/Users/cyberpwn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.10_mapped_official_1.20.1/forge-1.20.1-47.4.10_mapped_official_1.20.1.jar%23184!/data/.mcassetsroot' uses unexpected schema
+[07Feb2026 00:51:27.368] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: thaumcraft
+[07Feb2026 00:51:27.388] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: thaumcraft finished after 19 ms
+[07Feb2026 00:51:27.388] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: thaumcraft
+[07Feb2026 00:51:27.395] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: thaumcraft finished after 6 ms
+[07Feb2026 00:51:27.395] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
+[07Feb2026 00:51:27.396] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 1 ms
+[07Feb2026 00:51:27.396] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id thaumcraft
+[07Feb2026 00:51:27.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id thaumcraft finished after 51 ms
+[07Feb2026 00:51:27.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[07Feb2026 00:51:27.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 0 ms
+[07Feb2026 00:51:27.448] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 79 ms
+[07Feb2026 00:51:27.452] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 370, old count: 370, new count: 371, removed stale: 0, written: 0

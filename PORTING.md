@@ -102,6 +102,7 @@ Phase 2 status:
 - [x] Infusion Matrix now runs a baseline infusion state machine (requested start via matrix slot, timed cycle, vis drain per cycle tick, abort/fail handling)
 - [x] Infusion Matrix now computes a structural stability score and can fail active cycles based on instability (with flux penalty)
 - [x] Arcane Workbench now requires and consumes a crystal item via dedicated crystal slot (required crystal derived from dominant recipe aspects)
+- [x] Arcane Workbench parity-tuning pass: vis/crystal costs now apply only to Thaumcraft-output crafting results; non-Thaumcraft crafting no longer hard-requires arcane resources
 - [ ] Arcane Workbench crystal/vis balancing and exact legacy parity tuning are still pending
 - [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table progression)
 
@@ -132,10 +133,12 @@ Phase 3 status:
 - [x] Hooked crucible baseline processing to generate flux into chunk aura
 - [x] Hooked crucible baseline processing to derive essentia from aspect totals instead of generic item heuristics
 - [x] Added first Salis Mundus progression trigger scaffold (RMB crafting table -> arcane workbench conversion)
+- [x] Expanded Salis Mundus simple trigger set (bookshelf -> thaumonomicon grant/unlock, crafting table -> arcane workbench, cauldron -> crucible) with progression gating
+- [x] Added first-pass Salis Mundus multiblock trigger handling for `infusion` altar assembly, `thaumatorium`, `infernal_furnace`, and `golem_builder`
 - [x] Added player knowledge persistence baseline (`PlayerKnowledgeSavedData`) and first thaumometer scan hook for block scanning
 - [x] Expanded thaumometer scanning baseline to entity and item surfaces, including persisted unique scan tracking for blocks/items/entities
 - [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
-- [ ] Salis Mundus trigger set is still incomplete (only initial crafting-table conversion exists)
+- [ ] Salis Mundus trigger set is still incomplete (legacy multiblock variant parity is still pending, especially infusion altar stone/pillar/pedestal variants and exact placeholder transformation semantics)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
 
 Exit criteria:
@@ -177,6 +180,13 @@ Goal: restore infusion crafting loop.
 - Altar structure checks
 - Stability and failure logic
 - Pedestal/item routing
+
+Phase 5 status:
+
+- [x] Added infusion world-state baseline for cycle outcomes: successful cycles now consume matrix/captured ingredients and emit a result onto the center pedestal
+- [x] Added explicit instability side effects on failure: failed stability rolls now spill captured items before cycle abort
+- [ ] Infusion recipe type/serializer and real recipe-driven output resolution are still pending
+- [ ] Full legacy instability event parity is still pending (broader side effects, effects/FX, and failure variants)
 
 Exit criteria:
 

@@ -1,0 +1,25 @@
+{
+  "type": "thaumcraft:infusion",
+  "catalyst": {
+    "item": "thaumcraft:jar_normal"
+  },
+  "components": [
+    {
+      "item": "thaumcraft:brain"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:quartz"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "result": {
+    "item": "thaumcraft:jar_brain"
+  },
+  "instability": 4,
+  "vis": 80
+}

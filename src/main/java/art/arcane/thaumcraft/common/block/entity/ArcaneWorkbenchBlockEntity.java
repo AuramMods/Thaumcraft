@@ -9,6 +9,7 @@ import art.arcane.thaumcraft.common.registry.ModItems;
 import art.arcane.thaumcraft.common.world.aura.AuraManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -128,15 +129,20 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
 
         int visCost = this.currentVisCost;
         String requiredCrystalId = this.currentRequiredCrystalId;
-        if (visCost <= 0 || requiredCrystalId.isEmpty()) {
+        if (visCost > 0) {
+            if (requiredCrystalId.isEmpty()) {
+                recalculateCraftingResult();
+                return false;
+            }
+            if (!canAffordVis(visCost) || !hasRequiredCrystal(requiredCrystalId) || !consumeVis(serverLevel, visCost)) {
+                recalculateCraftingResult();
+                return false;
+            }
+            consumeRequiredCrystal(requiredCrystalId);
+        } else if (!requiredCrystalId.isEmpty()) {
             recalculateCraftingResult();
             return false;
         }
-        if (!canAffordVis(visCost) || !hasRequiredCrystal(requiredCrystalId) || !consumeVis(serverLevel, visCost)) {
-            recalculateCraftingResult();
-            return false;
-        }
-        consumeRequiredCrystal(requiredCrystalId);
 
         TransientCraftingContainer craftingInput = createCraftingInput();
         NonNullList<ItemStack> remainders = this.level.getRecipeManager().getRemainingItemsFor(RecipeType.CRAFTING, craftingInput, this.level);
@@ -180,12 +186,16 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         this.currentVisCost = 0;
         this.currentRequiredCrystalId = "";
         if (recipe.isPresent()) {
-            int visCost = calculateVisCost(craftingInput);
-            String requiredCrystalId = determineRequiredCrystal(craftingInput);
-            this.currentVisCost = visCost;
-            this.currentRequiredCrystalId = requiredCrystalId;
-            if (canAffordVis(visCost) && hasRequiredCrystal(requiredCrystalId)) {
-                result = recipe.get().assemble(craftingInput, this.level.registryAccess());
+            CraftingRecipe craftingRecipe = recipe.get();
+            result = craftingRecipe.assemble(craftingInput, this.level.registryAccess());
+            if (requiresArcaneCosts(result)) {
+                int visCost = calculateVisCost(craftingInput);
+                String requiredCrystalId = determineRequiredCrystal(craftingInput);
+                this.currentVisCost = visCost;
+                this.currentRequiredCrystalId = requiredCrystalId;
+                if (!(canAffordVis(visCost) && hasRequiredCrystal(requiredCrystalId))) {
+                    result = ItemStack.EMPTY;
+                }
             }
         }
 
@@ -202,7 +212,10 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         }
 
         int visCost = this.currentVisCost;
-        return visCost > 0 && canAffordVis(visCost) && hasRequiredCrystal(this.currentRequiredCrystalId);
+        if (visCost <= 0) {
+            return this.currentRequiredCrystalId.isEmpty();
+        }
+        return canAffordVis(visCost) && hasRequiredCrystal(this.currentRequiredCrystalId);
     }
 
     public int getCurrentVisCost() {
@@ -282,6 +295,19 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
 
         String mapped = dominant == null ? null : crystalIdForAspect(dominant);
         return mapped == null ? DEFAULT_CRYSTAL_ID : mapped;
+    }
+
+    private boolean requiresArcaneCosts(ItemStack assembledResult) {
+        if (assembledResult.isEmpty()) {
+            return false;
+        }
+
+        ResourceLocation resultId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(assembledResult.getItem());
+        if (resultId == null) {
+            return false;
+        }
+
+        return "thaumcraft".equals(resultId.getNamespace());
     }
 
     private boolean canAffordVis(int visCost) {

@@ -1,8 +1,10 @@
 package art.arcane.thaumcraft.common.block.entity;
 
 import art.arcane.thaumcraft.common.menu.InfusionMatrixMenu;
+import art.arcane.thaumcraft.common.recipe.InfusionRecipe;
 import art.arcane.thaumcraft.common.registry.ModBlockEntities;
 import art.arcane.thaumcraft.common.registry.ModBlocks;
+import art.arcane.thaumcraft.common.registry.ModRecipes;
 import art.arcane.thaumcraft.common.world.aura.AuraManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -388,6 +391,7 @@ public class InfusionMatrixBlockEntity extends StationBlockEntity {
             }
 
             if (rollStabilityFailure(serverLevel)) {
+                applyInstabilityFailureEffects(serverLevel);
                 AuraManager.addFlux(serverLevel, this.worldPosition, 1.0F + (getCapturedItemCount() * 0.4F));
                 abortInfusionCycle(true);
                 return true;
@@ -403,7 +407,18 @@ public class InfusionMatrixBlockEntity extends StationBlockEntity {
     }
 
     private void finishInfusionCycle() {
-        releaseCapturedItems();
+        ItemStack result = ItemStack.EMPTY;
+        if (this.level instanceof ServerLevel serverLevel) {
+            result = executeRecipeInfusionCycle(serverLevel);
+        }
+        if (result.isEmpty()) {
+            result = consumeMatrixCatalystForFallbackResult();
+            consumeCapturedIngredients();
+        }
+        if (!result.isEmpty()) {
+            BlockPos centerPedestalPos = this.worldPosition.below(2);
+            returnItemToSourceOrDrop(centerPedestalPos, result);
+        }
         this.infusionActive = false;
         this.infusionTicks = 0;
         this.infusionDurationTicks = 0;
@@ -461,6 +476,154 @@ public class InfusionMatrixBlockEntity extends StationBlockEntity {
         int effectiveStability = Mth.clamp(this.stability - capturedPenalty, 5, 95);
         int roll = serverLevel.random.nextInt(100);
         return roll >= effectiveStability;
+    }
+
+    private void applyInstabilityFailureEffects(ServerLevel serverLevel) {
+        if (this.level == null || this.capturedSourceBySlot.isEmpty()) {
+            return;
+        }
+
+        int spillCount = Mth.clamp(Math.max(1, getCapturedItemCount() / 4), 1, 2);
+        List<Map.Entry<Integer, BlockPos>> capturedEntries = new ArrayList<>(this.capturedSourceBySlot.entrySet());
+        for (int i = 0; i < spillCount && !capturedEntries.isEmpty(); i++) {
+            int index = serverLevel.random.nextInt(capturedEntries.size());
+            Map.Entry<Integer, BlockPos> entry = capturedEntries.remove(index);
+            int slot = entry.getKey();
+            ItemStack stack = super.getItem(slot);
+            if (stack.isEmpty()) {
+                continue;
+            }
+
+            Containers.dropItemStack(
+                    this.level,
+                    entry.getValue().getX() + 0.5D,
+                    entry.getValue().getY() + 1.0D,
+                    entry.getValue().getZ() + 0.5D,
+                    stack.copy()
+            );
+            super.setItem(slot, ItemStack.EMPTY);
+            this.capturedSourceBySlot.remove(slot);
+        }
+    }
+
+    private ItemStack executeRecipeInfusionCycle(ServerLevel serverLevel) {
+        ItemStack matrixStack = super.getItem(MATRIX_SLOT);
+        if (matrixStack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        RecipeMatch recipeMatch = findBestMatchingRecipe(serverLevel, matrixStack);
+        if (recipeMatch == null) {
+            return ItemStack.EMPTY;
+        }
+
+        consumeMatrixCatalyst();
+        consumeCapturedSlots(recipeMatch.matchedSlots());
+        releaseCapturedItems();
+        return recipeMatch.recipe().getResult();
+    }
+
+    private RecipeMatch findBestMatchingRecipe(ServerLevel serverLevel, ItemStack matrixStack) {
+        RecipeMatch bestMatch = null;
+
+        for (InfusionRecipe recipe : serverLevel.getRecipeManager().getAllRecipesFor(ModRecipes.INFUSION_TYPE)) {
+            if (!recipe.matchesCatalyst(matrixStack)) {
+                continue;
+            }
+
+            List<Integer> matchedSlots = matchComponentSlots(recipe.getComponents());
+            if (matchedSlots == null) {
+                continue;
+            }
+
+            if (bestMatch == null || recipe.getComponentCount() > bestMatch.recipe().getComponentCount()) {
+                bestMatch = new RecipeMatch(recipe, matchedSlots);
+            }
+        }
+
+        return bestMatch;
+    }
+
+    private List<Integer> matchComponentSlots(List<Ingredient> components) {
+        if (components.isEmpty()) {
+            return List.of();
+        }
+
+        List<Integer> availableSlots = new ArrayList<>(this.capturedSourceBySlot.keySet());
+        availableSlots.sort(Integer::compareTo);
+        boolean[] usedSlots = new boolean[availableSlots.size()];
+        List<Integer> matchedSlots = new ArrayList<>(components.size());
+
+        for (Ingredient component : components) {
+            int matchedIndex = -1;
+            for (int i = 0; i < availableSlots.size(); i++) {
+                if (usedSlots[i]) {
+                    continue;
+                }
+                ItemStack capturedStack = super.getItem(availableSlots.get(i));
+                if (!capturedStack.isEmpty() && component.test(capturedStack)) {
+                    matchedIndex = i;
+                    break;
+                }
+            }
+            if (matchedIndex < 0) {
+                return null;
+            }
+
+            usedSlots[matchedIndex] = true;
+            matchedSlots.add(availableSlots.get(matchedIndex));
+        }
+
+        return matchedSlots;
+    }
+
+    private void consumeCapturedSlots(List<Integer> slots) {
+        for (Integer slot : slots) {
+            ItemStack stack = super.getItem(slot);
+            if (!stack.isEmpty()) {
+                ItemStack updated = stack.copy();
+                updated.shrink(1);
+                super.setItem(slot, updated.isEmpty() ? ItemStack.EMPTY : updated);
+            }
+            this.capturedSourceBySlot.remove(slot);
+        }
+    }
+
+    private void consumeMatrixCatalyst() {
+        ItemStack matrixStack = super.getItem(MATRIX_SLOT);
+        if (matrixStack.isEmpty()) {
+            return;
+        }
+
+        ItemStack updatedMatrixStack = matrixStack.copy();
+        updatedMatrixStack.shrink(1);
+        super.setItem(MATRIX_SLOT, updatedMatrixStack.isEmpty() ? ItemStack.EMPTY : updatedMatrixStack);
+    }
+
+    private ItemStack consumeMatrixCatalystForFallbackResult() {
+        ItemStack matrixStack = super.getItem(MATRIX_SLOT);
+        if (matrixStack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack result = matrixStack.copy();
+        result.setCount(1);
+
+        ItemStack updatedMatrixStack = matrixStack.copy();
+        updatedMatrixStack.shrink(1);
+        super.setItem(MATRIX_SLOT, updatedMatrixStack.isEmpty() ? ItemStack.EMPTY : updatedMatrixStack);
+        return result;
+    }
+
+    private void consumeCapturedIngredients() {
+        if (this.capturedSourceBySlot.isEmpty()) {
+            return;
+        }
+
+        for (Integer slot : new ArrayList<>(this.capturedSourceBySlot.keySet())) {
+            super.setItem(slot, ItemStack.EMPTY);
+        }
+        this.capturedSourceBySlot.clear();
     }
 
     private boolean isSourceCaptured(BlockPos sourcePos) {
@@ -541,5 +704,8 @@ public class InfusionMatrixBlockEntity extends StationBlockEntity {
                         || entry.getKey() >= TOTAL_SLOTS
                         || super.getItem(entry.getKey()).isEmpty()
         );
+    }
+
+    private record RecipeMatch(InfusionRecipe recipe, List<Integer> matchedSlots) {
     }
 }
