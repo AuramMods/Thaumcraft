@@ -139,7 +139,7 @@ tasks.withType(JavaCompile).configureEach {
 task deployToModpack(type: Copy) {
     dependsOn 'reobfJar'
     from tasks.jar
-    into file("../../minecraft/mods")
+    into file("../Auram/minecraft/mods")
 
     rename { String fileName ->
         "Thaumcraft.jar"
