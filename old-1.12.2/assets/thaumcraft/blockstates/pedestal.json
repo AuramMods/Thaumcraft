@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "type=normal": { "model": "thaumcraft:pedestal_normal" },
+        "type=eldritch": { "model": "thaumcraft:pedestal_eldritch" },
+        "type=ancient": { "model": "thaumcraft:pedestal_ancient" }
+    }
+}

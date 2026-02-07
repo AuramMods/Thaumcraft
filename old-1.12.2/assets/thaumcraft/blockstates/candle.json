@@ -1,0 +1,25 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "type=white": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=orange": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=magenta": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=light_blue": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=yellow": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=lime": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=pink": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=gray": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=silver": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=cyan": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=purple": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=blue": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=brown": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=green": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=red": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }],
+        "type=black": [{ "model": "thaumcraft:candle" },{ "model": "thaumcraft:candle", "y": 90 },{ "model": "thaumcraft:candle", "y": 180 },{ "model": "thaumcraft:candle", "y": 270 }]
+    }
+}

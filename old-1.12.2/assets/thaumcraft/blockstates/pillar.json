@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "type=normal": { "transform": "forge:default-block", "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_normal"}},
+        "type=ancient": { "transform": "forge:default-block", "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_ancient"}},
+        "type=eldritch": { "transform": "forge:default-block", "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_eldritch"}},
+    
+        "facing=north,type=normal": { "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_normal"}},
+        "facing=north,type=ancient": { "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_ancient"}},
+        "facing=north,type=eldritch": { "model": "thaumcraft:pillar.obj", "textures": {"#texture": "thaumcraft:blocks/pillar_eldritch"}},
+        
+        "facing=south,type=normal": { "model": "thaumcraft:pillar.obj", "y": 180, "textures": {"#texture": "thaumcraft:blocks/pillar_normal"}},
+        "facing=south,type=ancient": { "model": "thaumcraft:pillar.obj", "y": 180, "textures": {"#texture": "thaumcraft:blocks/pillar_ancient"}},
+        "facing=south,type=eldritch": { "model": "thaumcraft:pillar.obj", "y": 180, "textures": {"#texture": "thaumcraft:blocks/pillar_eldritch"}},
+        
+        "facing=east,type=normal": { "model": "thaumcraft:pillar.obj", "y": 90, "textures": {"#texture": "thaumcraft:blocks/pillar_normal"}},
+        "facing=east,type=ancient": { "model": "thaumcraft:pillar.obj", "y": 90, "textures": {"#texture": "thaumcraft:blocks/pillar_ancient"} },
+        "facing=east,type=eldritch": { "model": "thaumcraft:pillar.obj", "y": 90, "textures": {"#texture": "thaumcraft:blocks/pillar_eldritch"}},
+        
+        "facing=west,type=normal": { "model": "thaumcraft:pillar.obj", "y": 270, "textures": {"#texture": "thaumcraft:blocks/pillar_normal"}},
+        "facing=west,type=ancient": { "model": "thaumcraft:pillar.obj", "y": 270, "textures": {"#texture": "thaumcraft:blocks/pillar_ancient"}},
+        "facing=west,type=eldritch": { "model": "thaumcraft:pillar.obj", "y": 270, "textures": {"#texture": "thaumcraft:blocks/pillar_eldritch"}}
+    }
+}

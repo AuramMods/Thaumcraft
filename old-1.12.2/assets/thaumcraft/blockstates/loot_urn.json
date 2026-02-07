@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "type=common": { "model": "thaumcraft:loot_urn_common" },
+        "type=uncommon": { "model": "thaumcraft:loot_urn_uncommon" },
+        "type=rare": { "model": "thaumcraft:loot_urn_rare" }
+    }
+}

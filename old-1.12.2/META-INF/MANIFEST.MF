@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+FMLCorePlugin: thaumcraft.loader.ThaumcraftLoader
+FMLCorePluginContainsFMLMod: true
+FMLAT: tc_at.cfg
+

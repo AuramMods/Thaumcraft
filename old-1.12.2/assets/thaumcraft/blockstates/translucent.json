@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "type=amber_block": { "model": "cube_bottom_top", 
+            "textures": {
+                "bottom": "thaumcraft:blocks/amber_top",
+                "top": "thaumcraft:blocks/amber_top",
+                "side": "thaumcraft:blocks/amber_side"
+            } },
+        "type=amber_brick": {"model": "cube_all", "textures": {"all": "thaumcraft:blocks/amber_brick"}},
+        "type=empty": {"model": "cube_all", "textures": {"all": "thaumcraft:blocks/empty"}}
+    }
+}

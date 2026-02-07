@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "inventory": { "model": "thaumcraft:empty", "transform": "forge:default-block" },      
+        "facing=down":    { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} },
+        "facing=up":      { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} },
+        "facing=east":    { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} },
+        "facing=west":    { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} },
+        "facing=north":   { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} },
+        "facing=south":   { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/mirrorframe"} }
+    }
+}

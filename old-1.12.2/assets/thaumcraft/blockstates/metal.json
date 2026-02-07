@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "type=thaumium": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/thaumium_metal"} },
+        "type=void": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/void_metal"} },
+        "type=alchemical": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/alchemical_metal"} },
+        "type=advanced_alchemical": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/advanced_alchemical_metal"} },
+        "type=brass": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/base_brass"} }      
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "entries" :[
+        {
+            "key": "BASEELDRITCH",    
+            "name": "research.BASEELDRITCH.title",
+            "icons": [ "thaumcraft:textures/research/r_eldritchminor.png" ],
+            "category": "ELDRITCH", "location": [ 0,0 ], 
+            "parents": [ "UNLOCKELDRITCH" ],        
+            "meta": [ "ROUND" , "HIDDEN" ],        
+            "stages": [
+                    {
+                        "text": "research.BASEELDRITCH.stage.1"
+                    },
+                    {
+                        "text": "research.BASEELDRITCH.stage.2"
+                    }
+                ]
+        }
+    ]
+}
+    

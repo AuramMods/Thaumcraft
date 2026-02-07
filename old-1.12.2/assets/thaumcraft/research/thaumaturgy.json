@@ -1,0 +1,282 @@
+{
+    "entries" :[
+        {
+        "key": "BASETHAUMATURGY",    
+        "name": "research.BASETHAUMATURGY.title",
+        "icons": [ "thaumcraft:textures/research/r_thaumaturgy.png" ],
+        "category": "THAUMATURGY", "location": [ 0,0 ], 
+        "parents": [ "UNLOCKTHAUMATURGY" ],        
+        "meta": [ "ROUND" , "HIDDEN" ],        
+        "stages": [
+                {
+                    "text": "research.BASETHAUMATURGY.stage.1",
+                    "recipes":["thaumcraft:vis_resonator","thaumcraft:caster_basic","thaumcraft:focus_blank"],
+                    "required_craft":["thaumcraft:focus_blank"]
+                },
+                {
+                    "text": "research.BASETHAUMATURGY.stage.2",
+                    "recipes":["thaumcraft:vis_resonator","thaumcraft:caster_basic","thaumcraft:focus_blank","thaumcraft:wand_workbench"],
+                    "required_research":["f_onfire"],
+                    "required_craft":["thaumcraft:wand_workbench"]
+                },
+                {
+                    "text": "research.BASETHAUMATURGY.stage.3",
+                    "recipes":["thaumcraft:vis_resonator","thaumcraft:caster_basic","thaumcraft:focus_blank","thaumcraft:wand_workbench"],
+                    "required_craft":["thaumcraft:focus;1;0;{core:{mediumMods:'thaumcraft.FIRE',effects:[0:{mods:'thaumcraft.TOUCH',effect:'thaumcraft.FIRE',costMod:0.5f,effMod:1.1f}],medium:'thaumcraft.TOUCH'}}"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSBASICMODS",    
+        "name": "research.FOCUSBASICMODS.title",
+        "icons": [ "focus:thaumcraft.FRUGAL" ],
+        "category": "THAUMATURGY", "location": [ 2,0 ], 
+        "parents": [ "BASETHAUMATURGY" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSBASICMODS.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!desiderium"]
+                },
+                {
+                    "text": "research.FOCUSBASICMODS.stage.2",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!potentia"]
+                },
+                {
+                    "text": "research.FOCUSBASICMODS.stage.3",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!aqua"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSFROST",    
+        "name": "research.FOCUSFROST.title",
+        "icons": [ "focus:thaumcraft.FROST" ],
+        "category": "THAUMATURGY", "location": [ 0,2 ], 
+        "parents": [ "BASETHAUMATURGY" ],       
+        "stages": [
+                {
+                    "text": "research.FOCUSFROST.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!gelum"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSCURSE",    
+        "name": "research.FOCUSCURSE.title",
+        "icons": [ "focus:thaumcraft.CURSE" ],
+        "category": "THAUMATURGY", "location": [ 2,-2 ], 
+        "parents": [ "BASETHAUMATURGY" ],     
+        "meta": [ "HIDDEN", "REVERSE" ],          
+        "stages": [
+                {
+                    "text": "research.FOCUSCURSE.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!mortuus"]
+                },
+                {
+                    "text": "research.FOCUSCURSE.stage.2"
+                }
+            ]
+        },
+        {
+        "key": "FOCUSMAGIC",    
+        "name": "research.FOCUSMAGIC.title",
+        "icons": [ "focus:thaumcraft.MAGIC" ],
+        "category": "THAUMATURGY", "location": [ 0,4 ], 
+        "parents": [ "FOCUSFROST" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSMAGIC.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!praecantatio"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSBREAK",    
+        "name": "research.FOCUSBREAK.title",
+        "icons": [ "focus:thaumcraft.BREAK" ],
+        "category": "THAUMATURGY", "location": [ 2,6 ], 
+        "parents": [ "FOCUSMAGIC" ],        
+        "meta": [ "REVERSE" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSBREAK.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!perditio"]
+                },
+                {
+                    "text": "research.FOCUSBREAK.stage.2",
+                    "required_item":["enchanted_book;1;0;{StoredEnchantments:[{id:33s,lvl:1s}]}"]
+                },
+                {
+                    "text": "research.FOCUSBREAK.stage.3",
+                    "required_item":["enchanted_book;1;0;{StoredEnchantments:[{id:35s,lvl:2s}]}"]
+                }
+                
+            ]
+        },
+        {
+        "key": "FOCUSEXCHANGE",    
+        "name": "research.FOCUSEXCHANGE.title",
+        "icons": [ "focus:thaumcraft.EXCHANGE" ],
+        "category": "THAUMATURGY", "location": [ 2,4 ], 
+        "parents": [ "FOCUSMAGIC" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSEXCHANGE.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!permutatio"]
+                },
+                {
+                    "text": "research.FOCUSEXCHANGE.stage.2"
+                }
+            ]
+        },
+        {
+        "key": "FOCUSRIFT",    
+        "name": "research.FOCUSRIFT.title",
+        "icons": [ "focus:thaumcraft.RIFT" ],
+        "category": "THAUMATURGY", "location": [ 4,5 ], 
+        "parents": [ "FOCUSBREAK", "FOCUSEXCHANGE" ],        
+        "meta": [ "HIDDEN" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSRIFT.stage.1",
+                    "required_knowledge":["OBSERVATION;ELDRITCH;1","THEORY;THAUMATURGY;1"],
+                    "required_research":["!vacuos"],
+                    "warp": 2
+                }
+            ]
+        },
+        {
+        "key": "FOCUSPROJECTILE",    
+        "name": "research.FOCUSPROJECTILE.title",
+        "icons": [ "focus:thaumcraft.PROJECTILE" ],
+        "category": "THAUMATURGY", "location": [ 4,0 ], 
+        "parents": [ "FOCUSBASICMODS@2" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSPROJECTILE.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!volatus"]
+                },
+                {
+                    "text": "research.FOCUSPROJECTILE.stage.2",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!aer"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSBOLT",    
+        "name": "research.FOCUSBOLT.title",
+        "icons": [ "focus:thaumcraft.BOLT" ],
+        "category": "THAUMATURGY", "location": [ 6,0 ], 
+        "parents": [ "FOCUSPROJECTILE@2" ],       
+        "stages": [
+                {
+                    "text": "research.FOCUSBOLT.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!ignis"]
+                },
+                {
+                    "text": "research.FOCUSBOLT.stage.2",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!motus"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSCHARGE",    
+        "name": "research.FOCUSCHARGE.title",
+        "icons": [ "focus:thaumcraft.CHARGE" ],
+        "category": "THAUMATURGY", "location": [ 5,2 ], 
+        "parents": [ "FOCUSBOLT@2","FOCUSPROJECTILE@2" ],        
+        "meta": [ "HIDDEN", "REVERSE" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSCHARGE.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"],
+                    "required_research":["!potentia"]
+                },
+                {
+                    "text": "research.FOCUSCHARGE.stage.2"
+                }
+            ]
+        },
+        {
+        "key": "RECHARGEPEDESTAL",    
+        "name": "research.RECHARGEPEDESTAL.title",
+        "icons": [ "thaumcraft:recharge_pedestal" ],
+        "category": "THAUMATURGY", "location": [ -3,2 ], 
+        "parents": [ "BASETHAUMATURGY" ],        
+        "stages": [
+                {
+                    "text": "research.RECHARGEPEDESTAL.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;1"]
+                },
+                {
+                    "text": "research.RECHARGEPEDESTAL.stage.2",  
+                    "recipes": ["thaumcraft:rechargepedestal"]
+                }
+            ]
+        },
+        {
+        "key": "VISAMULET",    
+        "name": "research.VISAMULET.title",
+        "icons": [ "thaumcraft:amulet_vis;1;1" ],
+        "category": "THAUMATURGY", "location": [ -5,4 ], 
+        "parents": [ "RECHARGEPEDESTAL", "INFUSION" ],        
+        "stages": [
+                {
+                    "text": "research.VISAMULET.stage.1",
+                    "required_knowledge":["THEORY;THAUMATURGY;2"]
+                },
+                {
+                    "text": "research.VISAMULET.stage.2",  
+                    "recipes": ["thaumcraft:VisAmulet"]
+                }
+            ]
+        },
+        {
+        "key": "WORKBENCHCHARGER",    
+        "name": "research.WORKBENCHCHARGER.title",
+        "icons": [ "thaumcraft:arcane_workbench_charger" ],
+        "category": "THAUMATURGY", "location": [ -3,4 ], 
+        "parents": [ "RECHARGEPEDESTAL" ],        
+        "stages": [
+                {
+                    "text": "research.WORKBENCHCHARGER.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1","THEORY;THAUMATURGY;1"]
+                },
+                {
+                    "text": "research.WORKBENCHCHARGER.stage.2",  
+                    "recipes": ["thaumcraft:workbenchcharger"]
+                }
+            ]
+        },
+        {
+        "key": "FOCUSPOUCH",    
+        "name": "research.FOCUSPOUCH.title",
+        "icons": [ "thaumcraft:focus_pouch" ],
+        "category": "THAUMATURGY", "location": [ -2,-1 ], 
+        "parents": [ "BASETHAUMATURGY" ],        
+        "stages": [
+                {
+                    "text": "research.FOCUSPOUCH.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1","OBSERVATION;ARTIFICE;1"]
+                },
+                {
+                    "text": "research.FOCUSPOUCH.stage.2",  
+                    "recipes": ["thaumcraft:FocusPouch"]
+                }
+            ]
+        }
+    ]
+}
+    

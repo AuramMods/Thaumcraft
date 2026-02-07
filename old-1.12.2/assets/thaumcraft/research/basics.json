@@ -1,0 +1,194 @@
+{
+    "entries" :[
+        {
+            "key": "FIRSTSTEPS",    
+            "name": "research.FIRSTSTEPS.title",
+            "icons": [ "thaumcraft:textures/items/thaumonomicon.png" ],
+            "category": "BASICS", "location": [ 0,0 ], 
+            "parents": [ "!gotthaumonomicon" ],
+            "siblings": [ "KNOWLEDGETYPES", "!gotdream" ],
+            "meta": [ "ROUND","SPIKY" ],        
+            "reward_knowledge": [ "EPIPHANY;2" ],
+            "stages": [
+                {   
+                    "text": "research.FIRSTSTEPS.stage.1", 
+                    "required_craft":["thaumcraft:arcane_workbench"], 
+                    "recipes": ["thaumcraft:salismundus"]
+                },
+                {
+                    "text": "research.FIRSTSTEPS.stage.2",            
+                    "required_craft":["thaumcraft:thaumometer"], 
+                    "required_knowledge":["OBSERVATION;BASICS;1"], 
+                    "recipes": ["thaumcraft:thaumometer","thaumcraft:salismundus"]
+                },
+                {
+                    "text": "research.FIRSTSTEPS.stage.3", 
+                    "recipes": ["thaumcraft:thaumometer","thaumcraft:salismundus"]
+                }
+            ]
+        },
+        {
+            "key": "KNOWLEDGETYPES",    
+            "name": "research.KNOWLEDGETYPES.title",
+            "icons": [ "thaumcraft:textures/research/knowledge_epiphany.png" ],
+            "category": "BASICS", "location": [ 2,-1 ], 
+            "siblings": [ "THEORYRESEARCH" ],
+            "meta": [ "ROUND" , "HIDDEN" ],        
+            "stages": [{"text": "research.KNOWLEDGETYPES.stage.1"}]
+        },
+        {
+            "key": "THEORYRESEARCH",    
+            "name": "research.THEORYRESEARCH.title",
+            "icons": [ "thaumcraft:textures/research/knowledge_theory.png" ],
+            "category": "BASICS", "location": [ 4,-1 ], 
+            "parents": [ "KNOWLEDGETYPES" ],
+            "meta": [ "ROUND" , "HIDDEN" ],        
+            "stages": [
+                {
+                    "text": "research.THEORYRESEARCH.stage.1",                     
+                    "required_craft":["thaumcraft:scribing_tools","thaumcraft:research_table"], 
+                    "recipes": ["thaumcraft:tablewood","thaumcraft:scribetools"]
+                },
+                {
+                    "text": "research.THEORYRESEARCH.stage.2", 
+                    "recipes": ["thaumcraft:tablewood","thaumcraft:scribetools"]
+                }
+            ]
+        },
+        {
+            "key": "FLUX",    
+            "name": "research.FLUX.title",
+            "icons": [ "thaumcraft:textures/research/r_flux.png" ],
+            "category": "BASICS", "location": [ -2,-2 ], 
+            "meta": [ "ROUND","HIDDEN" ],       
+            "stages": [
+                {"text": "research.FLUX.stage.1", "required_research":["f_toomuchflux"]},
+                {"text": "research.FLUX.stage.2"}
+            ]
+        },
+        {
+            "key": "WARP",    
+            "name": "research.WARP.title",
+            "icons": [ "thaumcraft:textures/research/r_warp.png" ],
+            "category": "BASICS", "location": [ -4,-2 ], 
+            "meta": [ "ROUND","HIDDEN" ],       
+            "stages": [{"text": "research.WARP.stage.1", "recipes":["thaumcraft:sanitychecker"]}]
+        },
+        {
+            "key": "ORE",    
+            "name": "research.ORE.title",
+            "icons": [ "minecraft:iron_pickaxe" ],
+            "category": "BASICS", "location": [ -4,0 ], 
+            "meta": [ "ROUND","HIDDEN" ],       
+            "stages": [{"text": "research.ORE.stage.1"}],
+            "addenda": [
+                {"text": "research.ORE.amber","required_research":["!OREAMBER"]},
+                {"text": "research.ORE.cinnabar","required_research":["!ORECINNABAR"]},
+                {"text": "research.ORE.crystal","required_research":["!ORECRYSTAL"]}
+            ]
+        },
+        {
+            "key": "UNLOCKALCHEMY",    
+            "name": "research.UNLOCKALCHEMY.title",
+            "icons": [ "thaumcraft:textures/research/r_crucible.png" ],
+            "category": "BASICS", "location": [ 0,2 ], 
+            "parents": [ "FIRSTSTEPS" ],
+            "meta": [ "ROUND","SPIKY" ],        
+            "stages": [
+                    {
+                        "text": "research.UNLOCKALCHEMY.stage.1",
+                        "required_knowledge":["EPIPHANY;1","OBSERVATION;ALCHEMY;1","OBSERVATION;BASICS;1"]
+                    },
+                    {
+                        "text": "research.UNLOCKALCHEMY.stage.2",          
+                        "required_craft":["thaumcraft:crucible"]
+                    },
+                    {
+                        "text": "research.UNLOCKALCHEMY.stage.3",          
+                        "required_craft":["thaumcraft:nitor;1;4"],  
+                        "recipes": ["thaumcraft:nitor","thaumcraft:nitorcolor"]
+                    }
+            ]
+        },
+        {
+            "key": "UNLOCKTHAUMATURGY",    
+            "name": "research.UNLOCKTHAUMATURGY.title",
+            "icons": [ "thaumcraft:textures/research/r_thaumaturgy.png" ],
+            "category": "BASICS", "location": [ -2,4 ], 
+            "parents": [ "UNLOCKALCHEMY" ],
+            "meta": [ "ROUND","SPIKY" ],        
+            "stages": [
+                    {
+                        "text": "research.UNLOCKTHAUMATURGY.stage.1",
+                        "required_research":["m_deepdown","m_uphigh","m_finddesert","m_findocean"],
+                        "required_knowledge":["EPIPHANY;1"]
+                    },
+                    {
+                        "text": "research.UNLOCKTHAUMATURGY.stage.2",
+                        "required_craft":["thaumcraft:vis_resonator","thaumcraft:caster_basic"],
+                        "recipes":["thaumcraft:vis_resonator","thaumcraft:caster_basic"]
+                    },
+                    {
+                        "text": "research.UNLOCKTHAUMATURGY.stage.3",
+                        "recipes":["thaumcraft:vis_resonator","thaumcraft:caster_basic"]
+                    }
+            ]
+        },
+        {
+            "key": "UNLOCKARTIFICE",
+            "name": "research.UNLOCKARTIFICE.title",
+            "icons": [ "thaumcraft:textures/research/r_artifice.png" ],
+            "category": "BASICS", "location": [ 2,4 ],
+            "parents": [ "UNLOCKALCHEMY" ],
+            "meta": [ "ROUND","SPIKY" ],
+            "stages": [
+                {
+                    "text": "research.UNLOCKARTIFICE.stage.1",
+                    "required_knowledge":["EPIPHANY;1","OBSERVATION;ARTIFICE;1","OBSERVATION;BASICS;1"],
+                    "required_research":["!auram","!sensus","!machina"]
+                },
+                {
+                    "text": "research.UNLOCKARTIFICE.stage.2",
+                    "recipes": ["thaumcraft:Goggles"],
+                    "required_craft":["thaumcraft:goggles"]
+                }
+            ]
+        },
+        {
+            "key": "UNLOCKGOLEMANCY",
+            "name": "research.UNLOCKGOLEMANCY.title",
+            "icons": [ "thaumcraft:textures/research/r_golemancy.png" ],
+            "category": "BASICS", "location": [ 0,6 ],
+            "parents": [ "UNLOCKARTIFICE", "UNLOCKTHAUMATURGY" ],
+            "meta": [ "ROUND","SPIKY" ],
+            "stages": [
+                {
+                    "text": "research.UNLOCKGOLEMANCY.stage.1",
+                    "required_knowledge":["EPIPHANY;1","OBSERVATION;GOLEMANCY;1","OBSERVATION;BASICS;1"],
+                    "required_research":["f_golem"]
+                },
+                {
+                    "text": "research.UNLOCKGOLEMANCY.stage.2"
+                }
+            ]
+        },
+        {
+            "key": "UNLOCKELDRITCH",
+            "name": "research.UNLOCKELDRITCH.title",
+            "icons": [ "thaumcraft:textures/research/r_eldritch.png" ],
+            "category": "BASICS", "location": [ -5,4 ],
+            "parents": [ "!CrimsonCultist", "UNLOCKTHAUMATURGY" ],
+            "meta": [ "ROUND","SPIKY","HIDDEN" ],
+            "stages": [
+                {
+                    "text": "research.UNLOCKELDRITCH.stage.1",
+                    "required_knowledge":["EPIPHANY;1","OBSERVATION;ELDRITCH;1","OBSERVATION;BASICS;1"]
+                },
+                {
+                    "text": "research.UNLOCKELDRITCH.stage.2"
+                }
+            ]
+        }        
+    ]
+}
+    

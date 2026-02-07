@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block",
+        "model": "cross"
+    },
+    "variants": {        
+        "type":
+        {
+            "greatwood": {"textures": { "cross": "thaumcraft:blocks/greatwood_sapling" } },
+            "silverwood": {"textures": { "cross": "thaumcraft:blocks/silverwood_sapling" } }
+        },
+        "stage": { "0":{}, "1":{} },
+        "type=greatwood": { "model": "forge:item-layer", "transform": "forge:default-item",
+            "textures": { "layer0": "thaumcraft:blocks/greatwood_sapling" } },
+        "type=silverwood": { "model": "forge:item-layer", "transform": "forge:default-item",
+            "textures": { "layer0": "thaumcraft:blocks/silverwood_sapling" } }
+    }
+}

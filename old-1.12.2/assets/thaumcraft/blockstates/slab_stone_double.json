@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "half=bottom,type=arcane": {"model": "thaumcraft:arcane_stone" },
+        "half=bottom,type=arcane_brick": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/arcane_brick_stone" }},
+        "half=bottom,type=ancient": {"model": "thaumcraft:ancient_stone" },
+        "half=bottom,type=eldritch": {"model": "thaumcraft:eldritch_stone" },
+        
+        "half=top,type=arcane": {"model": "thaumcraft:arcane_stone" },
+        "half=top,type=arcane_brick": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/arcane_brick_stone" }},
+        "half=top,type=ancient": {"model": "thaumcraft:ancient_stone" },
+        "half=top,type=eldritch": {"model": "thaumcraft:eldritch_stone" },
+        
+        "type=arcane": {"model": "thaumcraft:arcane_stone" },
+        "type=arcane_brick": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/arcane_brick_stone" }},
+        "type=ancient": {"model": "thaumcraft:ancient_stone" },
+        "type=eldritch": {"model": "thaumcraft:eldritch_stone" }
+    }
+}

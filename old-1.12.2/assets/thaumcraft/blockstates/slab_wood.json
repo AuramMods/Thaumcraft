@@ -1,0 +1,35 @@
+{
+    
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "half=bottom,type=greatwood": { "model": "half_slab","textures": {
+            "bottom": "thaumcraft:blocks/greatwood_plank",
+            "top": "thaumcraft:blocks/greatwood_plank",
+            "side": "thaumcraft:blocks/greatwood_plank"} },
+        "half=top,type=greatwood": { "model": "upper_slab","textures": {
+            "bottom": "thaumcraft:blocks/greatwood_plank",
+            "top": "thaumcraft:blocks/greatwood_plank",
+            "side": "thaumcraft:blocks/greatwood_plank"} },
+        "half=bottom,type=silverwood": { "model": "half_slab","textures": {
+            "bottom": "thaumcraft:blocks/silverwood_plank",
+            "top": "thaumcraft:blocks/silverwood_plank",
+            "side": "thaumcraft:blocks/silverwood_plank"} },
+        "half=top,type=silverwood": { "model": "upper_slab","textures": {
+            "bottom": "thaumcraft:blocks/silverwood_plank",
+            "top": "thaumcraft:blocks/silverwood_plank",
+            "side": "thaumcraft:blocks/silverwood_plank"} },
+            
+        "type=greatwood": { "model": "half_slab","textures": {
+            "bottom": "thaumcraft:blocks/greatwood_plank",
+            "top": "thaumcraft:blocks/greatwood_plank",
+            "side": "thaumcraft:blocks/greatwood_plank"} },
+        "type=silverwood": { "model": "half_slab","textures": {
+            "bottom": "thaumcraft:blocks/silverwood_plank",
+            "top": "thaumcraft:blocks/silverwood_plank",
+            "side": "thaumcraft:blocks/silverwood_plank"} }
+    }    
+}

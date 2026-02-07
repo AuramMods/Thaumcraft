@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "half=bottom,type=greatwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/greatwood_plank" }},
+        "half=bottom,type=silverwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/silverwood_plank" }},
+        
+        "half=top,type=greatwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/greatwood_plank" }},
+        "half=top,type=silverwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/silverwood_plank" }},
+        
+        "type=greatwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/greatwood_plank" }},
+        "type=silverwood": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/silverwood_plank" }}
+    }
+}

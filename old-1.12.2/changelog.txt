@@ -1,0 +1,142 @@
+6.0.ALPHA15
+- API: IRechargable.showInHud now returns an enum with various options for fine tuning of when the hud is displayed
+- completely redid theorycrafting
+- fixed workbench charger dropping when a neighbour block changes.
+- fixed aspect calculation crash caused when an invalid enchantment is added by another mod
+- rebalanced some aspect values
+- traveller boots now require charge to function
+- fixed golem crafting
+
+6.0.ALPHA14
+- fixed a massive bug that was basically breaking theory crafting - only Fundamental knowledge was being gained.
+- removed Field Notes. They don't really add anything that isn't covered by Observations and just complicate things
+- tweaked some aspect colors to differentiate them from each other a bit more
+- added arcane activator rails. They allow the activation and deactivation of things like automated crossbow turrets that pass over them.
+- The arcane bore is now a placable entity much like automated turrets. Like many entities they can ride empty mine carts. Have fun with that :)
+
+6.0.ALPHA13
+- re-added golems and golemancy research back into the game. Currently the arcane bore is missing. It is undergoing a massive rework at the moment.
+- more under-the-hood changes done, mostly to the research API.
+
+6.0.ALPHA12
+- increased the influence moon phases have on the aura
+- reduced aura replenishment across the board
+- added new research entries and rebalanced some older ones
+
+6.0.ALPHA11
+- API: added 'addenda' option to research entries. This allows certain pages within a completed research entry to unlock later as a result of discoveries or research. For example: ore entries
+- fixed search crash in thaumonomicon
+- more research entries added
+
+6.0.ALPHA10
+- filled out alchemy and artifice research trees. Alchemy is almost done and artifice is coming along nicely
+- added infusion crafting
+- various tweaks and bugfixes
+- bottled taint can be properly thrown again
+
+6.0.ALPHA9
+- fleshed out the research tree a bit, but there are still a lot of placeholder entries
+- added Theorycrafting. Uses the old research mechanic as a way to gain the "Theory" knowledge type. I am not 100% happy with this system so I would love some feedback.
+- added a charge mechanic in the form of a modifier that allows you to change a focus so that it can be 'charged up'. Short charge times result in a lesser effect while full charge gives a bonus. (range is 50% to 200%) 
+- fixed uncontrolled flux generation
+- basic thaumaturgy research fire focus crafting should now allow you to move on to the next step.
+- curios now have a use
+- focus can now be changed when gauntlet is in offhand
+- fix for custom blocksounds causing a crash server side
+
+6.0.ALPHA8
+- added more focus patterns and tweaked existing ones.
+- new visual fx to all things focus related
+- golems! No research entries or crafting recipes yet, but can be accessed via creative mode
+- multiple research requirements will no longer overlap in the requirements page
+- fix for auras values being rounded and occasionally causing numerical overflowing for large amounts of vis and flux
+- fix for chaining crash if it hits a block and chaining now works for blocks (so break + chaining is now a thing)
+
+6.0.ALPHA7
+- changed knowledge fields so they match the actual research categories. In other words instead of something like Theory: Mechanisms you will get Theory: Artifice instead. Since it is dynamic, addon mods will automatically get their own field if they add their own category (which most do)
+- warning: this change will mostly wipe any knowledge you currently have since the format has changed significantly
+- Added casting gauntlets and focus crafting mechanic. Still a lot that needs to be done and some of the research and visuals are just placeholders for testing purposes. 
+- fixed crash with hedge alchemy research and fixed its crafting requirements
+- nitor will act as a heatsource again
+- fixed angry zombie villager textures and furious zombie hitbox 
+
+6.0.ALPHA6
+- dev on research halted for now while I add things to research first :p
+- fixed pech related scanning crash
+- fixed essentia crystals essentia amounts
+- fixed vanilla crafting recipes not properly consuming components in arcane crafting table
+- added basic essentia blocks (jars, smelters, tubes, etc)
+- added several other random blocks and items
+
+6.0.ALPHA5
+- expanded research more and added a few basic research entries for testing purposes. 
+- If you don't want to start a fresh world it will probably be a good idea to reset your research first (/tc research <name> reset)
+- NOTE: while the research table is ingame and craftable it does not actually work quite yet. I'm still finalizing exactly how it will work. Most of the current research can be done without it however.
+- fixed multiple items being created with salis mundus
+- scanning inventories now also scans their contents as well
+- fixed zephyr sword fx
+- fix stair rendering
+- added stuff
+
+6.0.ALPHA4
+- Added a way to start with thaumcraft. It should happen naturally as you play the game and encounter TC related items
+- this will be further expanded to ease players into research and give them the starting tools without needing to go to the forums or check a wiki. 
+- added some more 'old' stuff
+- added taint and changed the way it spawns/spreads. This is just a first pass and it cannot spawn naturally yet (or from flux events). Will be worked on more at a later stage.
+= taint now spreads from taint seeds. They are immobile entities and there are eggs for them if you want to spawn some. Taint grows out from these 'seeds' and grows a lot faster than in TC5.
+- taint can only spread within a limited radius of a seed and will die if there is no seed within this radius. There is a small chance for new seeds to spawn at the outer rim of this radius.
+- taint spread is no longer linked to flux, however high flux levels will increase the distance taint can grow from a seed. 
+- put together this means taint can spread faster and even into non-polluted areas, but to get rid of it you only need to get rid of the seeds. Easier said than done though.
+- removed tainted dust
+- fiddled with the aura a bit. Vis and flux is now mutually exclusive. In practical terms what happens is that within a chunk the aura has a fixed capacity. For this example lets use 50. Vis in a chunk will replenish itself back to this number over time.
+- adding flux to the aura counts against this total however. If the flux + vis total exceeds this number, then some of the vis will slowly disappear or be pushed into adjacent chunks (if the have capacity) until the total drops down to 50. This means that polluting a chunk too much may result in it having no vis, just flux.  
+- lots of behind the scene changes
+
+6.0.ALPHA3
+- re-added step assist on traveler boots for those that do not use vanilla auto-jump
+- re-added more 'old' stuff
+- added some basic worldgen
+- added new aura and node system (see below)
+- modified arcane crafting to work with new aura system (see below)
+- arcane crafting table is 'crafted' by using salis mundus on vanilla crafting table.
+- thaumonomicon is now ingame, but doesn't do anything atm. Can be 'crafted' by using salis mundus on bookshelf
+- scanning things now generates various types of notes, observation and similar things. These will later be used for purchasing research. 
+
+6.0.ALPHA2
+- fix custom armor models
+- added some entities (monsters, etc)
+- added some more blocks and items
+- various behind the scenes changes to block definitions
+
+-------------------------
+
+ITEMS
+- Dowsing ability will now display a particle effect for an entire ore vein and not each block. Effect is also color coded for most common ore types.
+- Goggles can now also be placed in the 'headgear' baubles slot
+
+RESEARCH
+- Players are now eased into Thaumcraft more organically just by playing the game. No wiki or forum post required to take your first steps. 
+- scanning is now much more integral to research.
+
+AURA
+- Aura and vis is no longer separated into aspects. Vis now represents raw magical energy.
+- Aura Nodes are much rarer now and only spawn in special locations
+- aura replenishes itself based on moonphase and other natural factors
+- arcane crafting modified to draw vis directly from aura. Crystals are required for many arcane crafting recipes. Crystals are placed in the slots surrounding the main crafting grid.
+
+GENERAL
+- re-added the old praecantatio aspect
+- added alkimia, the alchemy aspect.
+- rebalanced essentia amounts in items. Everything has a lot more essentia (roughly 5x previous versions), but all recipes are more expensive to compensate. This is to improve the essentia calculation algorithm and to make costing and balancing easier and more granular. 
+- rebalanced armor values to incorporate the new toughness stat 
+- removed haste and repair vanilla enchants. Haste is now an infusion enchant and repair has been dropped in favor of the vanilla enchant
+- arcane bore can no longer be powered by the aura (not without some help that is)
+- added quartz ore spawns to overworld. They are much rarer than ore spawns in the nether however.
+- added ability for OP's to view a players known research
+
+API
+- IPlayerKnowledge is now the main repository for all things research and knowledge related. It uses the forge capability system and can be obtained via the getKnowledge(EntityPlayer player) method in ThaumcraftApi 
+- made significant changes to IRechargable making it more generic
+- changed IScanThing.getResearchKey to also accept the passed in player and scanned object
+- added IScanThing.onSuccess to allow performing something when a scan succeeds
+

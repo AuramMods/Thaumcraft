@@ -1,0 +1,30 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "parent": "cube_all",
+        "textures": {
+            "all": "thaumcraft:blocks/nitor"
+        },
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "normal": [{}], "inventory": [{}],
+        "type=white": {  },
+        "type=orange": {  },
+        "type=magenta": {  },
+        "type=light_blue": {  },
+        "type=yellow": {  },
+        "type=lime": {  },
+        "type=pink": {  },
+        "type=gray": {  },
+        "type=silver": {  },
+        "type=cyan": {  },
+        "type=purple": {  },
+        "type=blue": {  },
+        "type=brown": {  },
+        "type=green": {  },
+        "type=red": {  },
+        "type=black": {  }
+    }
+}

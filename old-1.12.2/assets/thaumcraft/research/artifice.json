@@ -1,0 +1,417 @@
+{
+    "entries" :[
+        {
+        "key": "BASEARTIFICE",    
+        "name": "research.BASEARTIFICE.title",
+        "icons": [ "thaumcraft:textures/research/r_artifice.png" ],
+        "category": "ARTIFICE", "location": [ 0,0 ], 
+        "parents": [ "UNLOCKARTIFICE" ],        
+        "meta": [ "ROUND" , "HIDDEN" ],        
+        "stages": [
+                {
+                    "text": "research.BASEARTIFICE.stage.1", 
+                    "recipes":["thaumcraft:Goggles","thaumcraft:mirrorglass","thaumcraft:Banners"]
+                }
+            ]
+        },
+        {
+        "key": "ENCHFABRIC",    
+        "name": "research.ENCHFABRIC.title",
+        "icons": [ "thaumcraft:fabric" ],
+        "category": "ARTIFICE", "location": [ -2,0 ], 
+        "parents": [ "BASEARTIFICE" ],       
+        "stages": [
+                {
+                    "text": "research.ENCHFABRIC.stage.1",
+                    "recipes": ["thaumcraft:EnchantedFabric"],
+                    "required_research":["!fabrico","!instrumentum","!praecantatio"],                    
+                    "required_craft":["thaumcraft:fabric"]
+                },
+                {
+                    "text": "research.ENCHFABRIC.stage.2",  
+                    "recipes": ["thaumcraft:EnchantedFabric","thaumcraft:RobeChest","thaumcraft:RobeLegs","thaumcraft:RobeBoots"]
+                }
+            ]
+        },
+        {
+        "key": "PAVINGSTONES",    
+        "name": "research.PAVINGSTONES.title",
+        "icons": [ "thaumcraft:paving_stone" ],
+        "category": "ARTIFICE", "location": [ 2,0 ], 
+        "parents": [ "BASEARTIFICE" ],       
+        "stages": [
+                {
+                    "text": "research.PAVINGSTONES.stage.1",
+                    "recipes": ["thaumcraft:arcane_stone"],
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1"],                 
+                    "required_craft":["thaumcraft:stone"]
+                },
+                {
+                    "text": "research.PAVINGSTONES.stage.2",  
+                    "recipes": ["thaumcraft:PaveBarrier","thaumcraft:PaveTravel","thaumcraft:arcane_stone","thaumcraft:arcane_brick"]
+                }
+            ]
+        },
+        {
+        "key": "LEVITATOR",    
+        "name": "research.LEVITATOR.title",
+        "icons": [ "thaumcraft:levitator" ],
+        "category": "ARTIFICE", "location": [ 4,-2 ], 
+        "parents": [ "PAVINGSTONES","METALLURGY@4" ],       
+        "stages": [
+                {
+                    "text": "research.LEVITATOR.stage.1",
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1"],
+                    "required_research":["!volatus"]
+                },
+                {
+                    "text": "research.LEVITATOR.stage.2",  
+                    "recipes": ["thaumcraft:Levitator"]
+                }
+            ]
+        },
+        {
+        "key": "INFERNALFURNACE",    
+        "name": "research.INFERNALFURNACE.title",
+        "icons": [ "thaumcraft:infernal_furnace" ],
+        "category": "ARTIFICE", "location": [ 5,0 ], 
+        "parents": [ "PAVINGSTONES" ],       
+        "stages": [
+                {
+                    "text": "research.INFERNALFURNACE.stage.1",
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1"],                 
+                    "required_research":["!ignis","m_hellandback"],
+                    "required_item":["minecraft:obsidian","minecraft:nether_brick","minecraft:blaze_rod"]
+                },
+                {
+                    "text": "research.INFERNALFURNACE.stage.2",  
+                    "recipes": ["thaumcraft:infernalfurnace"]
+                }
+            ],
+            "addenda": [
+                {"text": "research.INFERNALFURNACE.bellows","required_research":["BELLOWS"]}
+            ]
+        },
+        {
+        "key": "REDSTONERELAY",    
+        "name": "research.REDSTONERELAY.title",
+        "icons": [ "thaumcraft:redstone_relay" ],
+        "category": "ARTIFICE", "location": [ 0,-2 ], 
+        "parents": [ "BASEARTIFICE" ],       
+        "stages": [
+                {
+                    "text": "research.REDSTONERELAY.stage.1",
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1"],
+                    "required_research":["!potentia","!machina"],
+                    "required_item":["minecraft:redstone_torch"]
+                },
+                {
+                    "text": "research.REDSTONERELAY.stage.2",  
+                    "recipes": ["thaumcraft:RedstoneRelay"]
+                }
+            ]
+        },
+        {
+        "key": "ARCANEEAR",    
+        "name": "research.ARCANEEAR.title",
+        "icons": [ "thaumcraft:arcane_ear" ],
+        "category": "ARTIFICE", "location": [ 0,-4 ], 
+        "parents": [ "REDSTONERELAY" ],       
+        "stages": [
+                {
+                    "text": "research.ARCANEEAR.stage.1",
+                    "required_knowledgeauram":["OBSERVATION;ARTIFICE;1"],
+                    "required_research":["!sensus"],
+                    "required_item":["minecraft:noteblock"]
+                },
+                {
+                    "text": "research.ARCANEEAR.stage.2",  
+                    "recipes": ["thaumcraft:ArcaneEar"]
+                }
+            ]
+        },
+        {
+        "key": "DIOPTRA",    
+        "name": "research.DIOPTRA.title",
+        "icons": [ "thaumcraft:dioptra" ],
+        "category": "ARTIFICE", "location": [ 0,2 ], 
+        "parents": [ "BASEARTIFICE", "PAVINGSTONES" ],     
+        "meta": [ "REVERSE" ],  
+        "stages": [
+                {
+                    "text": "research.DIOPTRA.stage.1",
+                    "required_knowledge":["OBSERVATION;THAUMATURGY;1"],
+                    "required_research":["!sensus","!auram"]
+                },
+                {
+                    "text": "research.DIOPTRA.stage.2",  
+                    "recipes": ["thaumcraft:dioptra"]
+                }
+            ]
+        },
+        {
+        "key": "INFUSION",    
+        "name": "research.INFUSION.title",
+        "icons": [ "thaumcraft:infusion_matrix" ],
+        "category": "ARTIFICE", "location": [ 0,4 ], 
+        "parents": [ "DIOPTRA" ],       
+        "meta": [ "SPIKY" ],        
+        "reward_knowledge": [ "EPIPHANY;1" ],    
+        "stages": [
+                {
+                    "text": "research.INFUSION.stage.1",
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1","THEORY;ARTIFICE;1"],
+                    "required_item":["minecraft:stone","minecraft:feather","thaumcraft:phail;1;1;{Aspects:[0:{amount:10,key:'aer'}]}"]
+                },
+                {
+                    "text": "research.INFUSION.stage.2",
+                    "required_craft":["thaumcraft:infusion_matrix"],  
+                    "recipes": ["thaumcraft:InfusionMatrix"]
+                },
+                {
+                    "text": "research.INFUSION.stage.3",  
+                    "recipes": ["thaumcraft:InfusionMatrix","thaumcraft:ArcanePedestal","thaumcraft:infusionaltar"]
+                }
+            ]
+        },
+        {
+        "key": "INFUSIONBOOST",    
+        "name": "research.INFUSIONBOOST.title",
+        "icons": [ "thaumcraft:stone;1;8", "thaumcraft:stone;1;9" ],
+        "category": "ARTIFICE", "location": [ 0,6 ], 
+        "parents": [ "INFUSION" ],       
+        "stages": [
+                {
+                    "text": "research.INFUSIONBOOST.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;2"]
+                },
+                {
+                    "text": "research.INFUSIONBOOST.stage.2",  
+                    "recipes": ["thaumcraft:MatrixMotion","thaumcraft:MatrixCost"]
+                }
+            ]
+        },
+        {
+        "key": "INFUSIONANCIENT",    
+        "name": "research.INFUSIONANCIENT.title",
+        "icons": [ "thaumcraft:stone;1;2" ],
+        "category": "ARTIFICE", "location": [ 1,7 ], 
+        "parents": [ "INFUSIONBOOST","!ORBLOCK1" ],        
+        "meta": [ "HIDDEN","REVERSE" ],       
+        "stages": [
+                {
+                    "text": "research.INFUSIONANCIENT.stage.1",
+                    "required_knowledge":["OBSERVATION;BASICS;1"],
+                    "required_item":["thaumcraft:stone;1;2"]
+                },
+                {
+                    "text": "research.INFUSIONANCIENT.stage.2",  
+                    "recipes": ["thaumcraft:AncientPedestal","thaumcraft:infusionaltarancient"]
+                }
+            ]
+        },
+        {
+        "key": "INFUSIONELDRITCH",    
+        "name": "research.INFUSIONELDRITCH.title",
+        "icons": [ "thaumcraft:stone;1;4" ],
+        "category": "ARTIFICE", "location": [ 1,8 ], 
+        "parents": [ "INFUSIONBOOST","!ORBLOCK2" ],        
+        "meta": [ "HIDDEN","REVERSE" ],       
+        "stages": [
+                {
+                    "text": "research.INFUSIONELDRITCH.stage.1",
+                    "required_knowledge":["OBSERVATION;ELDRITCH;1"],
+                    "required_item":["thaumcraft:stone;1;4"]
+                },
+                {
+                    "text": "research.INFUSIONELDRITCH.stage.2",  
+                    "recipes": ["thaumcraft:EldritchPedestal","thaumcraft:infusionaltareldritch"]
+                }
+            ]
+        },
+        {
+        "key": "BOOTSTRAVELLER",    
+        "name": "research.BOOTSTRAVELLER.title",
+        "icons": [ "thaumcraft:traveller_boots" ],
+        "category": "ARTIFICE", "location": [ -2,2 ], 
+        "parents": [ "INFUSION","ENCHFABRIC","RECHARGEPEDESTAL" ],       
+        "stages": [
+                {
+                    "text": "research.BOOTSTRAVELLER.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"],
+                    "required_research":["!motus","m_walker","m_runner","m_swimmer","m_jumper"]
+                },
+                {
+                    "text": "research.BOOTSTRAVELLER.stage.2",  
+                    "recipes": ["thaumcraft:BootsTraveller"]
+                }
+            ]
+        },
+        {
+        "key": "ELEMENTALTOOLS",    
+        "name": "research.ELEMENTALTOOLS.title",
+        "icons": [ "thaumcraft:elemental_axe","thaumcraft:elemental_sword","thaumcraft:elemental_pick","thaumcraft:elemental_shovel","thaumcraft:elemental_hoe" ],
+        "category": "ARTIFICE", "location": [ -4,2 ], 
+        "parents": [ "BOOTSTRAVELLER","METALLURGY@4" ],       
+        "stages": [
+                {
+                    "text": "research.ELEMENTALTOOLS.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1","THEORY;BASICS;1"],
+                    "required_craft":["thaumcraft:thaumium_axe","thaumcraft:thaumium_sword","thaumcraft:thaumium_pick","thaumcraft:thaumium_shovel","thaumcraft:thaumium_hoe"]
+                },
+                {
+                    "text": "research.ELEMENTALTOOLS.stage.2",  
+                    "recipes": ["thaumcraft:ElementalAxe","thaumcraft:ElementalSword","thaumcraft:ElementalPick","thaumcraft:ElementalShovel","thaumcraft:ElementalHoe"]
+                }
+            ]
+        },
+        {
+        "key": "INFUSIONENCHANTMENT",    
+        "name": "research.INFUSIONENCHANTMENT.title",
+        "icons": [ "thaumcraft:textures/research/r_inf_enchant.png" ],
+        "category": "ARTIFICE", "location": [ -6,4 ], 
+        "parents": [ "ELEMENTALTOOLS" ],       
+        "stages": [
+                {
+                    "text": "research.INFUSIONENCHANTMENT.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;2"],
+                    "required_item":["minecraft:enchanted_book"]
+                },
+                {
+                    "text": "research.INFUSIONENCHANTMENT.stage.2",  
+                    "recipes": ["thaumcraft:IEBURROWINGFAKE","thaumcraft:IECOLLECTORFAKE","thaumcraft:IEDESTRUCTIVEFAKE","thaumcraft:IEREFININGFAKE","thaumcraft:IESOUNDINGFAKE","thaumcraft:IEARCINGFAKE","thaumcraft:IEESSENCEFAKE"]
+                }
+            ]
+        },
+        {
+        "key": "RUNICSHIELDING",    
+        "name": "research.RUNICSHIELDING.title",
+        "icons": [ "thaumcraft:textures/research/r_runicupg.png" ],
+        "category": "ARTIFICE", "location": [ -6,6 ], 
+        "parents": [ "INFUSIONENCHANTMENT" ],       
+        "stages": [
+                {
+                    "text": "research.RUNICSHIELDING.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"],
+                    "required_item":["minecraft:enchanted_book;1;0;{StoredEnchantments:[{id:0,lvl:1}]}","thaumcraft:amber"]
+                },
+                {
+                    "text": "research.RUNICSHIELDING.stage.2",  
+                    "recipes": ["thaumcraft:RunicArmorFake"]
+                }
+            ]
+        },
+        {
+        "key": "MIRROR",    
+        "name": "research.MIRROR.title",
+        "icons": [ "thaumcraft:mirror" ],
+        "category": "ARTIFICE", "location": [ -3,5 ], 
+        "parents": [ "INFUSION" ],       
+        "stages": [
+                {
+                    "text": "research.MIRROR.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1","OBSERVATION;ARTIFICE;1"],
+                    "required_item":["minecraft:ender_pearl","thaumcraft:mirrored_glass"],
+                    "required_research":["f_TELEPORT"], 
+                    "recipes":["thaumcraft:mirrorglass"]
+                },
+                {
+                    "text": "research.MIRROR.stage.2",  
+                    "recipes": ["thaumcraft:Mirror"]
+                }
+            ]
+        },
+        {
+        "key": "MIRRORHAND",    
+        "name": "research.MIRRORHAND.title",
+        "icons": [ "thaumcraft:hand_mirror" ],
+        "category": "ARTIFICE", "location": [ -4,6 ], 
+        "parents": [ "MIRROR" ],       
+        "stages": [
+                {
+                    "text": "research.MIRRORHAND.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"]
+                },
+                {
+                    "text": "research.MIRRORHAND.stage.2",  
+                    "recipes": ["thaumcraft:MirrorHand"]
+                }
+            ]
+        },
+        {
+        "key": "MIRRORESSENTIA",    
+        "name": "research.MIRRORESSENTIA.title",
+        "icons": [ "thaumcraft:mirror_essentia" ],
+        "category": "ARTIFICE", "location": [ -2,6 ], 
+        "parents": [ "MIRROR" ],       
+        "stages": [
+                {
+                    "text": "research.MIRRORESSENTIA.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"]
+                },
+                {
+                    "text": "research.MIRRORESSENTIA.stage.2",  
+                    "recipes": ["thaumcraft:MirrorEssentia"]
+                }
+            ]
+        },
+        {
+        "key": "ARCANELAMP",    
+        "name": "research.ARCANELAMP.title",
+        "icons": [ "thaumcraft:lamp_arcane" ],
+        "category": "ARTIFICE", "location": [ 3,2 ], 
+        "parents": [ "PAVINGSTONES" ],       
+        "stages": [
+                {
+                    "text": "research.ARCANELAMP.stage.1",
+                    "required_knowledge":["OBSERVATION;ARTIFICE;1"],
+                    "required_research":["!lux"]
+                },
+                {
+                    "text": "research.ARCANELAMP.stage.2",  
+                    "recipes": ["thaumcraft:ArcaneLamp"]
+                }
+            ]
+        },
+        {
+        "key": "LAMPGROWTH",    
+        "name": "research.LAMPGROWTH.title",
+        "icons": [ "thaumcraft:lamp_growth" ],
+        "category": "ARTIFICE", "location": [ 2,3 ], 
+        "parents": [ "ARCANELAMP", "INFUSION" ],   
+        "stages": [
+                {
+                    "text": "research.LAMPGROWTH.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"],
+                    "required_research":["!herba"],
+                    "required_item":["minecraft:dye;1;15"]
+                },
+                {
+                    "text": "research.LAMPGROWTH.stage.2",  
+                    "recipes": ["thaumcraft:LampGrowth"]
+                }
+            ]
+        },
+        {
+        "key": "LAMPFERTILITY",    
+        "name": "research.LAMPFERTILITY.title",
+        "icons": [ "thaumcraft:lamp_fertility" ],
+        "category": "ARTIFICE", "location": [ 4,3 ], 
+        "parents": [ "ARCANELAMP", "INFUSION" ],      
+        "stages": [
+                {
+                    "text": "research.LAMPFERTILITY.stage.1",
+                    "required_knowledge":["THEORY;ARTIFICE;1"],
+                    "required_research":["!desiderium"],
+                    "required_item":["minecraft:wheat","thaumcraft:carrot"]
+                },
+                {
+                    "text": "research.LAMPFERTILITY.stage.2",  
+                    "recipes": ["thaumcraft:LampFertility"]
+                }
+            ]
+        }
+        
+    ]
+}
+    

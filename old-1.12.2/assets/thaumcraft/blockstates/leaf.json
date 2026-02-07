@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block",
+        "model": "leaves"
+    },
+    "variants": {        
+        "type":
+        {
+            "greatwood": {"textures": { "all": "thaumcraft:blocks/greatwood_leaves" }},
+            "silverwood": {"textures": { "all": "thaumcraft:blocks/silverwood_leaves" }}
+        },
+        "check_decay": { "true": {}, "false": {} },
+        "decayable": { "true": {}, "false": {} },
+        "type=greatwood": { "model": "leaves", "textures": { "all": "thaumcraft:blocks/greatwood_leaves" }},
+        "type=silverwood": { "model": "leaves", "textures": { "all": "thaumcraft:blocks/silverwood_leaves" }}
+    }        
+}

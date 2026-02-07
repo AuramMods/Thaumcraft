@@ -1,0 +1,62 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block",
+        "model": "cube_all",
+        "textures": {
+            "all": "thaumcraft:blocks/arcane_stone_1",
+            "bottom": "#all",
+            "top": "#all",
+            "side": "#all",
+            "particle": "#all"
+        }
+    },
+    "variants": {
+        "type=arcane": [
+                { "model": "thaumcraft:arcane_stone" },
+                { "model": "thaumcraft:arcane_stone", "x": 90 },
+                { "model": "thaumcraft:arcane_stone", "y": 90 },
+                { "model": "thaumcraft:arcane_stone", "x": 90, "y": 90 }
+            ],
+        "type=arcane_brick": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/arcane_brick_stone" }},
+        "type=ancient": [
+                { "model": "thaumcraft:ancient_stone" },
+                { "model": "thaumcraft:ancient_stone", "x": 90 },
+                { "model": "thaumcraft:ancient_stone", "x": 180 },
+                { "model": "thaumcraft:ancient_stone", "x": 270 },
+                { "model": "thaumcraft:ancient_stone", "y": 90 },
+                { "model": "thaumcraft:ancient_stone", "y": 180 },
+                { "model": "thaumcraft:ancient_stone", "y": 270 },
+                { "model": "thaumcraft:ancient_stone", "y": 90, "x": 90 },
+                { "model": "thaumcraft:ancient_stone", "y": 90, "x": 180 },
+                { "model": "thaumcraft:ancient_stone", "y": 90, "x": 270 },
+                { "model": "thaumcraft:ancient_stone", "y": 180, "x": 90 },
+                { "model": "thaumcraft:ancient_stone", "y": 180, "x": 180 },
+                { "model": "thaumcraft:ancient_stone", "y": 180, "x": 270 },
+                { "model": "thaumcraft:ancient_stone", "y": 270, "x": 90 },
+                { "model": "thaumcraft:ancient_stone", "y": 270, "x": 180 },
+                { "model": "thaumcraft:ancient_stone", "y": 270, "x": 270 }
+            ],
+        "type=ancient_rock": [
+                { "textures": {"all": "thaumcraft:blocks/ancient_rock_stone_1"} },
+                { "textures": {"all": "thaumcraft:blocks/ancient_rock_stone_2"} },
+                { "textures": {"all": "thaumcraft:blocks/ancient_rock_stone_3"} },
+                { "textures": {"all": "thaumcraft:blocks/ancient_rock_stone_4"} }
+            ],
+        "type=eldritch": [
+                { "model": "thaumcraft:eldritch_stone" },
+                { "model": "thaumcraft:eldritch_stone", "x": 90 },
+                { "model": "thaumcraft:eldritch_stone", "y": 90 },
+                { "model": "thaumcraft:eldritch_stone", "x": 90, "y": 90 }
+            ],
+        "type=ancient_tile": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/ancient_tile" }},
+        "type=crust": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/crust" }},
+        "type=crust_glow": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/crust_glow" }},
+        "type=matrix_cost": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/matrix_cost" }},
+        "type=matrix_speed": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/matrix_speed" }},
+        "type=ancient_doorway": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/eldritch_door" }},
+        "type=glyphed": {"model": "cube_all", "textures": { "all": "thaumcraft:blocks/ancient_glyph" }},
+        "type=porous": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/porous_stone"}}
+    }
+}

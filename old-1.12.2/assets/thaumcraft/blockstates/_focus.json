@@ -1,0 +1,20 @@
+{
+
+    "forge_marker": 1,
+    "variants": {
+        "inventory": {
+            "model": "forge:item-layer",
+            "transform": "forge:default-item",
+            "textures": {
+                "layer0": "thaumcraft:items/focus_blank",
+                "layer1": "thaumcraft:items/focus_blank_1",
+                "layer2": "thaumcraft:items/focus_blank_2",
+                "layer3": "thaumcraft:items/focus_blank_3",
+                "layer4": "thaumcraft:items/focus_blank_4",
+                "layer5": "thaumcraft:items/focus_blank_5",
+                "layer6": "thaumcraft:items/focus_blank_6",
+                "layer7": "thaumcraft:items/focus_blank_7"
+            }
+        }
+    }
+}

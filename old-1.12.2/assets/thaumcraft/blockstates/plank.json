@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "defaults":
+    {
+        "transform": "forge:default-block",
+        "model": "cube_all"
+    },
+    "variants": {        
+        "type=greatwood": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/greatwood_plank"}},
+        "type=silverwood": { "model": "cube_all", "textures": {"all": "thaumcraft:blocks/silverwood_plank"}}
+    }
+}
