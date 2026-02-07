@@ -14,6 +14,10 @@ import java.util.Map;
 public final class ModItems {
     // TODO(port): replace generic placeholder Item registrations with functional item classes (thaumometer, thaumonomicon, phials, scribing tools, foci, etc.).
     // TODO(port): migrate legacy sub-item/meta behavior into explicit item/data-component models for 1.20.1 parity.
+    // TODO(port): split legacy variant containers (`nuggets`, `ingots`, `plate`, `gear`, etc.) into explicit subtype/data-component handling so quartz sliver (`nuggetQuartz`) and other recipe-critical variants are addressable.
+    // TODO(port): replace placeholder armor ids with real ArmorItem implementations and legacy behaviors (vis discounts, warping values, void self-repair, traveller boots movement/recharge, fortress mask set bonuses, goggles reveal support).
+    // TODO(port): replace placeholder tool ids with real tiered tool implementations (thaumium/void/elemental/crimson/primal) and legacy effects (void self-repair + warp, elemental active abilities, crimson/primal special logic).
+    // TODO(port): replace placeholder consumable/system items for insanity loop (`sanity_checker`, `sanity_soap`, `bath_salts`, `bucket_pure`, `bucket_death`) once warp + fluid systems are in place.
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Thaumcraft.MODID);
     public static final Map<String, RegistryObject<Item>> BLOCK_ITEMS_BY_ID = new LinkedHashMap<>();

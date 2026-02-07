@@ -166,11 +166,115 @@ Phase 4 status:
 - [x] Jar interaction now matches baseline TC flow (storage/transfer; no direct held-item dissolution path)
 - [x] Added baseline passive transfer from crucible to adjacent jars (wide-first automation scaffold)
 - [x] Salis Mundus crucible catalyst temporarily mapped to quartz as a quartz-sliver stand-in during wide-first porting
+- [ ] Quartz sliver parity is still pending:
+- [ ] legacy uses `nuggetQuartz` catalyst (quartz variant of `thaumcraft:nuggets`), not a dedicated standalone `quartz_sliver` item id.
+- [ ] migrate crucible catalysts to a quartz-sliver-compatible item/tag path and restore legacy crystal-alchemy catalyst usage.
 - [ ] Essentia transport automation is still pending (`alembic`, tubes, smelters, thaumatorium)
 
 Exit criteria:
 
 - Alchemy loop is craftable end-to-end
+
+## Research Notes (2026-02-07 Direction Reset)
+
+### Crucible + Quartz Sliver
+
+- Legacy TC6 does not use a standalone `quartz_sliver` item id.
+- Legacy quartz sliver behavior comes from `thaumcraft:nuggets` quartz subtype (`nuggetQuartz` ore dictionary entry, index 9 in legacy nugget variants).
+- Legacy base crystal alchemy recipes use quartz sliver (`nuggetQuartz`) as the catalyst with per-aspect essentia costs.
+- Current 1.20.1 port uses `minecraft:quartz` in `data/thaumcraft/recipes/crucible/salis_mundus.json` as a temporary stand-in.
+- TODO(port): implement nugget subtype parity for `thaumcraft:nuggets` (or explicit split ids) so quartz sliver semantics are real again.
+- TODO(port): add catalyst tags compatible with quartz sliver and migrate crucible recipe jsons to those tags/items.
+- TODO(port): port the legacy vis crystal crucible recipe set that depends on quartz sliver catalysts.
+
+### Bucket of Pure / Bucket of Death
+
+- Legacy bucket items place custom source fluids and return an empty bucket (`bucket_pure` -> `purifying_fluid`, `bucket_death` -> `liquid_death`).
+- Legacy allows source pickup into custom buckets via bucket fill event hooks.
+- Legacy `purifying_fluid` source behavior grants Warp Ward to players touching it and then consumes the source block.
+- Legacy `liquid_death` damages living entities on contact, scaled by fluid level.
+- Legacy bath-salts path includes a cauldron conversion to `purifying_fluid` and Spa-driven spreading/mixing behavior.
+- TODO(port): replace placeholder fluid blocks with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
+- TODO(port): add bucket pickup hooks for both fluids (source-only behavior parity).
+- TODO(port): wire purifying fluid to warp/insanity systems (`Warp Ward` interaction) once warp capability is ported.
+- TODO(port): port bath-salts conversion and Spa mixing flow that produces/propagates purifying fluid.
+
+### Model Parity Backlog (Explicit IDs)
+
+- Legacy blockstate references are under `old-1.12.2/assets/thaumcraft/blockstates/<id>.json`.
+- Activator Rail: `activator_rail`
+- Alembic: `alembic`
+- Arcane Ear: `arcane_ear`
+- Workbench Charger: `arcane_workbench_charger`
+- Bellows: `bellows`
+- Brain Box: `brain_box`
+- Candle: `candle`
+- Centrifuge: `centrifuge`
+- Dioptra: `dioptra`
+- Essentia Input: `essentia_input`
+- Essentia Output: `essentia_output`
+- Everfull Urn: `everfull_urn`
+- Golem Builder: `golem_builder`
+- Infernal Furnace: `infernal_furnace`
+- Lamp of Arcana: `lamp_arcane`
+- Lamp of Fertility: `lamp_fertility`
+- Lamp of Growth: `lamp_growth`
+- Levitator: `levitator`
+- Loot Crate: `loot_crate`
+- Loot Urn: `loot_urn`
+- Mirror: `mirror`
+- Essentia Mirror: `mirror_essentia`
+- Pattern Crafter: `pattern_crafter`
+- Pillar: `pillar`
+- Recharge Pedestal: `recharge_pedestal`
+- Redstone Relay: `redstone_relay`
+- Research Table: `research_table`
+- Sapling: `sapling`
+- Shimmerleaf: `shimmerleaf`
+- Vishroom: `vishroom`
+- Smelter Aux: `smelter_aux`
+- Smelter Basic: `smelter_basic`
+- Smelter Thaumium: `smelter_thaumium`
+- Smelter Vent: `smelter_vent`
+- Smelter Void: `smelter_void`
+- Spa: `spa`
+- Taint Fibre: `taint_fibre`
+- Tube: `tube`
+- Tube Buffer: `tube_buffer`
+- Tube Filter: `tube_filter`
+- Tube Oneway: `tube_oneway`
+- Tube Restrict: `tube_restrict`
+- Tube Valve: `tube_valve`
+- Wand Workbench: `wand_workbench`
+
+### Armor Porting Backlog
+
+- Current 1.20.1 registration still uses generic placeholder items for armor ids; none currently equip as functional armor with TC-specific behavior.
+- Legacy armor textures live under `old-1.12.2/assets/thaumcraft/textures/models/armor`.
+- Legacy armor item models live under `old-1.12.2/assets/thaumcraft/models/item`.
+- TODO(port): implement real armor classes and registration wiring for:
+- TODO(port): `thaumium_*`, `cloth_*`, `traveller_boots`, `fortress_*`, `void_*`, `void_robe_*`, `crimson_*`, `goggles`.
+- TODO(port): port key armor behavior from legacy:
+- TODO(port): vis discount gear (`goggles`, robes, void robe, cultist pieces), revealer/node visibility (`goggles`, some helms), warping gear values (void/cultist/void robe), self-repair on void gear, fortress set/mask modifiers, traveller boots movement + fall handling + recharge path.
+- TODO(port): preserve dye/overlay behavior for robe/void-robe textures and cauldron washing interaction where applicable.
+
+### Tool Porting Backlog
+
+- Current 1.20.1 registration still uses generic placeholder items for tool ids; no real `TieredItem` implementations are active yet.
+- Legacy tool textures/models are in `old-1.12.2/assets/thaumcraft/textures/items` and `old-1.12.2/assets/thaumcraft/models/item`.
+- TODO(port): implement real tool classes and registration wiring for:
+- TODO(port): `thaumium_*`, `void_*`, `elemental_*`, `crimson_blade`, `primal_crusher`.
+- TODO(port): port key behavior families:
+- TODO(port): void tools self-repair + warp + on-hit debuffs, elemental tool active abilities and default infusion enchant setups, crimson blade debuff profile + warp, primal crusher dual-tool behavior and self-maintaining infusion enchantments.
+
+### Insanity / Warp Backlog
+
+- Legacy insanity is implemented as a multi-type warp system (`PERMANENT`, `NORMAL`, `TEMPORARY`) with periodic warp event rolls and effects.
+- Legacy sanity checker drives dedicated warp HUD readout; sanity soap removes temporary warp and can reduce normal warp; purifying fluid and Warp Ward interact with this loop.
+- TODO(port): add warp persistence capability with all three warp pools and counters.
+- TODO(port): add server-side warp event scheduler/effects parity and progression triggers tied to warp thresholds.
+- TODO(port): add sanity checker UI/HUD behavior and synchronize values client-side.
+- TODO(port): port sanity soap, bath salts, and purifying fluid interactions against the new warp system.
 
 ### Phase 5: Infusion
 
@@ -226,7 +330,8 @@ Exit criteria:
 - Infusion and support blocks: `pedestal`, `recharge_pedestal`, `wand_workbench`, `arcane_workbench_charger`
 - Utility/device line: `golem_builder`, `pattern_crafter`, `hungry_chest`, `dioptra`, `spa`, `lamp_arcane`, `lamp_fertility`, `lamp_growth`, `redstone_relay`, `levitator`, `mirror`
 - High-visual backlog (custom blockstates/models/shapes): `infusion_matrix`, `pedestal`, all jars, `alembic`, all tube variants, `crucible`, `bellows`, `dioptra`, `mirror`, `thaumatorium_top`
-- World/progression systems: aura regen/transfer mechanics, flux events/cleanup, aspect definitions, player knowledge + warp persistence, research data load/unlock flow, Thaumonomicon UI/navigation
+- World/progression systems: aura regen/transfer mechanics, flux events/cleanup, aspect definitions, player knowledge + warp persistence, insanity/warp events, sanity-checker HUD, research data load/unlock flow, Thaumonomicon UI/navigation
+- Equipment parity systems: full armor/tool class migration, TC-specific attributes/effects, and model/texture parity for wearable/tool content
 
 ## Recommended Workflow
 

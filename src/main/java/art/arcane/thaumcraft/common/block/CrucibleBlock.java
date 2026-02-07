@@ -25,6 +25,9 @@ public class CrucibleBlock extends StationBlock {
     // TODO(port): Align interaction feedback/effects with legacy crucible block:
     // TODO(port): add full particle/sound event parity for smelting, spills, and boil state transitions.
     // TODO(port): preserve thrower/context metadata for recipe ownership/research attribution where needed by progression.
+    // TODO(port): Restore quartz sliver catalyst parity for crucible workflows:
+    // TODO(port): legacy "quartz sliver" is the quartz variant of `thaumcraft:nuggets` (ore key `nuggetQuartz`), not raw `minecraft:quartz`.
+    // TODO(port): once nugget subtype/tag parity exists, migrate crucible catalyst checks + user-facing feedback to quartz sliver semantics.
 
     public static final BooleanProperty WATER = BooleanProperty.create("water");
     public static final BooleanProperty HEATED = BooleanProperty.create("heated");

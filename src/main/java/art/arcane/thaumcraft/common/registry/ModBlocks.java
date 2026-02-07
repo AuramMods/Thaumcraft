@@ -24,6 +24,7 @@ import java.util.Map;
 public final class ModBlocks {
     // TODO(port): Replace remaining placeholder `new Block(...)` registrations with dedicated block classes as each legacy system is implemented.
     // TODO(port): split variant-heavy legacy ids (e.g., metadata-driven stone/pillar families) into explicit 1.20.1 blockstate/property models where parity needs it.
+    // TODO(port): replace placeholder fluid blocks (`purifying_fluid`, `liquid_death`) with proper fluid block/fluid type stacks so custom bucket pickup/place behavior and warp interactions can be restored.
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Thaumcraft.MODID);
     public static final Map<String, RegistryObject<Block>> BLOCKS_BY_ID = new LinkedHashMap<>();

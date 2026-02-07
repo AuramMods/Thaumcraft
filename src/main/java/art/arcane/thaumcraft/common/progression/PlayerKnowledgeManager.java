@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 public final class PlayerKnowledgeManager {
     // TODO(port): Add legacy research/knowledge API surface (progress research, set/clear research flags, category knowledge gain, warp integration).
     // TODO(port): reintroduce player sync packet flow once research UI/thaumonomicon and server-authoritative progression are ported.
+    // TODO(port): Add dedicated warp/insanity persistence and APIs (permanent/normal/temporary pools, counters, and event hooks) instead of overloading scan knowledge.
+    // TODO(port): Expose warp query/mutation helpers used by sanity-checker HUD, sanity soap cleansing, purifying fluid, and warp event systems.
 
     private static final String DATA_ID = Thaumcraft.MODID + "_player_knowledge";
 
