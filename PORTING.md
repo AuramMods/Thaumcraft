@@ -165,10 +165,11 @@ Phase 4 status:
 - [x] Added manual phial transfer path between crucible and jars (glass bottle <-> phial <-> container, no direct item-to-jar dissolution)
 - [x] Jar interaction now matches baseline TC flow (storage/transfer; no direct held-item dissolution path)
 - [x] Added baseline passive transfer from crucible to adjacent jars (wide-first automation scaffold)
-- [x] Salis Mundus crucible catalyst temporarily mapped to quartz as a quartz-sliver stand-in during wide-first porting
-- [ ] Quartz sliver parity is still pending:
+- [x] Added transitional quartz-sliver catalyst path (`thaumcraft:quartz_sliver` + `thaumcraft:catalysts/quartz_slivers` tag) and migrated Salis Mundus catalyst off raw `minecraft:quartz`.
+- [x] Restored baseline vis-crystal crucible recipes (`crystal_aer`, `crystal_aqua`, `crystal_ignis`, `crystal_terra`, `crystal_ordo`, `crystal_perditio`, `crystal_vitium`) using quartz-sliver catalyst tag.
+- [ ] Quartz sliver full legacy parity is still pending:
 - [ ] legacy uses `nuggetQuartz` catalyst (quartz variant of `thaumcraft:nuggets`), not a dedicated standalone `quartz_sliver` item id.
-- [ ] migrate crucible catalysts to a quartz-sliver-compatible item/tag path and restore legacy crystal-alchemy catalyst usage.
+- [ ] migrate compatibility item path to variant-container parity for nuggets/data components while preserving catalyst tag compatibility.
 - [ ] Essentia transport automation is still pending (`alembic`, tubes, smelters, thaumatorium)
 
 Exit criteria:
@@ -182,10 +183,9 @@ Exit criteria:
 - Legacy TC6 does not use a standalone `quartz_sliver` item id.
 - Legacy quartz sliver behavior comes from `thaumcraft:nuggets` quartz subtype (`nuggetQuartz` ore dictionary entry, index 9 in legacy nugget variants).
 - Legacy base crystal alchemy recipes use quartz sliver (`nuggetQuartz`) as the catalyst with per-aspect essentia costs.
-- Current 1.20.1 port uses `minecraft:quartz` in `data/thaumcraft/recipes/crucible/salis_mundus.json` as a temporary stand-in.
-- TODO(port): implement nugget subtype parity for `thaumcraft:nuggets` (or explicit split ids) so quartz sliver semantics are real again.
-- TODO(port): add catalyst tags compatible with quartz sliver and migrate crucible recipe jsons to those tags/items.
-- TODO(port): port the legacy vis crystal crucible recipe set that depends on quartz sliver catalysts.
+- Current 1.20.1 port now uses transitional `thaumcraft:quartz_sliver` + catalyst tag (`thaumcraft:catalysts/quartz_slivers`) for salis mundus and base vis crystal crucible recipes.
+- TODO(port): implement nugget subtype parity for `thaumcraft:nuggets` (or explicit split ids/data components) so quartz sliver semantics are canonical again.
+- TODO(port): migrate compatibility item path back to nugget-variant-backed catalyst semantics while keeping datapack-facing catalyst tags stable.
 
 ### Bucket of Pure / Bucket of Death
 

@@ -1,7 +1,7 @@
 {
   "type": "thaumcraft:crucible",
   "catalyst": {
-    "item": "minecraft:quartz"
+    "tag": "thaumcraft:catalysts/quartz_slivers"
   },
   "result": {
     "item": "thaumcraft:salis_mundus"

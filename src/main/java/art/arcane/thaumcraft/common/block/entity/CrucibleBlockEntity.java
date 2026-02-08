@@ -34,9 +34,9 @@ public class CrucibleBlockEntity extends StationBlockEntity {
     // TODO(port): Restore legacy crucible instability handling from TileCrucible:
     // TODO(port): over-capacity and long-boil behavior should spill random aspects into flux over time instead of only controlled dump behavior.
     // TODO(port): bind crucible recipe execution to research unlock requirements once the knowledge system is fully ported.
-    // TODO(port): Reinstate legacy catalyst parity for crystal alchemy recipes:
-    // TODO(port): legacy crucible crystal recipes depend on quartz sliver (`nuggetQuartz`), which currently has no true subtype/tag equivalent in this port.
-    // TODO(port): after nugget subtype migration, add recipe coverage for full vis crystal generation and remove quartz stand-ins.
+    // TODO(port): complete full catalyst parity for crystal alchemy:
+    // TODO(port): base vis crystal recipes now exist and use `thaumcraft:catalysts/quartz_slivers` backed by `thaumcraft:quartz_sliver`.
+    // TODO(port): migrate this compatibility path to canonical legacy nugget variant (`nuggetQuartz`) once variant-container parity is implemented.
 
     public static final int MAX_WATER = 1000;
     public static final int MAX_HEAT = 200;

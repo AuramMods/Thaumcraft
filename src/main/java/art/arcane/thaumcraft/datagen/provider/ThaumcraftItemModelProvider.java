@@ -31,6 +31,7 @@ public class ThaumcraftItemModelProvider extends ItemModelProvider {
             Map.entry("modules", "item/module_vision"),
             Map.entry("nuggets", "item/nugget_thaumium"),
             Map.entry("plate", "item/plate_brass"),
+            Map.entry("quartz_sliver", "item/nugget_quartz"),
             Map.entry("seals", "item/seals/seal_blank"),
             Map.entry("thaumometer", "item/scanscreen"),
             Map.entry("triple_meat_treat", "item/tripletreat"),

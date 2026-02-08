@@ -41,6 +41,9 @@ public final class ModItems {
         for (String id : LegacyContentRegistryIds.ITEM_IDS) {
             ITEMS_BY_ID.put(id, ITEMS.register(id, () -> new Item(new Item.Properties())));
         }
+
+        // Transitional parity item for legacy nuggetQuartz catalyst behavior.
+        ITEMS_BY_ID.put("quartz_sliver", ITEMS.register("quartz_sliver", () -> new Item(new Item.Properties())));
     }
 
     public static void register(IEventBus eventBus) {

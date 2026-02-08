@@ -1,0 +1,13 @@
+{
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "tag": "thaumcraft:catalysts/quartz_slivers"
+  },
+  "result": {
+    "item": "thaumcraft:crystal_aqua"
+  },
+  "aspects": {
+    "aqua": 2
+  },
+  "water": 50
+}
