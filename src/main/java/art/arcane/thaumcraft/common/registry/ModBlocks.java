@@ -2,7 +2,9 @@ package art.arcane.thaumcraft.common.registry;
 
 import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.block.JarBlock;
+import art.arcane.thaumcraft.common.block.LiquidDeathBlock;
 import art.arcane.thaumcraft.common.block.PedestalBlock;
+import art.arcane.thaumcraft.common.block.PurifyingFluidBlock;
 import art.arcane.thaumcraft.common.block.StationBlock;
 import art.arcane.thaumcraft.common.block.CrucibleBlock;
 import art.arcane.thaumcraft.common.block.entity.ArcaneWorkbenchBlockEntity;
@@ -50,6 +52,8 @@ public final class ModBlocks {
             case "infusion_matrix" -> new StationBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), InfusionMatrixBlockEntity::new);
             case "jar_normal", "jar_void", "jar_brain" -> new JarBlock(jarProperties());
             case "pedestal" -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(3.0F).noOcclusion());
+            case "purifying_fluid" -> new PurifyingFluidBlock(fluidPlaceholderProperties());
+            case "liquid_death" -> new LiquidDeathBlock(fluidPlaceholderProperties());
             default -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE));
         };
     }
@@ -59,6 +63,17 @@ public final class ModBlocks {
                 .strength(0.3F)
                 .sound(SoundType.GLASS)
                 .noOcclusion()
+                .isSuffocating((state, level, pos) -> false)
+                .isViewBlocking((state, level, pos) -> false);
+    }
+
+    private static BlockBehaviour.Properties fluidPlaceholderProperties() {
+        return BlockBehaviour.Properties.copy(Blocks.WATER)
+                .replaceable()
+                .noCollission()
+                .noOcclusion()
+                .strength(100.0F)
+                .noLootTable()
                 .isSuffocating((state, level, pos) -> false)
                 .isViewBlocking((state, level, pos) -> false);
     }

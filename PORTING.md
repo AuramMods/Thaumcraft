@@ -194,8 +194,14 @@ Exit criteria:
 - Legacy `purifying_fluid` source behavior grants Warp Ward to players touching it and then consumes the source block.
 - Legacy `liquid_death` damages living entities on contact, scaled by fluid level.
 - Legacy bath-salts path includes a cauldron conversion to `purifying_fluid` and Spa-driven spreading/mixing behavior.
-- TODO(port): replace placeholder fluid blocks with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
-- TODO(port): add bucket pickup hooks for both fluids (source-only behavior parity).
+- Current 1.20.1 port has baseline bucket/fluid placeholder behavior:
+- `bucket_pure` and `bucket_death` are now functional custom bucket items that place their matching blocks and return an empty bucket.
+- empty-bucket pickup into `bucket_pure` / `bucket_death` is wired through Forge `FillBucketEvent` for both placeholder fluid blocks.
+- `purifying_fluid` currently applies a temporary resistance effect and consumes the block (temporary Warp Ward stand-in).
+- `liquid_death` currently damages living entities on contact at a fixed interval/value (no depth scaling yet).
+- bath salts now have baseline expired-item cauldron conversion (`full water cauldron` -> `purifying_fluid` block placeholder), matching legacy trigger shape.
+- TODO(port): replace placeholder block-based fluid handling with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
+- TODO(port): restore source/flow-depth semantics for pickup/place behavior parity.
 - TODO(port): wire purifying fluid to warp/insanity systems (`Warp Ward` interaction) once warp capability is ported.
 - TODO(port): port bath-salts conversion and Spa mixing flow that produces/propagates purifying fluid.
 

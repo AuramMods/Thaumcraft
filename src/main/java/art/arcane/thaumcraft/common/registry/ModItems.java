@@ -1,6 +1,7 @@
 package art.arcane.thaumcraft.common.registry;
 
 import art.arcane.thaumcraft.Thaumcraft;
+import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -39,11 +40,19 @@ public final class ModItems {
 
     private static void registerLegacyItems() {
         for (String id : LegacyContentRegistryIds.ITEM_IDS) {
-            ITEMS_BY_ID.put(id, ITEMS.register(id, () -> new Item(new Item.Properties())));
+            ITEMS_BY_ID.put(id, ITEMS.register(id, () -> createItem(id)));
         }
 
         // Transitional parity item for legacy nuggetQuartz catalyst behavior.
         ITEMS_BY_ID.put("quartz_sliver", ITEMS.register("quartz_sliver", () -> new Item(new Item.Properties())));
+    }
+
+    private static Item createItem(String id) {
+        return switch (id) {
+            case "bucket_pure" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("purifying_fluid").get());
+            case "bucket_death" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("liquid_death").get());
+            default -> new Item(new Item.Properties());
+        };
     }
 
     public static void register(IEventBus eventBus) {
