@@ -235,9 +235,10 @@ public final class ThaumcraftCommandEvents {
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
         int gearWarp = WarpGearManager.getWarpFromGear(player);
         int totalWithGear = warp.total() + gearWarp;
-        boolean bathSaltsHint = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.BATH_SALTS_HINT);
-        boolean eldritchMinor = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MINOR);
-        boolean eldritchMajor = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MAJOR);
+        boolean bathSalts = PlayerKnowledgeManager.hasResearch(player, "BATHSALTS");
+        boolean bathSaltsHint = PlayerKnowledgeManager.hasResearch(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT);
+        boolean eldritchMinor = PlayerKnowledgeManager.hasResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR);
+        boolean eldritchMajor = PlayerKnowledgeManager.hasResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR);
 
         source.sendSuccess(() -> Component.literal("Thaumcraft Debug Warp"), false);
         source.sendSuccess(() -> Component.literal("permanent=" + warp.permanent()
@@ -246,7 +247,8 @@ public final class ThaumcraftCommandEvents {
                 + ", total=" + warp.total()), false);
         source.sendSuccess(() -> Component.literal("gear=" + gearWarp + ", total_with_gear=" + totalWithGear), false);
         source.sendSuccess(() -> Component.literal("event_counter=" + counter), false);
-        source.sendSuccess(() -> Component.literal("milestones: bath_salts_hint=" + bathSaltsHint
+        source.sendSuccess(() -> Component.literal("research: BATHSALTS=" + bathSalts
+                + ", !BATHSALTS=" + bathSaltsHint
                 + ", eldritch_minor=" + eldritchMinor
                 + ", eldritch_major=" + eldritchMajor), false);
     }

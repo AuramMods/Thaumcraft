@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 public final class WarpEvents {
     // TODO(port): Replace this baseline ticker with full legacy warp event table/progression gating/event categories.
     // TODO(port): Add client FX/audio hallucination events and proper sync packet flow.
-    // TODO(port): Replace milestone flags with full research unlock flow (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) once research is ported.
+    // TODO(port): Expand baseline research unlock flow to full research-stage/state parity once thaumonomicon progression is ported.
 
     private static final int TEMPORARY_WARP_DECAY_INTERVAL_TICKS = 2000;
     private static final int MIN_COUNTER_DECAY_ON_EVENT = 5;
@@ -71,7 +71,7 @@ public final class WarpEvents {
         PlayerKnowledgeManager.setWarpEventCounter(player, counter);
 
         triggerWarpEvent(player, effectiveWarp);
-        applyWarpMilestones(player, actualWarp);
+        applyWarpResearchUnlocks(player, actualWarp);
     }
 
     private static void triggerWarpEvent(ServerPlayer player, int totalWarp) {
@@ -100,15 +100,19 @@ public final class WarpEvents {
         player.displayClientMessage(Component.literal("You feel briefly unsettled."), true);
     }
 
-    private static void applyWarpMilestones(ServerPlayer player, int actualWarp) {
-        if (actualWarp > 10 && PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.BATH_SALTS_HINT)) {
+    private static void applyWarpResearchUnlocks(ServerPlayer player, int actualWarp) {
+        boolean knowsBathSalts = PlayerKnowledgeManager.hasResearch(player, "BATHSALTS")
+                || PlayerKnowledgeManager.hasResearch(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT);
+
+        if (actualWarp > 10 && !knowsBathSalts
+                && PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT)) {
             player.displayClientMessage(Component.literal("A cleansing thought surfaces: perhaps bath salts could calm this corruption."), false);
         }
         if (actualWarp > 25) {
-            PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MINOR);
+            PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR);
         }
         if (actualWarp > 50) {
-            PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MAJOR);
+            PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR);
         }
     }
 }

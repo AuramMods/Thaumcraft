@@ -214,12 +214,13 @@ This file captures migration state so work can continue safely after context com
 - Extended baseline warp ticker cadence/probability toward legacy `checkWarpEvent`:
   - warp checks now run every `2000` ticks (legacy cadence shape) instead of per-second threshold accumulation
   - event trigger chance now rolls from `sqrt(warp_counter)` (0-99 roll), with effective-warp scaling and legacy-shaped counter decay floor (`max(5, sqrt(counter) * 2)`)
-- Extended baseline warp ticker with legacy-shaped gear and milestone hooks:
+- Extended baseline warp ticker with legacy-shaped gear and research-unlock hooks:
   - warp event effective total now includes warping gear from main-hand + armor (plus legacy `TC.WARP` item NBT support)
   - baseline warping values are now wired for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, and `primal_crusher`
   - warp counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`)
-  - player knowledge now persists one-time warp milestones: `bath_salts_hint`, `eldritch_minor`, `eldritch_major`
-  - `/thaumcraft debug warp` now prints gear warp totals and milestone flag states for validation
+  - player knowledge now persists baseline research keys and warp progression unlocks legacy keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
+  - player-knowledge load now migrates old milestone tags (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) into those research keys for compatibility
+  - `/thaumcraft debug warp` now prints gear warp totals and research-key states for validation
 - Added dedicated cultist/crimson warping armor baselines:
   - `crimson_boots` now maps to `CultistBootsItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
   - `crimson_robe_chest` / `crimson_robe_helm` / `crimson_robe_legs` now map to `CultistRobeArmorItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
@@ -269,7 +270,7 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
+  - expand current key-only research unlocks into full research-stage/flag/category progression parity
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Continue armor parity after cultist warp baseline:
   - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)

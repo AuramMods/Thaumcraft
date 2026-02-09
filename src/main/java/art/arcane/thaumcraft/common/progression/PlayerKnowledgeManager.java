@@ -6,13 +6,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Set;
+
 public final class PlayerKnowledgeManager {
-    // TODO(port): Add legacy research/knowledge API surface (progress research, set/clear research flags, category knowledge gain, warp integration).
+    // TODO(port): Expand baseline research-key support to legacy IPlayerKnowledge parity (stages/flags and category knowledge points).
     // TODO(port): reintroduce player sync packet flow once research UI/thaumonomicon and server-authoritative progression are ported.
-    // TODO(port): Add dedicated warp/insanity persistence and APIs (permanent/normal/temporary pools, counters, and event hooks) instead of overloading scan knowledge.
-    // TODO(port): Expose warp query/mutation helpers used by sanity-checker HUD, sanity soap cleansing, purifying fluid, and warp event systems.
+    // TODO(port): expose research completion helpers that also trigger popup/page flags once thaumonomicon UI exists.
 
     private static final String DATA_ID = Thaumcraft.MODID + "_player_knowledge";
+    public static final String RESEARCH_BATH_SALTS_HINT = "!BATHSALTS";
+    public static final String RESEARCH_ELDRITCH_MINOR = "ELDRITCHMINOR";
+    public static final String RESEARCH_ELDRITCH_MAJOR = "ELDRITCHMAJOR";
 
     private PlayerKnowledgeManager() {
     }
@@ -25,6 +29,21 @@ public final class PlayerKnowledgeManager {
     public static boolean hasSalisMundusUnlocked(ServerPlayer player) {
         PlayerKnowledgeSavedData data = getData(player.serverLevel());
         return data.hasSalisMundusUnlocked(player.getUUID());
+    }
+
+    public static boolean hasResearch(ServerPlayer player, String researchKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.hasResearch(player.getUUID(), researchKey);
+    }
+
+    public static boolean unlockResearch(ServerPlayer player, String researchKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.unlockResearch(player.getUUID(), researchKey);
+    }
+
+    public static Set<String> getResearchKeys(ServerPlayer player) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchKeys(player.getUUID());
     }
 
     public static ScanResult recordBlockScan(ServerPlayer player, ResourceLocation blockId, AspectList aspects) {
@@ -110,16 +129,6 @@ public final class PlayerKnowledgeManager {
         data.setWarpEventCounter(player.getUUID(), value);
     }
 
-    public static boolean hasWarpMilestone(ServerPlayer player, WarpMilestone milestone) {
-        PlayerKnowledgeSavedData data = getData(player.serverLevel());
-        return data.hasWarpMilestone(player.getUUID(), milestone.id);
-    }
-
-    public static boolean unlockWarpMilestone(ServerPlayer player, WarpMilestone milestone) {
-        PlayerKnowledgeSavedData data = getData(player.serverLevel());
-        return data.unlockWarpMilestone(player.getUUID(), milestone.id);
-    }
-
     private static PlayerKnowledgeSavedData getData(ServerLevel level) {
         ServerLevel overworld = level.getServer().overworld();
         return overworld.getDataStorage().computeIfAbsent(PlayerKnowledgeSavedData::load, PlayerKnowledgeSavedData::new, DATA_ID);
@@ -132,18 +141,6 @@ public final class PlayerKnowledgeManager {
         PERMANENT,
         NORMAL,
         TEMPORARY
-    }
-
-    public enum WarpMilestone {
-        BATH_SALTS_HINT("bath_salts_hint"),
-        ELDRITCH_MINOR("eldritch_minor"),
-        ELDRITCH_MAJOR("eldritch_major");
-
-        private final String id;
-
-        WarpMilestone(String id) {
-            this.id = id;
-        }
     }
 
     public record WarpSnapshot(int permanent, int normal, int temporary) {

@@ -32,7 +32,11 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String WARP_NORMAL_TAG = "warp_normal";
     private static final String WARP_TEMPORARY_TAG = "warp_temporary";
     private static final String WARP_EVENT_COUNTER_TAG = "warp_event_counter";
+    private static final String RESEARCH_KEYS_TAG = "research_keys";
     private static final String WARP_MILESTONES_TAG = "warp_milestones";
+    private static final String LEGACY_BATH_SALTS_MILESTONE = "bath_salts_hint";
+    private static final String LEGACY_ELDRITCH_MINOR_MILESTONE = "eldritch_minor";
+    private static final String LEGACY_ELDRITCH_MAJOR_MILESTONE = "eldritch_major";
 
     private final Map<UUID, PlayerKnowledgeEntry> players = new HashMap<>();
 
@@ -187,21 +191,30 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         }
     }
 
-    public boolean hasWarpMilestone(UUID playerId, String milestoneId) {
-        return getOrCreate(playerId).warpMilestones.contains(milestoneId);
+    public boolean hasResearch(UUID playerId, String researchKey) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return false;
+        }
+        return getOrCreate(playerId).researchKeys.contains(normalized);
     }
 
-    public boolean unlockWarpMilestone(UUID playerId, String milestoneId) {
-        if (milestoneId == null || milestoneId.isBlank()) {
+    public boolean unlockResearch(UUID playerId, String researchKey) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
             return false;
         }
 
         PlayerKnowledgeEntry entry = getOrCreate(playerId);
-        boolean added = entry.warpMilestones.add(milestoneId);
+        boolean added = entry.researchKeys.add(normalized);
         if (added) {
             setDirty();
         }
         return added;
+    }
+
+    public Set<String> getResearchKeys(UUID playerId) {
+        return Set.copyOf(getOrCreate(playerId).researchKeys);
     }
 
     private PlayerKnowledgeEntry getOrCreate(UUID playerId) {
@@ -221,6 +234,18 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return Math.max(0, Math.min(100_000, value));
     }
 
+    private static String normalizeResearchKey(String researchKey) {
+        if (researchKey == null) {
+            return null;
+        }
+
+        String normalized = researchKey.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+        return normalized;
+    }
+
     private static final class PlayerKnowledgeEntry {
         private boolean salisUnlocked;
         private int scanCount;
@@ -232,7 +257,7 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         private int warpNormal;
         private int warpTemporary;
         private int warpEventCounter;
-        private final Set<String> warpMilestones = new HashSet<>();
+        private final Set<String> researchKeys = new HashSet<>();
 
         private CompoundTag toTag() {
             CompoundTag tag = new CompoundTag();
@@ -276,13 +301,13 @@ public final class PlayerKnowledgeSavedData extends SavedData {
             tag.putInt(WARP_TEMPORARY_TAG, this.warpTemporary);
             tag.putInt(WARP_EVENT_COUNTER_TAG, this.warpEventCounter);
 
-            ListTag warpMilestonesTag = new ListTag();
-            for (String milestoneId : this.warpMilestones) {
+            ListTag researchKeysTag = new ListTag();
+            for (String researchKey : this.researchKeys) {
                 CompoundTag single = new CompoundTag();
-                single.putString("id", milestoneId);
-                warpMilestonesTag.add(single);
+                single.putString("id", researchKey);
+                researchKeysTag.add(single);
             }
-            tag.put(WARP_MILESTONES_TAG, warpMilestonesTag);
+            tag.put(RESEARCH_KEYS_TAG, researchKeysTag);
 
             return tag;
         }
@@ -329,15 +354,37 @@ public final class PlayerKnowledgeSavedData extends SavedData {
             entry.warpTemporary = clampWarp(tag.getInt(WARP_TEMPORARY_TAG));
             entry.warpEventCounter = Math.max(0, tag.getInt(WARP_EVENT_COUNTER_TAG));
 
+            ListTag researchKeysTag = tag.getList(RESEARCH_KEYS_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < researchKeysTag.size(); i++) {
+                String researchKey = normalizeResearchKey(researchKeysTag.getCompound(i).getString("id"));
+                if (researchKey != null) {
+                    entry.researchKeys.add(researchKey);
+                }
+            }
+
             ListTag warpMilestonesTag = tag.getList(WARP_MILESTONES_TAG, Tag.TAG_COMPOUND);
             for (int i = 0; i < warpMilestonesTag.size(); i++) {
                 String milestoneId = warpMilestonesTag.getCompound(i).getString("id");
                 if (!milestoneId.isEmpty()) {
-                    entry.warpMilestones.add(milestoneId);
+                    migrateLegacyWarpMilestone(entry, milestoneId);
                 }
             }
 
             return entry;
+        }
+
+        private static void migrateLegacyWarpMilestone(PlayerKnowledgeEntry entry, String milestoneId) {
+            if (LEGACY_BATH_SALTS_MILESTONE.equals(milestoneId)) {
+                entry.researchKeys.add(PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT);
+                return;
+            }
+            if (LEGACY_ELDRITCH_MINOR_MILESTONE.equals(milestoneId)) {
+                entry.researchKeys.add(PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR);
+                return;
+            }
+            if (LEGACY_ELDRITCH_MAJOR_MILESTONE.equals(milestoneId)) {
+                entry.researchKeys.add(PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR);
+            }
         }
     }
 }

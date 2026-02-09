@@ -141,6 +141,7 @@ Phase 3 status:
 - [x] Added first-pass Salis Mundus multiblock trigger handling for `infusion` altar assembly, `thaumatorium`, `infernal_furnace`, and `golem_builder`
 - [x] Added player knowledge persistence baseline (`PlayerKnowledgeSavedData`) and first thaumometer scan hook for block scanning
 - [x] Expanded thaumometer scanning baseline to entity and item surfaces, including persisted unique scan tracking for blocks/items/entities
+- [x] Added baseline research-key persistence APIs (`hasResearch`/`unlockResearch`) with migration from older warp-milestone flags into legacy research keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
 - [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
 - [ ] Salis Mundus trigger set is still incomplete (legacy multiblock variant parity is still pending, especially infusion altar stone/pillar/pedestal variants and exact placeholder transformation semantics)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
@@ -318,12 +319,13 @@ Exit criteria:
 - main-hand + armor warping gear values are included, and legacy `TC.WARP` item NBT is honored.
 - current baseline includes explicit warping values for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, `primal_crusher`, `crimson_boots`, and `crimson_robe_*`.
 - baseline event-counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`) when an event fires.
-- warp milestone flags are now persisted in player knowledge (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) and triggered from the periodic warp event flow.
-- `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + milestone flag state for testing.
+- baseline warp progression now unlocks/persists legacy research keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) from periodic warp checks.
+- player knowledge load now migrates old milestone flags (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) into those research keys for save compatibility.
+- `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + research key state for testing.
 - `/thaumcraft debug warp gear` now prints per-slot gear warp contribution (main hand + armor) for legacy parity/debug validation.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
-- TODO(port): replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) once research is ported.
+- TODO(port): expand key-only research unlock integration into full research-entry completion/state parity (stages/flags/category knowledge gates).
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 
