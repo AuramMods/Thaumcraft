@@ -190,6 +190,27 @@ This file captures migration state so work can continue safely after context com
   - legacy aspect coverage is now substantially expanded but not complete; direct vanilla `ItemStack(...)` mappings and final parity review still remain
   - aura generation curves, regen, spread, and flux events are still pending
 
+### Phase 4 / Insanity Loop Baselines (Recent)
+
+- Added registered `warp_ward` mob effect scaffold:
+  - new effect type + registry (`ModMobEffects`, `WarpWardMobEffect`)
+  - mod bootstrap now registers mob effects during startup
+- Updated purifying fluid behavior toward legacy parity:
+  - touching purifying fluid now grants `warp_ward`
+  - ward duration baseline now scales from permanent warp (`min(32000, 200000 / sqrt(permanent_warp_or_1))`)
+  - source block is consumed after ward application
+- Expanded warp debug command tooling:
+  - `/thaumcraft debug warp add <pool> <amount>`
+  - `/thaumcraft debug warp set <pool> <value>`
+  - `/thaumcraft debug warp clear [pool]`
+  - `/thaumcraft debug warp counter set|reset`
+  - added direct warp setters in player knowledge data/manager for test/debug flows
+- Added dedicated `bath_salts` item class baseline:
+  - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
+  - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
+- Verified:
+  - `./gradlew classes -q` passes after these changes
+
 ## Overall Plan (Condensed)
 
 1. Phase 0: Foundation + migration map (complete)
@@ -203,6 +224,12 @@ This file captures migration state so work can continue safely after context com
 
 ## Immediate Next Steps
 
+- Finalize bath-salts conversion parity audit against legacy behavior:
+  - validate exact conversion surfaces (source-water/cauldron expectations) and tune to match intended TC6 semantics
+- Port Spa mixing/spreading baseline that consumes `bath_salts` and produces/propagates `purifying_fluid`
+- Extend Warp Ward integration beyond current baseline:
+  - add localization/icon/UX polish for `warp_ward`
+  - gate/modify warp-event effects where legacy behavior expects Warp Ward interaction
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:

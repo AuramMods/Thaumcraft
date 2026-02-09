@@ -2,6 +2,10 @@
 
 Generated from `old-1.12.2` registration and asset roots for Phase 0 planning.
 
+Progress checkpoints and forward-looking porting operations are tracked in:
+- `PORTING.md`
+- `PORTING_MEMORY.md`
+
 ## Inventory Counts
 
 - Java files (`old-1.12.2/thaumcraft`): 823

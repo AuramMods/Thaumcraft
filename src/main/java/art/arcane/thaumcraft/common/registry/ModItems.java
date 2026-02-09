@@ -2,6 +2,7 @@ package art.arcane.thaumcraft.common.registry;
 
 import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
+import art.arcane.thaumcraft.common.item.BathSaltsItem;
 import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
 import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
 import art.arcane.thaumcraft.common.item.SanityCheckerItem;
@@ -81,6 +82,7 @@ public final class ModItems {
         return switch (id) {
             case "bucket_pure" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("purifying_fluid").get());
             case "bucket_death" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("liquid_death").get());
+            case "bath_salts" -> new BathSaltsItem();
             case "sanity_checker" -> new SanityCheckerItem();
             case "sanity_soap" -> new SanitySoapItem();
             default -> new Item(new Item.Properties());
