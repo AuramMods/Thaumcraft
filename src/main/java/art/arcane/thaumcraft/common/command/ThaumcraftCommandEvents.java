@@ -37,6 +37,7 @@ public final class ThaumcraftCommandEvents {
     private static final int MAX_WARP_VALUE = 100_000;
     private static final int MAX_COUNTER_VALUE = 1_000_000;
     private static final int MAX_RESEARCH_STAGE = 256;
+    private static final int MAX_RESEARCH_KNOWLEDGE_VALUE = 1_000_000;
     private static final int DEFAULT_RESEARCH_SUMMARY_LINES = 12;
 
     private ThaumcraftCommandEvents() {
@@ -145,6 +146,59 @@ public final class ThaumcraftCommandEvents {
                                                         context.getSource(),
                                                         StringArgumentType.getString(context, "key"),
                                                         StringArgumentType.getString(context, "flag")
+                                                ))))))
+                .then(createResearchKnowledgeDebugCommand());
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> createResearchKnowledgeDebugCommand() {
+        return Commands.literal("knowledge")
+                .executes(context -> runResearchKnowledgeSummary(context.getSource(), false))
+                .then(Commands.literal("list")
+                        .executes(context -> runResearchKnowledgeSummary(context.getSource(), true)))
+                .then(Commands.literal("get")
+                        .then(Commands.argument("type", StringArgumentType.word())
+                                .executes(context -> runResearchKnowledgeGet(
+                                        context.getSource(),
+                                        StringArgumentType.getString(context, "type"),
+                                        null
+                                ))
+                                .then(Commands.argument("category", StringArgumentType.word())
+                                        .executes(context -> runResearchKnowledgeGet(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "type"),
+                                                StringArgumentType.getString(context, "category")
+                                        )))))
+                .then(Commands.literal("add")
+                        .then(Commands.argument("type", StringArgumentType.word())
+                                .then(Commands.argument("amount", IntegerArgumentType.integer(-MAX_RESEARCH_KNOWLEDGE_VALUE, MAX_RESEARCH_KNOWLEDGE_VALUE))
+                                        .executes(context -> runResearchKnowledgeAdd(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "type"),
+                                                IntegerArgumentType.getInteger(context, "amount"),
+                                                null
+                                        ))
+                                        .then(Commands.argument("category", StringArgumentType.word())
+                                                .executes(context -> runResearchKnowledgeAdd(
+                                                        context.getSource(),
+                                                        StringArgumentType.getString(context, "type"),
+                                                        IntegerArgumentType.getInteger(context, "amount"),
+                                                        StringArgumentType.getString(context, "category")
+                                                ))))))
+                .then(Commands.literal("set")
+                        .then(Commands.argument("type", StringArgumentType.word())
+                                .then(Commands.argument("amount", IntegerArgumentType.integer(0, MAX_RESEARCH_KNOWLEDGE_VALUE))
+                                        .executes(context -> runResearchKnowledgeSet(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "type"),
+                                                IntegerArgumentType.getInteger(context, "amount"),
+                                                null
+                                        ))
+                                        .then(Commands.argument("category", StringArgumentType.word())
+                                                .executes(context -> runResearchKnowledgeSet(
+                                                        context.getSource(),
+                                                        StringArgumentType.getString(context, "type"),
+                                                        IntegerArgumentType.getInteger(context, "amount"),
+                                                        StringArgumentType.getString(context, "category")
                                                 ))))));
     }
 
@@ -393,6 +447,100 @@ public final class ThaumcraftCommandEvents {
         return 1;
     }
 
+    private static int runResearchKnowledgeSummary(CommandSourceStack source, boolean verbose) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        Set<PlayerKnowledgeManager.ResearchKnowledgeEntry> entries = PlayerKnowledgeManager.getResearchKnowledgeEntries(player);
+        List<PlayerKnowledgeManager.ResearchKnowledgeEntry> sorted = new ArrayList<>(entries);
+        sorted.sort((a, b) -> {
+            int typeCompare = Integer.compare(a.type().ordinal(), b.type().ordinal());
+            if (typeCompare != 0) {
+                return typeCompare;
+            }
+            return a.categoryKey().compareTo(b.categoryKey());
+        });
+
+        source.sendSuccess(() -> Component.literal("Thaumcraft Debug Research Knowledge"), false);
+        source.sendSuccess(() -> Component.literal("knowledge_entries=" + sorted.size()), false);
+        if (sorted.isEmpty()) {
+            return 1;
+        }
+
+        int maxLines = verbose ? sorted.size() : Math.min(DEFAULT_RESEARCH_SUMMARY_LINES, sorted.size());
+        for (int i = 0; i < maxLines; i++) {
+            PlayerKnowledgeManager.ResearchKnowledgeEntry entry = sorted.get(i);
+            source.sendSuccess(() -> Component.literal(formatResearchKnowledgeEntry(entry)), false);
+        }
+
+        if (!verbose && sorted.size() > maxLines) {
+            int remaining = sorted.size() - maxLines;
+            source.sendSuccess(() -> Component.literal("... " + remaining + " more knowledge entr(y/ies). Use /thaumcraft debug research knowledge list"), false);
+        }
+        return 1;
+    }
+
+    private static int runResearchKnowledgeGet(
+            CommandSourceStack source,
+            String rawType,
+            String rawCategory
+    ) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchKnowledgeType type = parseResearchKnowledgeType(rawType);
+        if (type == null) {
+            source.sendFailure(Component.literal("Unknown research knowledge type: " + rawType + " (valid: theory, observation, epiphany)"));
+            return 0;
+        }
+
+        String category = normalizeResearchKnowledgeCategory(type, rawCategory);
+        int raw = PlayerKnowledgeManager.getResearchKnowledgeRaw(player, type, category);
+        int points = PlayerKnowledgeManager.getResearchKnowledgePoints(player, type, category);
+        source.sendSuccess(() -> Component.literal(formatResearchKnowledgeValue(type, category, raw, points)), false);
+        return 1;
+    }
+
+    private static int runResearchKnowledgeAdd(
+            CommandSourceStack source,
+            String rawType,
+            int amount,
+            String rawCategory
+    ) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchKnowledgeType type = parseResearchKnowledgeType(rawType);
+        if (type == null) {
+            source.sendFailure(Component.literal("Unknown research knowledge type: " + rawType + " (valid: theory, observation, epiphany)"));
+            return 0;
+        }
+
+        String category = normalizeResearchKnowledgeCategory(type, rawCategory);
+        boolean changed = PlayerKnowledgeManager.addResearchKnowledge(player, type, category, amount);
+        if (!changed) {
+            source.sendFailure(Component.literal("Research knowledge add failed: resulting value would be negative."));
+            return 0;
+        }
+
+        source.sendSuccess(() -> Component.literal("research knowledge add: " + formatResearchKnowledgeTarget(type, category) + " += " + amount), false);
+        return runResearchKnowledgeGet(source, rawType, rawCategory);
+    }
+
+    private static int runResearchKnowledgeSet(
+            CommandSourceStack source,
+            String rawType,
+            int amount,
+            String rawCategory
+    ) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchKnowledgeType type = parseResearchKnowledgeType(rawType);
+        if (type == null) {
+            source.sendFailure(Component.literal("Unknown research knowledge type: " + rawType + " (valid: theory, observation, epiphany)"));
+            return 0;
+        }
+
+        String category = normalizeResearchKnowledgeCategory(type, rawCategory);
+        boolean changed = PlayerKnowledgeManager.setResearchKnowledgeRaw(player, type, category, amount);
+        source.sendSuccess(() -> Component.literal("research knowledge set: " + formatResearchKnowledgeTarget(type, category)
+                + " = " + amount + " (" + (changed ? "updated" : "unchanged") + ")"), false);
+        return runResearchKnowledgeGet(source, rawType, rawCategory);
+    }
+
     private static void sendWarpSummary(CommandSourceStack source, ServerPlayer player) {
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
@@ -458,6 +606,25 @@ public final class ThaumcraftCommandEvents {
         return key + " (stage=" + stage + ", flags=" + formatResearchFlags(flags) + ")";
     }
 
+    private static String formatResearchKnowledgeEntry(PlayerKnowledgeManager.ResearchKnowledgeEntry entry) {
+        return formatResearchKnowledgeValue(entry.type(), entry.categoryKey(), entry.rawAmount(), entry.points());
+    }
+
+    private static String formatResearchKnowledgeValue(
+            PlayerKnowledgeManager.ResearchKnowledgeType type,
+            String category,
+            int rawAmount,
+            int points
+    ) {
+        return "knowledge " + formatResearchKnowledgeTarget(type, category) + ": raw=" + rawAmount + ", points=" + points;
+    }
+
+    private static String formatResearchKnowledgeTarget(PlayerKnowledgeManager.ResearchKnowledgeType type, String category) {
+        String typeLabel = type.name().toLowerCase(Locale.ROOT);
+        String categoryLabel = category == null || category.isEmpty() ? "-" : category;
+        return typeLabel + "/" + categoryLabel;
+    }
+
     private static String formatResearchFlags(Set<PlayerKnowledgeManager.ResearchFlag> flags) {
         if (flags == null || flags.isEmpty()) {
             return "-";
@@ -491,6 +658,20 @@ public final class ThaumcraftCommandEvents {
         } catch (IllegalArgumentException ignored) {
             return null;
         }
+    }
+
+    private static PlayerKnowledgeManager.ResearchKnowledgeType parseResearchKnowledgeType(String rawType) {
+        return PlayerKnowledgeManager.ResearchKnowledgeType.parse(rawType);
+    }
+
+    private static String normalizeResearchKnowledgeCategory(PlayerKnowledgeManager.ResearchKnowledgeType type, String category) {
+        if (type == null || !type.isCategoryScoped()) {
+            return "";
+        }
+        if (category == null || category.isBlank()) {
+            return "";
+        }
+        return category.trim().toUpperCase(Locale.ROOT);
     }
 
     @FunctionalInterface

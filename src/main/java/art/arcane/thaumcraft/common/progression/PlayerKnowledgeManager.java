@@ -6,10 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Locale;
 import java.util.Set;
 
 public final class PlayerKnowledgeManager {
-    // TODO(port): Expand baseline research key/stage/flag support to legacy IPlayerKnowledge parity (category knowledge points and full research entry flow).
+    // TODO(port): Expand baseline research key/stage/flag/knowledge support to legacy IPlayerKnowledge parity (full research entry flow and auto-unlock rules).
     // TODO(port): reintroduce player sync packet flow once research UI/thaumonomicon and server-authoritative progression are ported.
     // TODO(port): expose research completion helpers that also trigger popup/page flags once thaumonomicon UI exists.
 
@@ -79,6 +80,31 @@ public final class PlayerKnowledgeManager {
     public static Set<ResearchFlag> getResearchFlags(ServerPlayer player, String researchKey) {
         PlayerKnowledgeSavedData data = getData(player.serverLevel());
         return data.getResearchFlags(player.getUUID(), researchKey);
+    }
+
+    public static int getResearchKnowledgeRaw(ServerPlayer player, ResearchKnowledgeType type, String categoryKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchKnowledgeRaw(player.getUUID(), type, categoryKey);
+    }
+
+    public static int getResearchKnowledgePoints(ServerPlayer player, ResearchKnowledgeType type, String categoryKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchKnowledgePoints(player.getUUID(), type, categoryKey);
+    }
+
+    public static boolean addResearchKnowledge(ServerPlayer player, ResearchKnowledgeType type, String categoryKey, int rawAmountDelta) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.addResearchKnowledge(player.getUUID(), type, categoryKey, rawAmountDelta);
+    }
+
+    public static boolean setResearchKnowledgeRaw(ServerPlayer player, ResearchKnowledgeType type, String categoryKey, int rawAmount) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.setResearchKnowledgeRaw(player.getUUID(), type, categoryKey, rawAmount);
+    }
+
+    public static Set<ResearchKnowledgeEntry> getResearchKnowledgeEntries(ServerPlayer player) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchKnowledgeEntries(player.getUUID());
     }
 
     public static ScanResult recordBlockScan(ServerPlayer player, ResourceLocation blockId, AspectList aspects) {
@@ -182,6 +208,57 @@ public final class PlayerKnowledgeManager {
         PAGE,
         RESEARCH,
         POPUP
+    }
+
+    public enum ResearchKnowledgeType {
+        THEORY(32, true, "T"),
+        OBSERVATION(16, true, "O"),
+        EPIPHANY(256, false, "E");
+
+        private final int progression;
+        private final boolean categoryScoped;
+        private final String abbreviation;
+
+        ResearchKnowledgeType(int progression, boolean categoryScoped, String abbreviation) {
+            this.progression = progression;
+            this.categoryScoped = categoryScoped;
+            this.abbreviation = abbreviation;
+        }
+
+        public int getProgression() {
+            return this.progression;
+        }
+
+        public boolean isCategoryScoped() {
+            return this.categoryScoped;
+        }
+
+        public String getAbbreviation() {
+            return this.abbreviation;
+        }
+
+        public static ResearchKnowledgeType parse(String value) {
+            if (value == null || value.isBlank()) {
+                return null;
+            }
+
+            String normalized = value.trim().toUpperCase(Locale.ROOT);
+            for (ResearchKnowledgeType type : values()) {
+                if (type.name().equals(normalized) || type.abbreviation.equals(normalized)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+    }
+
+    public record ResearchKnowledgeEntry(ResearchKnowledgeType type, String categoryKey, int rawAmount) {
+        public int points() {
+            if (this.rawAmount <= 0) {
+                return 0;
+            }
+            return this.rawAmount / this.type.getProgression();
+        }
     }
 
     public record WarpSnapshot(int permanent, int normal, int temporary) {

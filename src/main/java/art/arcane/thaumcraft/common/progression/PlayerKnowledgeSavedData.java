@@ -11,13 +11,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.saveddata.SavedData;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 public final class PlayerKnowledgeSavedData extends SavedData {
     // TODO(port): Expand this baseline data model to legacy IPlayerKnowledge parity:
-    // TODO(port): persist research entries with stage/flags and category-based observation/theory totals.
+    // TODO(port): expand persisted research stage/flag/category-knowledge scaffolding into full research graph completion rules.
     // TODO(port): warp pools are now present as baseline (permanent/normal/temporary + event counter); expand toward full legacy event parity.
     // TODO(port): keep backward compatibility migration paths for current simplified scan/salis fields when introducing the richer schema.
 
@@ -36,8 +37,12 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String RESEARCH_KEYS_TAG = "research_keys";
     private static final String RESEARCH_STAGES_TAG = "research_stages";
     private static final String RESEARCH_FLAGS_TAG = "research_flags";
+    private static final String RESEARCH_KNOWLEDGE_TAG = "research_knowledge";
     private static final String RESEARCH_STAGE_VALUE_TAG = "stage";
     private static final String RESEARCH_FLAG_VALUES_TAG = "flags";
+    private static final String RESEARCH_KNOWLEDGE_TYPE_TAG = "type";
+    private static final String RESEARCH_KNOWLEDGE_CATEGORY_TAG = "category";
+    private static final String RESEARCH_KNOWLEDGE_AMOUNT_TAG = "amount";
     private static final String WARP_MILESTONES_TAG = "warp_milestones";
     private static final String LEGACY_BATH_SALTS_MILESTONE = "bath_salts_hint";
     private static final String LEGACY_ELDRITCH_MINOR_MILESTONE = "eldritch_minor";
@@ -360,6 +365,107 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return Set.copyOf(flags);
     }
 
+    public int getResearchKnowledgeRaw(UUID playerId, PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey) {
+        if (type == null) {
+            return 0;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        String storageKey = createResearchKnowledgeStorageKey(type, categoryKey);
+        return entry.researchKnowledgeRaw.getOrDefault(storageKey, 0);
+    }
+
+    public int getResearchKnowledgePoints(UUID playerId, PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey) {
+        if (type == null) {
+            return 0;
+        }
+
+        int raw = getResearchKnowledgeRaw(playerId, type, categoryKey);
+        if (raw <= 0) {
+            return 0;
+        }
+
+        return raw / type.getProgression();
+    }
+
+    public boolean addResearchKnowledge(UUID playerId, PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey, int rawAmountDelta) {
+        if (type == null) {
+            return false;
+        }
+
+        if (rawAmountDelta == 0) {
+            return true;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        String storageKey = createResearchKnowledgeStorageKey(type, categoryKey);
+        int current = entry.researchKnowledgeRaw.getOrDefault(storageKey, 0);
+        long updatedLong = (long) current + rawAmountDelta;
+        if (updatedLong < 0) {
+            return false;
+        }
+
+        int updated = (int) Math.min(Integer.MAX_VALUE, updatedLong);
+        if (updated == current) {
+            return true;
+        }
+
+        if (updated <= 0) {
+            entry.researchKnowledgeRaw.remove(storageKey);
+        } else {
+            entry.researchKnowledgeRaw.put(storageKey, updated);
+        }
+
+        setDirty();
+        return true;
+    }
+
+    public boolean setResearchKnowledgeRaw(UUID playerId, PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey, int rawAmount) {
+        if (type == null || rawAmount < 0) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        String storageKey = createResearchKnowledgeStorageKey(type, categoryKey);
+        int current = entry.researchKnowledgeRaw.getOrDefault(storageKey, 0);
+        if (current == rawAmount) {
+            return false;
+        }
+
+        if (rawAmount <= 0) {
+            entry.researchKnowledgeRaw.remove(storageKey);
+        } else {
+            entry.researchKnowledgeRaw.put(storageKey, rawAmount);
+        }
+        setDirty();
+        return true;
+    }
+
+    public Set<PlayerKnowledgeManager.ResearchKnowledgeEntry> getResearchKnowledgeEntries(UUID playerId) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        if (entry.researchKnowledgeRaw.isEmpty()) {
+            return Set.of();
+        }
+
+        Set<PlayerKnowledgeManager.ResearchKnowledgeEntry> result = new HashSet<>();
+        for (Map.Entry<String, Integer> rawEntry : entry.researchKnowledgeRaw.entrySet()) {
+            ResearchKnowledgeKey key = parseResearchKnowledgeStorageKey(rawEntry.getKey());
+            if (key == null) {
+                continue;
+            }
+            int rawAmount = rawEntry.getValue() == null ? 0 : rawEntry.getValue();
+            if (rawAmount <= 0) {
+                continue;
+            }
+            result.add(new PlayerKnowledgeManager.ResearchKnowledgeEntry(key.type(), key.categoryKey(), rawAmount));
+        }
+
+        if (result.isEmpty()) {
+            return Set.of();
+        }
+        return Set.copyOf(result);
+    }
+
     private PlayerKnowledgeEntry getOrCreate(UUID playerId) {
         return this.players.computeIfAbsent(playerId, id -> new PlayerKnowledgeEntry());
     }
@@ -389,16 +495,59 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return normalized;
     }
 
+    private static String normalizeResearchCategoryKey(String categoryKey) {
+        if (categoryKey == null) {
+            return "";
+        }
+
+        String normalized = categoryKey.trim().toUpperCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            return "";
+        }
+        return normalized;
+    }
+
+    private static String createResearchKnowledgeStorageKey(PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey) {
+        String normalizedCategory = type.isCategoryScoped() ? normalizeResearchCategoryKey(categoryKey) : "";
+        return type.getAbbreviation() + "|" + normalizedCategory;
+    }
+
+    private static ResearchKnowledgeKey parseResearchKnowledgeStorageKey(String storageKey) {
+        if (storageKey == null || storageKey.isBlank()) {
+            return null;
+        }
+
+        String[] split = storageKey.split("\\|", 2);
+        if (split.length == 0) {
+            return null;
+        }
+
+        PlayerKnowledgeManager.ResearchKnowledgeType type = PlayerKnowledgeManager.ResearchKnowledgeType.parse(split[0]);
+        if (type == null) {
+            return null;
+        }
+
+        String categoryKey = "";
+        if (split.length > 1 && type.isCategoryScoped()) {
+            categoryKey = normalizeResearchCategoryKey(split[1]);
+        }
+
+        return new ResearchKnowledgeKey(type, categoryKey);
+    }
+
     private static PlayerKnowledgeManager.ResearchFlag parseResearchFlag(String value) {
         if (value == null || value.isBlank()) {
             return null;
         }
 
         try {
-            return PlayerKnowledgeManager.ResearchFlag.valueOf(value.trim().toUpperCase());
+            return PlayerKnowledgeManager.ResearchFlag.valueOf(value.trim().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException ignored) {
             return null;
         }
+    }
+
+    private record ResearchKnowledgeKey(PlayerKnowledgeManager.ResearchKnowledgeType type, String categoryKey) {
     }
 
     private static final class PlayerKnowledgeEntry {
@@ -415,6 +564,7 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         private final Set<String> researchKeys = new HashSet<>();
         private final Map<String, Integer> researchStages = new HashMap<>();
         private final Map<String, Set<PlayerKnowledgeManager.ResearchFlag>> researchFlags = new HashMap<>();
+        private final Map<String, Integer> researchKnowledgeRaw = new HashMap<>();
 
         private CompoundTag toTag() {
             CompoundTag tag = new CompoundTag();
@@ -496,6 +646,26 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 researchFlagsTag.add(single);
             }
             tag.put(RESEARCH_FLAGS_TAG, researchFlagsTag);
+
+            ListTag researchKnowledgeTag = new ListTag();
+            for (Map.Entry<String, Integer> knowledgeEntry : this.researchKnowledgeRaw.entrySet()) {
+                int amount = knowledgeEntry.getValue() == null ? 0 : knowledgeEntry.getValue();
+                if (amount <= 0) {
+                    continue;
+                }
+
+                ResearchKnowledgeKey key = parseResearchKnowledgeStorageKey(knowledgeEntry.getKey());
+                if (key == null) {
+                    continue;
+                }
+
+                CompoundTag single = new CompoundTag();
+                single.putString(RESEARCH_KNOWLEDGE_TYPE_TAG, key.type().getAbbreviation());
+                single.putString(RESEARCH_KNOWLEDGE_CATEGORY_TAG, key.categoryKey());
+                single.putInt(RESEARCH_KNOWLEDGE_AMOUNT_TAG, amount);
+                researchKnowledgeTag.add(single);
+            }
+            tag.put(RESEARCH_KNOWLEDGE_TAG, researchKnowledgeTag);
 
             return tag;
         }
@@ -583,6 +753,29 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 if (!parsed.isEmpty()) {
                     entry.researchFlags.put(researchKey, parsed);
                 }
+            }
+
+            ListTag researchKnowledgeTag = tag.getList(RESEARCH_KNOWLEDGE_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < researchKnowledgeTag.size(); i++) {
+                CompoundTag knowledgeTag = researchKnowledgeTag.getCompound(i);
+                PlayerKnowledgeManager.ResearchKnowledgeType type = PlayerKnowledgeManager.ResearchKnowledgeType.parse(
+                        knowledgeTag.getString(RESEARCH_KNOWLEDGE_TYPE_TAG)
+                );
+                if (type == null) {
+                    continue;
+                }
+
+                int amount = knowledgeTag.getInt(RESEARCH_KNOWLEDGE_AMOUNT_TAG);
+                if (amount <= 0) {
+                    continue;
+                }
+
+                String category = type.isCategoryScoped()
+                        ? normalizeResearchCategoryKey(knowledgeTag.getString(RESEARCH_KNOWLEDGE_CATEGORY_TAG))
+                        : "";
+
+                String storageKey = createResearchKnowledgeStorageKey(type, category);
+                entry.researchKnowledgeRaw.put(storageKey, amount);
             }
 
             ListTag warpMilestonesTag = tag.getList(WARP_MILESTONES_TAG, Tag.TAG_COMPOUND);
