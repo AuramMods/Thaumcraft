@@ -1,5 +1,8 @@
 package art.arcane.thaumcraft.common.item.armor;
 
+import art.arcane.thaumcraft.Thaumcraft;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import art.arcane.thaumcraft.common.item.VisDiscountGearItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorItem;
@@ -21,6 +24,13 @@ public class RobeArmorItem extends ArmorItem implements VisDiscountGearItem {
     @Override
     public int getVisDiscountPercent(ItemStack stack, ServerPlayer player) {
         return this.visDiscountPercent;
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        String base = slot == EquipmentSlot.LEGS ? "robes_2" : "robes_1";
+        String selected = type == null ? base : base + "_overlay";
+        return Thaumcraft.MODID + ":textures/models/armor/" + selected + ".png";
     }
 
     @Override

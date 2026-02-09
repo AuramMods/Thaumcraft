@@ -6,6 +6,7 @@ import art.arcane.thaumcraft.common.item.BathSaltsItem;
 import art.arcane.thaumcraft.common.item.armor.CultistBootsItem;
 import art.arcane.thaumcraft.common.item.armor.CultistRobeArmorItem;
 import art.arcane.thaumcraft.common.item.armor.GogglesItem;
+import art.arcane.thaumcraft.common.item.armor.LegacyTexturedArmorItem;
 import art.arcane.thaumcraft.common.item.armor.RobeArmorItem;
 import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
 import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
@@ -119,16 +121,16 @@ public final class ModItems {
             case "cloth_chest" -> new RobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, 3, new Item.Properties());
             case "cloth_legs" -> new RobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, new Item.Properties());
 
-            case "thaumium_boots" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "thaumium_chest" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "thaumium_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
-            case "thaumium_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "thaumium_boots" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, "thaumium_1", "thaumium_2", Rarity.UNCOMMON, new Item.Properties());
+            case "thaumium_chest" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, "thaumium_1", "thaumium_2", Rarity.UNCOMMON, new Item.Properties());
+            case "thaumium_helm" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "thaumium_1", "thaumium_2", Rarity.UNCOMMON, new Item.Properties());
+            case "thaumium_legs" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, "thaumium_1", "thaumium_2", Rarity.UNCOMMON, new Item.Properties());
 
             case "traveller_boots" -> new TravellerBootsItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
 
-            case "fortress_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "fortress_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
-            case "fortress_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "fortress_chest" -> new LegacyTexturedArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, "fortress_armor", null, Rarity.RARE, new Item.Properties());
+            case "fortress_helm" -> new LegacyTexturedArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, "fortress_armor", null, Rarity.RARE, new Item.Properties());
+            case "fortress_legs" -> new LegacyTexturedArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, "fortress_armor", null, Rarity.RARE, new Item.Properties());
 
             case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, 1, 0, new Item.Properties());
             case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, 1, 0, new Item.Properties());
@@ -140,13 +142,13 @@ public final class ModItems {
             case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, 5, new Item.Properties());
 
             case "crimson_boots" -> new CultistBootsItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "crimson_plate_helm" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET, new Item.Properties());
-            case "crimson_plate_legs" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "crimson_plate_chest" -> new LegacyTexturedArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, "cultist_plate_armor", null, Rarity.UNCOMMON, new Item.Properties());
+            case "crimson_plate_helm" -> new LegacyTexturedArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET, "cultist_plate_armor", null, Rarity.UNCOMMON, new Item.Properties());
+            case "crimson_plate_legs" -> new LegacyTexturedArmorItem(ArmorMaterials.IRON, ArmorItem.Type.LEGGINGS, "cultist_plate_armor", null, Rarity.UNCOMMON, new Item.Properties());
 
-            case "crimson_praetor_chest" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "crimson_praetor_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
-            case "crimson_praetor_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "crimson_praetor_chest" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, "cultist_leader_armor", null, Rarity.RARE, new Item.Properties());
+            case "crimson_praetor_helm" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "cultist_leader_armor", null, Rarity.RARE, new Item.Properties());
+            case "crimson_praetor_legs" -> new LegacyTexturedArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, "cultist_leader_armor", null, Rarity.RARE, new Item.Properties());
 
             case "crimson_robe_chest" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
             case "crimson_robe_helm" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());

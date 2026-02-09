@@ -1,15 +1,18 @@
 package art.arcane.thaumcraft.common.item.armor;
 
+import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftItemBehaviors;
 import art.arcane.thaumcraft.common.item.VisDiscountGearItem;
 import art.arcane.thaumcraft.common.item.WarpingGearItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class VoidArmorItem extends ArmorItem implements WarpingGearItem, VisDiscountGearItem {
     // TODO(port): Add legacy revealer behavior where applicable by armor family.
@@ -44,5 +47,23 @@ public class VoidArmorItem extends ArmorItem implements WarpingGearItem, VisDisc
     @Override
     public int getVisDiscountPercent(ItemStack stack, ServerPlayer player) {
         return this.visDiscountPercent;
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        String path = "";
+        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        if (key != null) {
+            path = key.getPath();
+        }
+
+        if (path.startsWith("void_robe_")) {
+            // Legacy texture pass order: overlay first, then the base robe texture.
+            String robeTexture = type == null ? "void_robe_armor_overlay" : "void_robe_armor";
+            return Thaumcraft.MODID + ":textures/models/armor/" + robeTexture + ".png";
+        }
+
+        String setTexture = slot == EquipmentSlot.LEGS ? "void_2" : "void_1";
+        return Thaumcraft.MODID + ":textures/models/armor/" + setTexture + ".png";
     }
 }

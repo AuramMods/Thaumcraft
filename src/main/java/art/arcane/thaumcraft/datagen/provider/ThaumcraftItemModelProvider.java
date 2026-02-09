@@ -9,10 +9,42 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ThaumcraftItemModelProvider extends ItemModelProvider {
 
     private final ExistingFileHelper existingFileHelper;
+    private static final Set<String> CUSTOM_ITEM_MODELS = Set.of(
+            "cloth_boots",
+            "cloth_chest",
+            "cloth_legs",
+            "thaumium_boots",
+            "thaumium_chest",
+            "thaumium_helm",
+            "thaumium_legs",
+            "traveller_boots",
+            "fortress_chest",
+            "fortress_helm",
+            "fortress_legs",
+            "void_boots",
+            "void_chest",
+            "void_helm",
+            "void_legs",
+            "void_robe_chest",
+            "void_robe_helm",
+            "void_robe_legs",
+            "crimson_boots",
+            "crimson_plate_chest",
+            "crimson_plate_helm",
+            "crimson_plate_legs",
+            "crimson_praetor_chest",
+            "crimson_praetor_helm",
+            "crimson_praetor_legs",
+            "crimson_robe_chest",
+            "crimson_robe_helm",
+            "crimson_robe_legs",
+            "goggles"
+    );
     private static final Map<String, String> ITEM_TEXTURE_ALIASES = Map.ofEntries(
             Map.entry("baubles", "item/ring_mundane"),
             Map.entry("caster_basic", "item/creative_caster"),
@@ -46,6 +78,10 @@ public class ThaumcraftItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (String id : ModItems.ITEMS_BY_ID.keySet()) {
+            if (CUSTOM_ITEM_MODELS.contains(id)) {
+                continue;
+            }
+
             ResourceLocation texture = resolveItemTexture(id);
             withExistingParent(id, mcLoc("item/generated"))
                     .texture("layer0", texture);

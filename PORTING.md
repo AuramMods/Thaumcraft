@@ -71,7 +71,13 @@ Phase 1 status:
 - [x] Known visual gap logged: many non-cube legacy models render incorrectly (expected before custom geometry/model pass)
 - [x] First non-cube model conversion pass completed for: `pedestal`, `infusion_matrix`, `arcane_workbench`, `crucible`, `jar_normal`, `jar_void`, `jar_brain`
 - [x] Added first-pass item display transforms for converted non-cube block items (inventory + hand sizing baseline)
+- [x] Restored legacy armor/goggle model assets baseline:
+- [x] imported legacy `textures/models/armor/*` into 1.20.1 resources,
+- [x] wired armor texture routing for thaumium/void/robes/cultist/fortress/traveller/goggles to replace vanilla placeholder material textures,
+- [x] replaced generated placeholder armor/goggle item models with legacy multi-layer item model JSONs (including robe/void-robe overlay layers),
+- [x] updated item-model datagen to skip those custom armor/goggle model ids so generated/main resources no longer collide.
 - [ ] Remaining non-cube model parity and advanced render polish are still pending
+- [ ] Full legacy custom armor geometry parity is still pending (`ModelRobe`/`ModelFortressArmor`/`ModelLeaderArmor`-equivalent 1.20.1 layer definitions)
 
 ### Phase 2: Functional Block Entities and Menus
 

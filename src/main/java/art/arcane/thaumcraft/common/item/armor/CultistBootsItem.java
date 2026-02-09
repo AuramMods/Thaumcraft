@@ -1,8 +1,11 @@
 package art.arcane.thaumcraft.common.item.armor;
 
+import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.WarpingGearItem;
 import art.arcane.thaumcraft.common.item.VisDiscountGearItem;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +27,11 @@ public class CultistBootsItem extends ArmorItem implements WarpingGearItem, VisD
     @Override
     public int getVisDiscountPercent(ItemStack stack, ServerPlayer player) {
         return 1;
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return Thaumcraft.MODID + ":textures/models/armor/cultistboots.png";
     }
 
     @Override

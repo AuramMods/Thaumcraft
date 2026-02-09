@@ -277,8 +277,14 @@ This file captures migration state so work can continue safely after context com
   - retained `thaumcraft:quartz_sliver` compatibility in `thaumcraft:catalysts/quartz_slivers`
   - updated quartz conversion recipes so quartz recombination accepts the catalyst tag and added legacy-to-canonical migration recipe (`quartz_sliver` -> `nugget_quartz`)
   - mirrored quartz nugget aspect mapping so catalyst dissolution behavior remains consistent
+- Restored armor/goggle model asset baseline:
+  - imported legacy armor render textures into `assets/thaumcraft/textures/models/armor`
+  - added explicit armor texture routing per armor family (`thaumium`, `void`, `void_robe`, `cloth_robe`, `cultist`, `fortress`, `traveller`, `goggles`) to replace vanilla-material placeholder renders
+  - added legacy armor/goggle item model JSONs in main resources (including multi-layer robe/void-robe overlays)
+  - updated item-model datagen to skip custom armor/goggle ids and removed generated duplicates to avoid resource copy collisions
 - Verified:
   - `./gradlew compileJava -q` passes
+  - `./gradlew classes -q` passes
   - `./gradlew runData --no-daemon` passes
 
 ## Overall Plan (Condensed)
@@ -298,6 +304,9 @@ This file captures migration state so work can continue safely after context com
   - design canonical `thaumcraft:nuggets` subtype/data-component model and migration path from split-ID baseline
   - expand the same split-ID-to-variant strategy to other containers (`ingots`, `plate`, `gear`) or move directly to unified component-backed containers
   - retire `thaumcraft:quartz_sliver` compatibility item once save/datapack migration handling is in place
+- Continue armor visual parity after texture/model-asset pass:
+  - port custom equipped-geometry layers for robe/fortress/leader/goggles families (1.20.1 equivalents of legacy `ModelRobe`/`ModelFortressArmor`/`ModelLeaderArmor`)
+  - restore robe/void-robe tint + overlay behavior parity on equipped models (beyond current baseline texture routing)
 - Finalize bath-salts + spa parity audit against legacy behavior:
   - validate exact conversion surfaces (source-water/cauldron expectations) and tune to intended TC6 semantics
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
