@@ -109,14 +109,14 @@ public final class ModItems {
             case "fortress_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
             case "fortress_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "void_helm" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
-            case "void_legs" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, 1, new Item.Properties());
+            case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, 1, new Item.Properties());
+            case "void_helm" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, 1, new Item.Properties());
+            case "void_legs" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, 1, new Item.Properties());
 
-            case "void_robe_chest" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
-            case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "void_robe_chest" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, 3, new Item.Properties());
+            case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, 3, new Item.Properties());
+            case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, new Item.Properties());
 
             case "crimson_boots" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
             case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());

@@ -1,6 +1,8 @@
 package art.arcane.thaumcraft.common.item.tool;
 
 import art.arcane.thaumcraft.common.item.ThaumcraftItemBehaviors;
+import art.arcane.thaumcraft.common.item.WarpingGearItem;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -9,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
-public class PrimalCrusherItem extends PickaxeItem {
+public class PrimalCrusherItem extends PickaxeItem implements WarpingGearItem {
     // TODO(port): replace this baseline with dedicated dual-tool mining logic + persistent infusion enchant behavior.
 
     public PrimalCrusherItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties) {
@@ -27,5 +29,10 @@ public class PrimalCrusherItem extends PickaxeItem {
         return super.canPerformAction(stack, toolAction)
                 || toolAction == ToolActions.SHOVEL_DIG
                 || toolAction == ToolActions.SHOVEL_FLATTEN;
+    }
+
+    @Override
+    public int getWarp(ItemStack stack, ServerPlayer player) {
+        return 2;
     }
 }

@@ -32,6 +32,7 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String WARP_NORMAL_TAG = "warp_normal";
     private static final String WARP_TEMPORARY_TAG = "warp_temporary";
     private static final String WARP_EVENT_COUNTER_TAG = "warp_event_counter";
+    private static final String WARP_MILESTONES_TAG = "warp_milestones";
 
     private final Map<UUID, PlayerKnowledgeEntry> players = new HashMap<>();
 
@@ -186,6 +187,23 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         }
     }
 
+    public boolean hasWarpMilestone(UUID playerId, String milestoneId) {
+        return getOrCreate(playerId).warpMilestones.contains(milestoneId);
+    }
+
+    public boolean unlockWarpMilestone(UUID playerId, String milestoneId) {
+        if (milestoneId == null || milestoneId.isBlank()) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        boolean added = entry.warpMilestones.add(milestoneId);
+        if (added) {
+            setDirty();
+        }
+        return added;
+    }
+
     private PlayerKnowledgeEntry getOrCreate(UUID playerId) {
         return this.players.computeIfAbsent(playerId, id -> new PlayerKnowledgeEntry());
     }
@@ -214,6 +232,7 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         private int warpNormal;
         private int warpTemporary;
         private int warpEventCounter;
+        private final Set<String> warpMilestones = new HashSet<>();
 
         private CompoundTag toTag() {
             CompoundTag tag = new CompoundTag();
@@ -256,6 +275,14 @@ public final class PlayerKnowledgeSavedData extends SavedData {
             tag.putInt(WARP_NORMAL_TAG, this.warpNormal);
             tag.putInt(WARP_TEMPORARY_TAG, this.warpTemporary);
             tag.putInt(WARP_EVENT_COUNTER_TAG, this.warpEventCounter);
+
+            ListTag warpMilestonesTag = new ListTag();
+            for (String milestoneId : this.warpMilestones) {
+                CompoundTag single = new CompoundTag();
+                single.putString("id", milestoneId);
+                warpMilestonesTag.add(single);
+            }
+            tag.put(WARP_MILESTONES_TAG, warpMilestonesTag);
 
             return tag;
         }
@@ -301,6 +328,14 @@ public final class PlayerKnowledgeSavedData extends SavedData {
             entry.warpNormal = clampWarp(tag.getInt(WARP_NORMAL_TAG));
             entry.warpTemporary = clampWarp(tag.getInt(WARP_TEMPORARY_TAG));
             entry.warpEventCounter = Math.max(0, tag.getInt(WARP_EVENT_COUNTER_TAG));
+
+            ListTag warpMilestonesTag = tag.getList(WARP_MILESTONES_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < warpMilestonesTag.size(); i++) {
+                String milestoneId = warpMilestonesTag.getCompound(i).getString("id");
+                if (!milestoneId.isEmpty()) {
+                    entry.warpMilestones.add(milestoneId);
+                }
+            }
 
             return entry;
         }

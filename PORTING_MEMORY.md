@@ -211,6 +211,13 @@ This file captures migration state so work can continue safely after context com
 - Extended baseline warp ticker cadence/probability toward legacy `checkWarpEvent`:
   - warp checks now run every `2000` ticks (legacy cadence shape) instead of per-second threshold accumulation
   - event trigger chance now rolls from `sqrt(warp_counter)` (0-99 roll), with effective-warp scaling and legacy-shaped counter decay floor (`max(5, sqrt(counter) * 2)`)
+- Extended baseline warp ticker with legacy-shaped gear and milestone hooks:
+  - warp event effective total now includes warping gear from main-hand + armor (plus legacy `TC.WARP` item NBT support)
+  - baseline warping values are now wired for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, and `primal_crusher`
+  - fallback warping placeholders now cover `crimson_boots` and `crimson_robe_*` until dedicated classes land
+  - warp counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`)
+  - player knowledge now persists one-time warp milestones: `bath_salts_hint`, `eldritch_minor`, `eldritch_major`
+  - `/thaumcraft debug warp` now prints gear warp totals and milestone flag states for validation
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
@@ -243,7 +250,8 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - add remaining legacy warp modifiers/parity (gear warp contribution, milestone/research unlock hooks, richer event table)
+  - replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
+  - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:

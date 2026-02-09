@@ -306,10 +306,15 @@ Exit criteria:
 - `bath_salts` now has baseline legacy-shaped dropped-lifespan timing and water conversion hooks as part of the insanity/purification loop scaffolding.
 - `spa` now provides a first-pass purification loop baseline with mix toggle support and non-mix fluid-source spreading.
 - baseline warp ticker now suppresses checks while `warp_ward` is active, performs a legacy-shaped periodic check every `2000` ticks, applies temporary-warp decay (`-1` per check), and rolls event triggers from `sqrt(event_counter)` probability.
-- baseline event-counter decay now follows a legacy-shaped floor (`max(5, sqrt(counter) * 2)`) when an event fires.
-- `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) for testing the insanity loop.
+- baseline warp ticker now applies legacy-shaped gear warp contribution in event checks:
+- main-hand + armor warping gear values are included, and legacy `TC.WARP` item NBT is honored.
+- current baseline includes explicit warping values for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, and `primal_crusher`, with fallback placeholders for `crimson_boots` and `crimson_robe_*`.
+- baseline event-counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`) when an event fires.
+- warp milestone flags are now persisted in player knowledge (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) and triggered from the periodic warp event flow.
+- `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + milestone flag state for testing.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
+- TODO(port): replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) once research is ported.
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 

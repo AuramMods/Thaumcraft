@@ -4,6 +4,7 @@ import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.aspect.AspectList;
 import art.arcane.thaumcraft.common.aspect.AspectRegistry;
 import art.arcane.thaumcraft.common.aspect.AspectType;
+import art.arcane.thaumcraft.common.progression.WarpGearManager;
 import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -178,13 +179,22 @@ public final class ThaumcraftCommandEvents {
     private static void sendWarpSummary(CommandSourceStack source, ServerPlayer player) {
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
+        int gearWarp = WarpGearManager.getWarpFromGear(player);
+        int totalWithGear = warp.total() + gearWarp;
+        boolean bathSaltsHint = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.BATH_SALTS_HINT);
+        boolean eldritchMinor = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MINOR);
+        boolean eldritchMajor = PlayerKnowledgeManager.hasWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MAJOR);
 
         source.sendSuccess(() -> Component.literal("Thaumcraft Debug Warp"), false);
         source.sendSuccess(() -> Component.literal("permanent=" + warp.permanent()
                 + ", normal=" + warp.normal()
                 + ", temporary=" + warp.temporary()
                 + ", total=" + warp.total()), false);
+        source.sendSuccess(() -> Component.literal("gear=" + gearWarp + ", total_with_gear=" + totalWithGear), false);
         source.sendSuccess(() -> Component.literal("event_counter=" + counter), false);
+        source.sendSuccess(() -> Component.literal("milestones: bath_salts_hint=" + bathSaltsHint
+                + ", eldritch_minor=" + eldritchMinor
+                + ", eldritch_major=" + eldritchMajor), false);
     }
 
     private static String warpTypeName(PlayerKnowledgeManager.WarpType type) {

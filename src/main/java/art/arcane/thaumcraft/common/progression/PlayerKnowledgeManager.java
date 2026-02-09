@@ -110,6 +110,16 @@ public final class PlayerKnowledgeManager {
         data.setWarpEventCounter(player.getUUID(), value);
     }
 
+    public static boolean hasWarpMilestone(ServerPlayer player, WarpMilestone milestone) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.hasWarpMilestone(player.getUUID(), milestone.id);
+    }
+
+    public static boolean unlockWarpMilestone(ServerPlayer player, WarpMilestone milestone) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.unlockWarpMilestone(player.getUUID(), milestone.id);
+    }
+
     private static PlayerKnowledgeSavedData getData(ServerLevel level) {
         ServerLevel overworld = level.getServer().overworld();
         return overworld.getDataStorage().computeIfAbsent(PlayerKnowledgeSavedData::load, PlayerKnowledgeSavedData::new, DATA_ID);
@@ -122,6 +132,18 @@ public final class PlayerKnowledgeManager {
         PERMANENT,
         NORMAL,
         TEMPORARY
+    }
+
+    public enum WarpMilestone {
+        BATH_SALTS_HINT("bath_salts_hint"),
+        ELDRITCH_MINOR("eldritch_minor"),
+        ELDRITCH_MAJOR("eldritch_major");
+
+        private final String id;
+
+        WarpMilestone(String id) {
+            this.id = id;
+        }
     }
 
     public record WarpSnapshot(int permanent, int normal, int temporary) {

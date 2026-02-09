@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 public final class WarpEvents {
     // TODO(port): Replace this baseline ticker with full legacy warp event table/progression gating/event categories.
     // TODO(port): Add client FX/audio hallucination events and proper sync packet flow.
-    // TODO(port): Add gear warp modifiers and research-unlock milestone hooks to match legacy checkWarpEvent behavior.
+    // TODO(port): Replace milestone flags with full research unlock flow (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) once research is ported.
 
     private static final int TEMPORARY_WARP_DECAY_INTERVAL_TICKS = 2000;
     private static final int MIN_COUNTER_DECAY_ON_EVENT = 5;
@@ -50,7 +50,9 @@ public final class WarpEvents {
         }
 
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
-        int totalWarp = warp.total();
+        int actualWarp = warp.permanent() + warp.normal();
+        int gearWarp = WarpGearManager.getWarpFromGear(player);
+        int totalWarp = warp.total() + gearWarp;
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
 
         if (counter <= 0 || totalWarp <= 0) {
@@ -64,11 +66,12 @@ public final class WarpEvents {
         }
 
         int effectiveWarp = Math.min(100, (totalWarp + totalWarp + counter) / 3);
-        int counterDecay = Math.max(MIN_COUNTER_DECAY_ON_EVENT, (int) (Math.sqrt(counter) * 2.0D));
+        int counterDecay = Math.max(MIN_COUNTER_DECAY_ON_EVENT, (int) (Math.sqrt(counter) * 2.0D - (gearWarp * 2.0D)));
         counter = Math.max(0, counter - counterDecay);
         PlayerKnowledgeManager.setWarpEventCounter(player, counter);
 
         triggerWarpEvent(player, effectiveWarp);
+        applyWarpMilestones(player, actualWarp);
     }
 
     private static void triggerWarpEvent(ServerPlayer player, int totalWarp) {
@@ -95,5 +98,17 @@ public final class WarpEvents {
 
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 0, true, true));
         player.displayClientMessage(Component.literal("You feel briefly unsettled."), true);
+    }
+
+    private static void applyWarpMilestones(ServerPlayer player, int actualWarp) {
+        if (actualWarp > 10 && PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.BATH_SALTS_HINT)) {
+            player.displayClientMessage(Component.literal("A cleansing thought surfaces: perhaps bath salts could calm this corruption."), false);
+        }
+        if (actualWarp > 25) {
+            PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MINOR);
+        }
+        if (actualWarp > 50) {
+            PlayerKnowledgeManager.unlockWarpMilestone(player, PlayerKnowledgeManager.WarpMilestone.ELDRITCH_MAJOR);
+        }
     }
 }
