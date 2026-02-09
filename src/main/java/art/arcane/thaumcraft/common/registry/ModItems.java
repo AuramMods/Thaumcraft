@@ -2,6 +2,15 @@ package art.arcane.thaumcraft.common.registry;
 
 import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
+import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
+import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
+import art.arcane.thaumcraft.common.item.tool.CrimsonBladeItem;
+import art.arcane.thaumcraft.common.item.tool.PrimalCrusherItem;
+import art.arcane.thaumcraft.common.item.tool.VoidAxeItem;
+import art.arcane.thaumcraft.common.item.tool.VoidHoeItem;
+import art.arcane.thaumcraft.common.item.tool.VoidPickaxeItem;
+import art.arcane.thaumcraft.common.item.tool.VoidShovelItem;
+import art.arcane.thaumcraft.common.item.tool.VoidSwordItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.AxeItem;
@@ -87,21 +96,21 @@ public final class ModItems {
             case "thaumium_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
             case "thaumium_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "traveller_boots" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "traveller_boots" -> new TravellerBootsItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
             case "goggles" -> new ArmorItem(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties());
 
             case "fortress_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
             case "fortress_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
             case "fortress_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "void_boots" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "void_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "void_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
-            case "void_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "void_helm" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
+            case "void_legs" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "void_robe_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "void_robe_helm" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
-            case "void_robe_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "void_robe_chest" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
+            case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
             case "crimson_boots" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
             case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());
@@ -129,11 +138,11 @@ public final class ModItems {
             case "thaumium_sword" -> new SwordItem(Tiers.DIAMOND, 3, -2.4F, new Item.Properties());
             case "thaumium_hoe" -> new HoeItem(Tiers.DIAMOND, -3, 0.0F, new Item.Properties());
 
-            case "void_pick" -> new PickaxeItem(Tiers.NETHERITE, 1, -2.8F, new Item.Properties().fireResistant());
-            case "void_axe" -> new AxeItem(Tiers.NETHERITE, 5.0F, -3.0F, new Item.Properties().fireResistant());
-            case "void_shovel" -> new ShovelItem(Tiers.NETHERITE, 1.5F, -3.0F, new Item.Properties().fireResistant());
-            case "void_sword" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
-            case "void_hoe" -> new HoeItem(Tiers.NETHERITE, -4, 0.0F, new Item.Properties().fireResistant());
+            case "void_pick" -> new VoidPickaxeItem(Tiers.NETHERITE, 1, -2.8F, new Item.Properties().fireResistant());
+            case "void_axe" -> new VoidAxeItem(Tiers.NETHERITE, 5.0F, -3.0F, new Item.Properties().fireResistant());
+            case "void_shovel" -> new VoidShovelItem(Tiers.NETHERITE, 1.5F, -3.0F, new Item.Properties().fireResistant());
+            case "void_sword" -> new VoidSwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
+            case "void_hoe" -> new VoidHoeItem(Tiers.NETHERITE, -4, 0.0F, new Item.Properties().fireResistant());
 
             case "elemental_pick" -> new PickaxeItem(Tiers.NETHERITE, 1, -2.8F, new Item.Properties().fireResistant());
             case "elemental_axe" -> new AxeItem(Tiers.NETHERITE, 5.0F, -3.0F, new Item.Properties().fireResistant());
@@ -141,8 +150,8 @@ public final class ModItems {
             case "elemental_sword" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
             case "elemental_hoe" -> new HoeItem(Tiers.NETHERITE, -4, 0.0F, new Item.Properties().fireResistant());
 
-            case "crimson_blade" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
-            case "primal_crusher" -> new PickaxeItem(Tiers.NETHERITE, 2, -2.7F, new Item.Properties().fireResistant());
+            case "crimson_blade" -> new CrimsonBladeItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
+            case "primal_crusher" -> new PrimalCrusherItem(Tiers.NETHERITE, 2, -2.7F, new Item.Properties().fireResistant());
             default -> null;
         };
     }

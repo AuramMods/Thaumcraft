@@ -257,6 +257,8 @@ Exit criteria:
 
 - Current 1.20.1 registration now maps armor ids to equipable `ArmorItem` baseline instances so armor slots/equip flow works in-game.
 - Current baseline still uses vanilla materials/stats as a compatibility bridge; Thaumcraft-specific armor materials/behavior are still pending.
+- `void_*` and `void_robe_*` now use a custom baseline class with passive self-repair ticks (inventory + worn) as a first behavior parity step.
+- `traveller_boots` now use a custom baseline class with movement/fall assist placeholder behavior (non-charge-based for now).
 - Legacy armor textures live under `old-1.12.2/assets/thaumcraft/textures/models/armor`.
 - Legacy armor item models live under `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real armor classes and registration wiring for:
@@ -269,6 +271,9 @@ Exit criteria:
 
 - Current 1.20.1 registration now maps tool ids to functional baseline vanilla tool classes (`PickaxeItem`, `AxeItem`, `ShovelItem`, `SwordItem`, `HoeItem`) so mining/combat/tool actions work.
 - Current baseline uses vanilla tiers/stats as compatibility scaffolding; Thaumcraft class-specific behavior/effects remain pending.
+- `void_*` tools now use custom baseline classes with self-repair ticks + wither on-hit effects.
+- `crimson_blade` now uses a custom baseline class with self-repair and wither/weakness on-hit effects.
+- `primal_crusher` now uses a custom baseline class with self-repair and shovel-action support (dual-tool baseline).
 - Legacy tool textures/models are in `old-1.12.2/assets/thaumcraft/textures/items` and `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real tool classes and registration wiring for:
 - TODO(port): `thaumium_*`, `void_*`, `elemental_*`, `crimson_blade`, `primal_crusher`.
