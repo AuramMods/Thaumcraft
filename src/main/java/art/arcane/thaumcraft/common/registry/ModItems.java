@@ -2,13 +2,22 @@ package art.arcane.thaumcraft.common.registry;
 
 import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -48,10 +57,93 @@ public final class ModItems {
     }
 
     private static Item createItem(String id) {
+        Item armorItem = createArmorItem(id);
+        if (armorItem != null) {
+            return armorItem;
+        }
+
+        Item toolItem = createToolItem(id);
+        if (toolItem != null) {
+            return toolItem;
+        }
+
         return switch (id) {
             case "bucket_pure" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("purifying_fluid").get());
             case "bucket_death" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("liquid_death").get());
             default -> new Item(new Item.Properties());
+        };
+    }
+
+    @Nullable
+    private static Item createArmorItem(String id) {
+        // TODO(port): Replace these baseline vanilla-material mappings with proper Thaumcraft armor classes/materials/textures + behaviors.
+        return switch (id) {
+            case "cloth_boots" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "cloth_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "cloth_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "thaumium_boots" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "thaumium_chest" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "thaumium_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
+            case "thaumium_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "traveller_boots" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "goggles" -> new ArmorItem(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties());
+
+            case "fortress_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "fortress_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
+            case "fortress_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "void_boots" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "void_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "void_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
+            case "void_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "void_robe_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "void_robe_helm" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
+            case "void_robe_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "crimson_boots" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "crimson_plate_helm" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET, new Item.Properties());
+            case "crimson_plate_legs" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "crimson_praetor_chest" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "crimson_praetor_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
+            case "crimson_praetor_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
+
+            case "crimson_robe_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "crimson_robe_helm" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
+            case "crimson_robe_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            default -> null;
+        };
+    }
+
+    @Nullable
+    private static Item createToolItem(String id) {
+        // TODO(port): Replace these baseline vanilla-tier tools with dedicated Thaumcraft tool classes/effects.
+        return switch (id) {
+            case "thaumium_pick" -> new PickaxeItem(Tiers.DIAMOND, 1, -2.8F, new Item.Properties());
+            case "thaumium_axe" -> new AxeItem(Tiers.DIAMOND, 5.0F, -3.0F, new Item.Properties());
+            case "thaumium_shovel" -> new ShovelItem(Tiers.DIAMOND, 1.5F, -3.0F, new Item.Properties());
+            case "thaumium_sword" -> new SwordItem(Tiers.DIAMOND, 3, -2.4F, new Item.Properties());
+            case "thaumium_hoe" -> new HoeItem(Tiers.DIAMOND, -3, 0.0F, new Item.Properties());
+
+            case "void_pick" -> new PickaxeItem(Tiers.NETHERITE, 1, -2.8F, new Item.Properties().fireResistant());
+            case "void_axe" -> new AxeItem(Tiers.NETHERITE, 5.0F, -3.0F, new Item.Properties().fireResistant());
+            case "void_shovel" -> new ShovelItem(Tiers.NETHERITE, 1.5F, -3.0F, new Item.Properties().fireResistant());
+            case "void_sword" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
+            case "void_hoe" -> new HoeItem(Tiers.NETHERITE, -4, 0.0F, new Item.Properties().fireResistant());
+
+            case "elemental_pick" -> new PickaxeItem(Tiers.NETHERITE, 1, -2.8F, new Item.Properties().fireResistant());
+            case "elemental_axe" -> new AxeItem(Tiers.NETHERITE, 5.0F, -3.0F, new Item.Properties().fireResistant());
+            case "elemental_shovel" -> new ShovelItem(Tiers.NETHERITE, 1.5F, -3.0F, new Item.Properties().fireResistant());
+            case "elemental_sword" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
+            case "elemental_hoe" -> new HoeItem(Tiers.NETHERITE, -4, 0.0F, new Item.Properties().fireResistant());
+
+            case "crimson_blade" -> new SwordItem(Tiers.NETHERITE, 3, -2.4F, new Item.Properties().fireResistant());
+            case "primal_crusher" -> new PickaxeItem(Tiers.NETHERITE, 2, -2.7F, new Item.Properties().fireResistant());
+            default -> null;
         };
     }
 

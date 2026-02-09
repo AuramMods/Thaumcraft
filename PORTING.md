@@ -255,7 +255,8 @@ Exit criteria:
 
 ### Armor Porting Backlog
 
-- Current 1.20.1 registration still uses generic placeholder items for armor ids; none currently equip as functional armor with TC-specific behavior.
+- Current 1.20.1 registration now maps armor ids to equipable `ArmorItem` baseline instances so armor slots/equip flow works in-game.
+- Current baseline still uses vanilla materials/stats as a compatibility bridge; Thaumcraft-specific armor materials/behavior are still pending.
 - Legacy armor textures live under `old-1.12.2/assets/thaumcraft/textures/models/armor`.
 - Legacy armor item models live under `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real armor classes and registration wiring for:
@@ -266,7 +267,8 @@ Exit criteria:
 
 ### Tool Porting Backlog
 
-- Current 1.20.1 registration still uses generic placeholder items for tool ids; no real `TieredItem` implementations are active yet.
+- Current 1.20.1 registration now maps tool ids to functional baseline vanilla tool classes (`PickaxeItem`, `AxeItem`, `ShovelItem`, `SwordItem`, `HoeItem`) so mining/combat/tool actions work.
+- Current baseline uses vanilla tiers/stats as compatibility scaffolding; Thaumcraft class-specific behavior/effects remain pending.
 - Legacy tool textures/models are in `old-1.12.2/assets/thaumcraft/textures/items` and `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real tool classes and registration wiring for:
 - TODO(port): `thaumium_*`, `void_*`, `elemental_*`, `crimson_blade`, `primal_crusher`.
