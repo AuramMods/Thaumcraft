@@ -144,6 +144,7 @@ Phase 3 status:
 - [x] Added baseline research-key persistence APIs (`hasResearch`/`unlockResearch`) with migration from older warp-milestone flags into legacy research keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
 - [x] Added baseline research stage/flag persistence scaffolding (per-key stage values + `PAGE`/`RESEARCH`/`POPUP` flags) and debug command support (`/thaumcraft debug research ...`)
 - [x] Added baseline research knowledge-point scaffolding (`THEORY`/`OBSERVATION`/`EPIPHANY`, category-aware raw totals and progression points) plus debug command support (`/thaumcraft debug research knowledge ...`)
+- [x] Thaumometer first-time scans now grant baseline category observation knowledge (all main legacy research categories) and grant epiphany raw when new aspects are discovered
 - [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
 - [ ] Salis Mundus trigger set is still incomplete (legacy multiblock variant parity is still pending, especially infusion altar stone/pillar/pedestal variants and exact placeholder transformation semantics)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
@@ -330,7 +331,7 @@ Exit criteria:
 - `/thaumcraft debug warp gear` now prints per-slot gear warp contribution (main hand + armor) for legacy parity/debug validation.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
-- TODO(port): expand research scaffolding into full legacy research-entry completion parity (auto-unlocks, stage progression rules, and real category knowledge gain/spend flows).
+- TODO(port): expand research scaffolding into full legacy research-entry completion parity (auto-unlocks, stage progression rules, and full knowledge spend/reward flows from research table + stage rewards).
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 

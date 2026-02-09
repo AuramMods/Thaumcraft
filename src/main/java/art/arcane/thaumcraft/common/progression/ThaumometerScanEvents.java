@@ -23,7 +23,8 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ThaumometerScanEvents {
     // TODO(port): Replace baseline scan counters with legacy-style ScanningManager behavior:
-    // TODO(port): scans should unlock research keys, grant category-specific observation knowledge, and distinguish unknown vs known targets by research state.
+    // TODO(port): scans should unlock scan-specific research keys and distinguish unknown vs known targets by research state.
+    // TODO(port): observation gain is now category-scoped baseline; port full legacy formulas/category metadata when research categories are data-driven.
     // TODO(port): expand scan surface parity (inventory contents, special block/entity handlers, and richer client feedback/UI hooks).
 
     private static final String THAUMOMETER_ID = "thaumometer";
@@ -71,7 +72,10 @@ public final class ThaumometerScanEvents {
 
         if (result.firstScan()) {
             player.displayClientMessage(
-                    Component.literal("Scanned " + blockId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans() + " | Discovered Aspects " + result.totalAspects()),
+                    Component.literal("Scanned " + blockId + " | Aspects: " + aspectSummary
+                            + " | Knowledge " + result.totalScans()
+                            + " | Discovered Aspects " + result.totalAspects()
+                            + " | " + formatKnowledgeGainSummary(result)),
                     true
             );
         } else {
@@ -128,7 +132,10 @@ public final class ThaumometerScanEvents {
         String aspectSummary = formatAspectSummary(aspects);
         if (result.firstScan()) {
             player.displayClientMessage(
-                    Component.literal("Scanned entity " + entityId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans() + " | Discovered Aspects " + result.totalAspects()),
+                    Component.literal("Scanned entity " + entityId + " | Aspects: " + aspectSummary
+                            + " | Knowledge " + result.totalScans()
+                            + " | Discovered Aspects " + result.totalAspects()
+                            + " | " + formatKnowledgeGainSummary(result)),
                     true
             );
         } else {
@@ -178,7 +185,10 @@ public final class ThaumometerScanEvents {
         String aspectSummary = formatAspectSummary(aspects);
         if (result.firstScan()) {
             player.displayClientMessage(
-                    Component.literal("Scanned item " + itemId + " | Aspects: " + aspectSummary + " | Knowledge " + result.totalScans() + " | Discovered Aspects " + result.totalAspects()),
+                    Component.literal("Scanned item " + itemId + " | Aspects: " + aspectSummary
+                            + " | Knowledge " + result.totalScans()
+                            + " | Discovered Aspects " + result.totalAspects()
+                            + " | " + formatKnowledgeGainSummary(result)),
                     true
             );
         } else {
@@ -215,6 +225,19 @@ public final class ThaumometerScanEvents {
             builder.append(entry.getKey().getTag()).append("=").append(entry.getValue());
         }
 
+        return builder.toString();
+    }
+
+    private static String formatKnowledgeGainSummary(PlayerKnowledgeManager.ScanResult result) {
+        if (!result.firstScan()) {
+            return "knowledge gain: none";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("knowledge gain: observation +").append(result.observationRawTotal()).append(" raw");
+        if (result.epiphanyRaw() > 0) {
+            builder.append(", epiphany +").append(result.epiphanyRaw()).append(" raw");
+        }
         return builder.toString();
     }
 }

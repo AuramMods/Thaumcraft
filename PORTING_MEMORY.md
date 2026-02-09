@@ -232,6 +232,9 @@ This file captures migration state so work can continue safely after context com
 - Added baseline research knowledge-point scaffolding:
   - player knowledge now persists legacy-shaped knowledge totals by type (`THEORY`, `OBSERVATION`, `EPIPHANY`) with category-aware storage for fielded types
   - knowledge debug tooling added under `/thaumcraft debug research knowledge` (`list`, `get`, `add`, `set`) with raw + projected points output
+- Wired first gameplay gain path for research knowledge:
+  - thaumometer first-time scans now grant baseline observation raw across core research categories (`BASICS`, `THAUMATURGY`, `ALCHEMY`, `ARTIFICE`, `GOLEMANCY`, `ELDRITCH`)
+  - scan flow now grants baseline epiphany raw when a scan discovers new aspects
 - Added dedicated cultist/crimson warping armor baselines:
   - `crimson_boots` now maps to `CultistBootsItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
   - `crimson_robe_chest` / `crimson_robe_helm` / `crimson_robe_legs` now map to `CultistRobeArmorItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
@@ -281,7 +284,7 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - expand current key/stage/flag/knowledge scaffolding into full research progression parity (auto-unlock graph + real category knowledge gain/spend flows)
+  - expand current key/stage/flag/knowledge scaffolding into full research progression parity (auto-unlock graph + research-table/stage reward spend/gain flows)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Continue armor parity after cultist warp baseline:
   - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)

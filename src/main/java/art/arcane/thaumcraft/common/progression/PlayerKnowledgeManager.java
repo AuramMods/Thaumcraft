@@ -6,7 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public final class PlayerKnowledgeManager {
@@ -18,6 +20,12 @@ public final class PlayerKnowledgeManager {
     public static final String RESEARCH_BATH_SALTS_HINT = "!BATHSALTS";
     public static final String RESEARCH_ELDRITCH_MINOR = "ELDRITCHMINOR";
     public static final String RESEARCH_ELDRITCH_MAJOR = "ELDRITCHMAJOR";
+    public static final String RESEARCH_CATEGORY_BASICS = "BASICS";
+    public static final String RESEARCH_CATEGORY_THAUMATURGY = "THAUMATURGY";
+    public static final String RESEARCH_CATEGORY_ALCHEMY = "ALCHEMY";
+    public static final String RESEARCH_CATEGORY_ARTIFICE = "ARTIFICE";
+    public static final String RESEARCH_CATEGORY_GOLEMANCY = "GOLEMANCY";
+    public static final String RESEARCH_CATEGORY_ELDRITCH = "ELDRITCH";
 
     private PlayerKnowledgeManager() {
     }
@@ -112,12 +120,15 @@ public final class PlayerKnowledgeManager {
 
         boolean firstScan = data.markBlockScanned(player.getUUID(), blockId);
         int newAspects = data.discoverAspects(player.getUUID(), aspects);
+        ScanKnowledgeGain knowledgeGain = firstScan ? applyScanKnowledgeGain(data, player, aspects, newAspects) : ScanKnowledgeGain.empty();
 
         return new ScanResult(
                 firstScan,
                 data.getScanCount(player.getUUID()),
                 newAspects,
-                data.getDiscoveredAspectCount(player.getUUID())
+                data.getDiscoveredAspectCount(player.getUUID()),
+                knowledgeGain.observationRawByCategory(),
+                knowledgeGain.epiphanyRaw()
         );
     }
 
@@ -126,12 +137,15 @@ public final class PlayerKnowledgeManager {
 
         boolean firstScan = data.markItemScanned(player.getUUID(), itemId);
         int newAspects = data.discoverAspects(player.getUUID(), aspects);
+        ScanKnowledgeGain knowledgeGain = firstScan ? applyScanKnowledgeGain(data, player, aspects, newAspects) : ScanKnowledgeGain.empty();
 
         return new ScanResult(
                 firstScan,
                 data.getScanCount(player.getUUID()),
                 newAspects,
-                data.getDiscoveredAspectCount(player.getUUID())
+                data.getDiscoveredAspectCount(player.getUUID()),
+                knowledgeGain.observationRawByCategory(),
+                knowledgeGain.epiphanyRaw()
         );
     }
 
@@ -140,12 +154,15 @@ public final class PlayerKnowledgeManager {
 
         boolean firstScan = data.markEntityScanned(player.getUUID(), entityId);
         int newAspects = data.discoverAspects(player.getUUID(), aspects);
+        ScanKnowledgeGain knowledgeGain = firstScan ? applyScanKnowledgeGain(data, player, aspects, newAspects) : ScanKnowledgeGain.empty();
 
         return new ScanResult(
                 firstScan,
                 data.getScanCount(player.getUUID()),
                 newAspects,
-                data.getDiscoveredAspectCount(player.getUUID())
+                data.getDiscoveredAspectCount(player.getUUID()),
+                knowledgeGain.observationRawByCategory(),
+                knowledgeGain.epiphanyRaw()
         );
     }
 
@@ -195,7 +212,75 @@ public final class PlayerKnowledgeManager {
         return overworld.getDataStorage().computeIfAbsent(PlayerKnowledgeSavedData::load, PlayerKnowledgeSavedData::new, DATA_ID);
     }
 
-    public record ScanResult(boolean firstScan, int totalScans, int newAspects, int totalAspects) {
+    private static ScanKnowledgeGain applyScanKnowledgeGain(
+            PlayerKnowledgeSavedData data,
+            ServerPlayer player,
+            AspectList aspects,
+            int newAspects
+    ) {
+        Map<String, Integer> observationRawByCategory = computeObservationKnowledgeGains(aspects);
+        for (Map.Entry<String, Integer> entry : observationRawByCategory.entrySet()) {
+            data.addResearchKnowledge(
+                    player.getUUID(),
+                    ResearchKnowledgeType.OBSERVATION,
+                    entry.getKey(),
+                    entry.getValue()
+            );
+        }
+
+        int epiphanyRaw = newAspects > 0 ? 1 : 0;
+        if (epiphanyRaw > 0) {
+            data.addResearchKnowledge(
+                    player.getUUID(),
+                    ResearchKnowledgeType.EPIPHANY,
+                    "",
+                    epiphanyRaw
+            );
+        }
+
+        return new ScanKnowledgeGain(Map.copyOf(observationRawByCategory), epiphanyRaw);
+    }
+
+    private static Map<String, Integer> computeObservationKnowledgeGains(AspectList aspects) {
+        int totalAspects = Math.max(1, aspects == null ? 0 : aspects.totalAmount());
+        double scale = Math.sqrt(totalAspects);
+
+        LinkedHashMap<String, Integer> gains = new LinkedHashMap<>();
+        gains.put(RESEARCH_CATEGORY_BASICS, scaledKnowledgeGain(scale, 1.00));
+        gains.put(RESEARCH_CATEGORY_THAUMATURGY, scaledKnowledgeGain(scale, 0.85));
+        gains.put(RESEARCH_CATEGORY_ALCHEMY, scaledKnowledgeGain(scale, 0.70));
+        gains.put(RESEARCH_CATEGORY_ARTIFICE, scaledKnowledgeGain(scale, 0.55));
+        gains.put(RESEARCH_CATEGORY_GOLEMANCY, scaledKnowledgeGain(scale, 0.45));
+        gains.put(RESEARCH_CATEGORY_ELDRITCH, scaledKnowledgeGain(scale, 0.35));
+        return gains;
+    }
+
+    private static int scaledKnowledgeGain(double scale, double weight) {
+        int gain = (int) Math.round(scale * weight);
+        return Math.max(1, gain);
+    }
+
+    private record ScanKnowledgeGain(Map<String, Integer> observationRawByCategory, int epiphanyRaw) {
+        private static ScanKnowledgeGain empty() {
+            return new ScanKnowledgeGain(Map.of(), 0);
+        }
+    }
+
+    public record ScanResult(
+            boolean firstScan,
+            int totalScans,
+            int newAspects,
+            int totalAspects,
+            Map<String, Integer> observationRawByCategory,
+            int epiphanyRaw
+    ) {
+        public int observationRawTotal() {
+            int total = 0;
+            for (int value : this.observationRawByCategory.values()) {
+                total += value;
+            }
+            return total;
+        }
     }
 
     public enum WarpType {
