@@ -4,6 +4,8 @@ import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
 import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
 import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
+import art.arcane.thaumcraft.common.item.SanityCheckerItem;
+import art.arcane.thaumcraft.common.item.SanitySoapItem;
 import art.arcane.thaumcraft.common.item.tool.CrimsonBladeItem;
 import art.arcane.thaumcraft.common.item.tool.PrimalCrusherItem;
 import art.arcane.thaumcraft.common.item.tool.VoidAxeItem;
@@ -79,6 +81,8 @@ public final class ModItems {
         return switch (id) {
             case "bucket_pure" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("purifying_fluid").get());
             case "bucket_death" -> new ThaumcraftFluidBucketItem(() -> ModBlocks.get("liquid_death").get());
+            case "sanity_checker" -> new SanityCheckerItem();
+            case "sanity_soap" -> new SanitySoapItem();
             default -> new Item(new Item.Properties());
         };
     }

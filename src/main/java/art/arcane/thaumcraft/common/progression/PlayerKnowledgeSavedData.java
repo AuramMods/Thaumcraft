@@ -16,7 +16,8 @@ import java.util.UUID;
 
 public final class PlayerKnowledgeSavedData extends SavedData {
     // TODO(port): Expand this baseline data model to legacy IPlayerKnowledge parity:
-    // TODO(port): persist research entries with stage/flags, category-based observation/theory totals, and warp data (permanent/normal/temporary).
+    // TODO(port): persist research entries with stage/flags and category-based observation/theory totals.
+    // TODO(port): warp pools are now present as baseline (permanent/normal/temporary + event counter); expand toward full legacy event parity.
     // TODO(port): keep backward compatibility migration paths for current simplified scan/salis fields when introducing the richer schema.
 
     private static final String PLAYERS_TAG = "players";
@@ -27,6 +28,10 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String SCANNED_ITEMS_TAG = "scanned_items";
     private static final String SCANNED_ENTITIES_TAG = "scanned_entities";
     private static final String DISCOVERED_ASPECTS_TAG = "discovered_aspects";
+    private static final String WARP_PERMANENT_TAG = "warp_permanent";
+    private static final String WARP_NORMAL_TAG = "warp_normal";
+    private static final String WARP_TEMPORARY_TAG = "warp_temporary";
+    private static final String WARP_EVENT_COUNTER_TAG = "warp_event_counter";
 
     private final Map<UUID, PlayerKnowledgeEntry> players = new HashMap<>();
 
@@ -121,6 +126,47 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return getOrCreate(playerId).discoveredAspects.size();
     }
 
+    public int getWarp(UUID playerId, PlayerKnowledgeManager.WarpType type) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        return switch (type) {
+            case PERMANENT -> entry.warpPermanent;
+            case NORMAL -> entry.warpNormal;
+            case TEMPORARY -> entry.warpTemporary;
+        };
+    }
+
+    public int addWarp(UUID playerId, PlayerKnowledgeManager.WarpType type, int delta) {
+        if (delta == 0) {
+            return getWarp(playerId, type);
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        int updated = switch (type) {
+            case PERMANENT -> entry.warpPermanent = clampWarp(entry.warpPermanent + delta);
+            case NORMAL -> entry.warpNormal = clampWarp(entry.warpNormal + delta);
+            case TEMPORARY -> entry.warpTemporary = clampWarp(entry.warpTemporary + delta);
+        };
+
+        if (delta > 0) {
+            entry.warpEventCounter = Math.max(0, entry.warpEventCounter + delta);
+        }
+        setDirty();
+        return updated;
+    }
+
+    public int getWarpEventCounter(UUID playerId) {
+        return getOrCreate(playerId).warpEventCounter;
+    }
+
+    public void setWarpEventCounter(UUID playerId, int value) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        int clamped = Math.max(0, value);
+        if (entry.warpEventCounter != clamped) {
+            entry.warpEventCounter = clamped;
+            setDirty();
+        }
+    }
+
     private PlayerKnowledgeEntry getOrCreate(UUID playerId) {
         return this.players.computeIfAbsent(playerId, id -> new PlayerKnowledgeEntry());
     }
@@ -134,6 +180,10 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return added;
     }
 
+    private static int clampWarp(int value) {
+        return Math.max(0, Math.min(100_000, value));
+    }
+
     private static final class PlayerKnowledgeEntry {
         private boolean salisUnlocked;
         private int scanCount;
@@ -141,6 +191,10 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         private final Set<String> scannedItems = new HashSet<>();
         private final Set<String> scannedEntities = new HashSet<>();
         private final Set<String> discoveredAspects = new HashSet<>();
+        private int warpPermanent;
+        private int warpNormal;
+        private int warpTemporary;
+        private int warpEventCounter;
 
         private CompoundTag toTag() {
             CompoundTag tag = new CompoundTag();
@@ -178,6 +232,11 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 aspectTag.add(single);
             }
             tag.put(DISCOVERED_ASPECTS_TAG, aspectTag);
+
+            tag.putInt(WARP_PERMANENT_TAG, this.warpPermanent);
+            tag.putInt(WARP_NORMAL_TAG, this.warpNormal);
+            tag.putInt(WARP_TEMPORARY_TAG, this.warpTemporary);
+            tag.putInt(WARP_EVENT_COUNTER_TAG, this.warpEventCounter);
 
             return tag;
         }
@@ -218,6 +277,11 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                     entry.discoveredAspects.add(aspect);
                 }
             }
+
+            entry.warpPermanent = clampWarp(tag.getInt(WARP_PERMANENT_TAG));
+            entry.warpNormal = clampWarp(tag.getInt(WARP_NORMAL_TAG));
+            entry.warpTemporary = clampWarp(tag.getInt(WARP_TEMPORARY_TAG));
+            entry.warpEventCounter = Math.max(0, tag.getInt(WARP_EVENT_COUNTER_TAG));
 
             return entry;
         }

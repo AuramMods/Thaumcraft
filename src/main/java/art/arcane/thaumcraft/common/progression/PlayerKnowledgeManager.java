@@ -69,11 +69,59 @@ public final class PlayerKnowledgeManager {
         );
     }
 
+    public static int getWarp(ServerPlayer player, WarpType type) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getWarp(player.getUUID(), type);
+    }
+
+    public static int addWarp(ServerPlayer player, WarpType type, int delta) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.addWarp(player.getUUID(), type, delta);
+    }
+
+    public static void clearTemporaryWarp(ServerPlayer player) {
+        addWarp(player, WarpType.TEMPORARY, -getWarp(player, WarpType.TEMPORARY));
+    }
+
+    public static int getTotalWarp(ServerPlayer player) {
+        return getWarp(player, WarpType.PERMANENT) + getWarp(player, WarpType.NORMAL) + getWarp(player, WarpType.TEMPORARY);
+    }
+
+    public static WarpSnapshot getWarpSnapshot(ServerPlayer player) {
+        return new WarpSnapshot(
+                getWarp(player, WarpType.PERMANENT),
+                getWarp(player, WarpType.NORMAL),
+                getWarp(player, WarpType.TEMPORARY)
+        );
+    }
+
+    public static int getWarpEventCounter(ServerPlayer player) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getWarpEventCounter(player.getUUID());
+    }
+
+    public static void setWarpEventCounter(ServerPlayer player, int value) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        data.setWarpEventCounter(player.getUUID(), value);
+    }
+
     private static PlayerKnowledgeSavedData getData(ServerLevel level) {
         ServerLevel overworld = level.getServer().overworld();
         return overworld.getDataStorage().computeIfAbsent(PlayerKnowledgeSavedData::load, PlayerKnowledgeSavedData::new, DATA_ID);
     }
 
     public record ScanResult(boolean firstScan, int totalScans, int newAspects, int totalAspects) {
+    }
+
+    public enum WarpType {
+        PERMANENT,
+        NORMAL,
+        TEMPORARY
+    }
+
+    public record WarpSnapshot(int permanent, int normal, int temporary) {
+        public int total() {
+            return this.permanent + this.normal + this.temporary;
+        }
     }
 }

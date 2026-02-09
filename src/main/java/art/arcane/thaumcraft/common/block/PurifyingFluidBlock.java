@@ -1,5 +1,6 @@
 package art.arcane.thaumcraft.common.block;
 
+import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -35,6 +36,13 @@ public class PurifyingFluidBlock extends Block {
 
         // Transitional parity: consume source and grant a temporary ward-like protection effect.
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, WARD_DURATION_TICKS, 0, true, true));
+        if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            // Transitional parity: purifying fluid trims temporary warp until full warp system/event loop is in place.
+            int temporary = PlayerKnowledgeManager.getWarp(serverPlayer, PlayerKnowledgeManager.WarpType.TEMPORARY);
+            if (temporary > 0) {
+                PlayerKnowledgeManager.addWarp(serverPlayer, PlayerKnowledgeManager.WarpType.TEMPORARY, -1);
+            }
+        }
         serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         serverLevel.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 0.6F, 1.2F);
     }

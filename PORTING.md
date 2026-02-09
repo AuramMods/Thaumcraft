@@ -198,6 +198,7 @@ Exit criteria:
 - `bucket_pure` and `bucket_death` are now functional custom bucket items that place their matching blocks and return an empty bucket.
 - empty-bucket pickup into `bucket_pure` / `bucket_death` is wired through Forge `FillBucketEvent` for both placeholder fluid blocks.
 - `purifying_fluid` currently applies a temporary resistance effect and consumes the block (temporary Warp Ward stand-in).
+- `purifying_fluid` now trims temporary warp by one on contact as a baseline interaction hook.
 - `liquid_death` currently damages living entities on contact at a fixed interval/value (no depth scaling yet).
 - bath salts now have baseline expired-item cauldron conversion (`full water cauldron` -> `purifying_fluid` block placeholder), matching legacy trigger shape.
 - TODO(port): replace placeholder block-based fluid handling with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
@@ -284,10 +285,13 @@ Exit criteria:
 
 - Legacy insanity is implemented as a multi-type warp system (`PERMANENT`, `NORMAL`, `TEMPORARY`) with periodic warp event rolls and effects.
 - Legacy sanity checker drives dedicated warp HUD readout; sanity soap removes temporary warp and can reduce normal warp; purifying fluid and Warp Ward interact with this loop.
-- TODO(port): add warp persistence capability with all three warp pools and counters.
-- TODO(port): add server-side warp event scheduler/effects parity and progression triggers tied to warp thresholds.
+- Current 1.20.1 port now has baseline warp persistence in player knowledge data (`permanent`, `normal`, `temporary`, and a basic warp event counter field).
+- `sanity_checker` now has a baseline use action that prints current warp pools in chat for debugging/gameplay feedback.
+- `sanity_soap` now has a baseline use flow that clears temporary warp and has a chance to reduce normal warp (with placeholder chance bonuses from resistance effect/purifying fluid).
+- Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
+- TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
 - TODO(port): add sanity checker UI/HUD behavior and synchronize values client-side.
-- TODO(port): port sanity soap, bath salts, and purifying fluid interactions against the new warp system.
+- TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 
 ### Phase 5: Infusion
 

@@ -4,6 +4,7 @@ import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.aspect.AspectList;
 import art.arcane.thaumcraft.common.aspect.AspectRegistry;
 import art.arcane.thaumcraft.common.aspect.AspectType;
+import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -34,7 +35,10 @@ public final class ThaumcraftCommandEvents {
                         .then(Commands.literal("debug")
                                 .then(Commands.literal("hand")
                                         .requires(source -> source.getEntity() instanceof ServerPlayer)
-                                        .executes(context -> runDebugHand(context.getSource()))))
+                                        .executes(context -> runDebugHand(context.getSource())))
+                                .then(Commands.literal("warp")
+                                        .requires(source -> source.getEntity() instanceof ServerPlayer)
+                                        .executes(context -> runDebugWarp(context.getSource()))))
         );
     }
 
@@ -65,6 +69,20 @@ public final class ThaumcraftCommandEvents {
             emitted++;
         }
 
+        return 1;
+    }
+
+    private static int runDebugWarp(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
+        int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
+
+        source.sendSuccess(() -> Component.literal("Thaumcraft Debug Warp"), false);
+        source.sendSuccess(() -> Component.literal("permanent=" + warp.permanent()
+                + ", normal=" + warp.normal()
+                + ", temporary=" + warp.temporary()
+                + ", total=" + warp.total()), false);
+        source.sendSuccess(() -> Component.literal("event_counter=" + counter), false);
         return 1;
     }
 
