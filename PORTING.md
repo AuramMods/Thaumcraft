@@ -103,6 +103,7 @@ Phase 2 status:
 - [x] Infusion Matrix now computes a structural stability score and can fail active cycles based on instability (with flux penalty)
 - [x] Arcane Workbench now requires and consumes a crystal item via dedicated crystal slot (required crystal derived from dominant recipe aspects)
 - [x] Arcane Workbench parity-tuning pass: vis/crystal costs now apply only to Thaumcraft-output crafting results; non-Thaumcraft crafting no longer hard-requires arcane resources
+- [x] Arcane Workbench vis consumption now applies player armor vis-discount totals (legacy-shaped baseline) at craft-take time
 - [ ] Arcane Workbench crystal/vis balancing and exact legacy parity tuning are still pending
 - [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table progression)
 
@@ -274,12 +275,15 @@ Exit criteria:
 - `void_*` and `void_robe_*` now use a custom baseline class with passive self-repair ticks (inventory + worn) as a first behavior parity step.
 - `traveller_boots` now use a custom baseline class with movement/fall assist placeholder behavior (non-charge-based for now).
 - `crimson_boots` and `crimson_robe_*` now use dedicated baseline cultist armor classes with legacy-shaped warp values (`1`) and iron-ingot repair compatibility.
+- baseline vis discount values are now wired for:
+- `goggles` (`5`), `cloth_*` (`boots=2`, `chest/legs=3`), `void_robe_*` (`5`), `crimson_boots` (`1`), and `crimson_robe_*` (`1`).
+- `/thaumcraft debug vis discount` now prints current armor vis-discount contributions for parity/debug validation.
 - Legacy armor textures live under `old-1.12.2/assets/thaumcraft/textures/models/armor`.
 - Legacy armor item models live under `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real armor classes and registration wiring for:
 - TODO(port): `thaumium_*`, `cloth_*`, `traveller_boots`, `fortress_*`, `void_*`, `void_robe_*`, `crimson_*`, `goggles`.
 - TODO(port): port key armor behavior from legacy:
-- TODO(port): vis discount gear (`goggles`, robes, void robe, cultist pieces), revealer/node visibility (`goggles`, some helms), warping gear values (void/cultist/void robe), self-repair on void gear, fortress set/mask modifiers, traveller boots movement + fall handling + recharge path.
+- TODO(port): expand vis discount parity beyond current armor baseline (baubles/curios equivalents, item NBT modifiers), plus revealer/node visibility (`goggles`, some helms), remaining warping gear edge cases, fortress set/mask modifiers, traveller boots recharge-driven movement, and full model/texture parity.
 - TODO(port): preserve dye/overlay behavior for robe/void-robe textures and cauldron washing interaction where applicable.
 
 ### Tool Porting Backlog
@@ -309,7 +313,7 @@ Exit criteria:
 - baseline warp ticker now suppresses checks while `warp_ward` is active, performs a legacy-shaped periodic check every `2000` ticks, applies temporary-warp decay (`-1` per check), and rolls event triggers from `sqrt(event_counter)` probability.
 - baseline warp ticker now applies legacy-shaped gear warp contribution in event checks:
 - main-hand + armor warping gear values are included, and legacy `TC.WARP` item NBT is honored.
-- current baseline includes explicit warping values for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, and `primal_crusher`, with fallback placeholders for `crimson_boots` and `crimson_robe_*`.
+- current baseline includes explicit warping values for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, `primal_crusher`, `crimson_boots`, and `crimson_robe_*`.
 - baseline event-counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`) when an event fires.
 - warp milestone flags are now persisted in player knowledge (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) and triggered from the periodic warp event flow.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + milestone flag state for testing.

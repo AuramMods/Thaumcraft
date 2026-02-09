@@ -6,6 +6,7 @@ import art.arcane.thaumcraft.common.aspect.AspectRegistry;
 import art.arcane.thaumcraft.common.aspect.AspectType;
 import art.arcane.thaumcraft.common.progression.WarpGearManager;
 import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
+import art.arcane.thaumcraft.common.progression.VisDiscountManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -42,8 +43,16 @@ public final class ThaumcraftCommandEvents {
                                 .then(Commands.literal("hand")
                                         .requires(source -> source.getEntity() instanceof ServerPlayer)
                                         .executes(context -> runDebugHand(context.getSource())))
+                                .then(createVisDebugCommand())
                                 .then(createWarpDebugCommand()))
         );
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> createVisDebugCommand() {
+        return Commands.literal("vis")
+                .requires(source -> source.getEntity() instanceof ServerPlayer)
+                .then(Commands.literal("discount")
+                        .executes(context -> runDebugVisDiscount(context.getSource())));
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> createWarpDebugCommand() {
@@ -175,6 +184,24 @@ public final class ThaumcraftCommandEvents {
         PlayerKnowledgeManager.setWarpEventCounter(player, value);
         source.sendSuccess(() -> Component.literal("warp.event_counter = " + value), false);
         sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runDebugVisDiscount(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        int totalDiscount = VisDiscountManager.getTotalVisDiscountPercent(player);
+
+        source.sendSuccess(() -> Component.literal("Thaumcraft Debug Vis Discount"), false);
+        source.sendSuccess(() -> Component.literal("total_discount_percent=" + totalDiscount), false);
+
+        String[] armorSlotNames = {"boots", "leggings", "chestplate", "helmet"};
+        for (int i = 0; i < player.getInventory().armor.size(); i++) {
+            ItemStack armorStack = player.getInventory().armor.get(i);
+            int discount = VisDiscountManager.getVisDiscountPercent(armorStack, player);
+            String slotName = i < armorSlotNames.length ? armorSlotNames[i] : ("armor_" + i);
+            source.sendSuccess(() -> Component.literal(slotName + ": " + formatStackLabel(armorStack) + " -> " + discount + "%"), false);
+        }
+
         return 1;
     }
 

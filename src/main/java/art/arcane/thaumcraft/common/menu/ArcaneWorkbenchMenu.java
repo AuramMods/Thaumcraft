@@ -43,7 +43,7 @@ public class ArcaneWorkbenchMenu extends AbstractStationMenu {
 
             @Override
             public boolean mayPickup(Player player) {
-                return blockEntity == null || blockEntity.canTakeCurrentResult();
+                return blockEntity == null || blockEntity.canTakeCurrentResult(player);
             }
 
             @Override

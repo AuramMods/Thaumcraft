@@ -4,6 +4,7 @@ public final class ArmorPortingNotes {
     // TODO(port): Replace placeholder item registrations for armor ids with real ArmorItem classes:
     // TODO(port): thaumium_* , cloth_* , traveller_boots , fortress_* , void_* , void_robe_* , crimson_* , goggles.
     // TODO(port): current baseline has dedicated classes for `void_*`, `void_robe_*`, `crimson_boots`, and `crimson_robe_*` with legacy-shaped warp values.
+    // TODO(port): current baseline has vis discount wiring for `goggles` (5), `cloth_*` robes (boots 2 / chest+legs 3), `void_robe_*` (5), and `crimson_*` cultist robe/boots (1).
 
     // TODO(port): Port legacy armor behavior by class family:
     // TODO(port): ItemThaumiumArmor -> standard equipable armor, thaumium repair material, thaumium_1/thaumium_2 textures.

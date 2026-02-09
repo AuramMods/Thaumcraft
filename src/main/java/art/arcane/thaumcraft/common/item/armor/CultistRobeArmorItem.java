@@ -1,6 +1,7 @@
 package art.arcane.thaumcraft.common.item.armor;
 
 import art.arcane.thaumcraft.common.item.WarpingGearItem;
+import art.arcane.thaumcraft.common.item.VisDiscountGearItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -8,8 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 
-public class CultistRobeArmorItem extends ArmorItem implements WarpingGearItem {
-    // TODO(port): Add legacy vis-discount behavior once vis discount hooks are ported.
+public class CultistRobeArmorItem extends ArmorItem implements WarpingGearItem, VisDiscountGearItem {
     // TODO(port): Port robe model/tint/overlay behavior and cultist robe textures.
 
     public CultistRobeArmorItem(ArmorMaterial material, Type type, Properties properties) {
@@ -18,6 +18,11 @@ public class CultistRobeArmorItem extends ArmorItem implements WarpingGearItem {
 
     @Override
     public int getWarp(ItemStack stack, ServerPlayer player) {
+        return 1;
+    }
+
+    @Override
+    public int getVisDiscountPercent(ItemStack stack, ServerPlayer player) {
         return 1;
     }
 

@@ -4,6 +4,7 @@ import art.arcane.thaumcraft.common.aspect.AspectList;
 import art.arcane.thaumcraft.common.aspect.AspectRegistry;
 import art.arcane.thaumcraft.common.aspect.AspectType;
 import art.arcane.thaumcraft.common.menu.ArcaneWorkbenchMenu;
+import art.arcane.thaumcraft.common.progression.VisDiscountManager;
 import art.arcane.thaumcraft.common.registry.ModBlockEntities;
 import art.arcane.thaumcraft.common.registry.ModItems;
 import art.arcane.thaumcraft.common.world.aura.AuraManager;
@@ -11,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +32,7 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
     // TODO(port): Match legacy TileArcaneWorkbench charger behavior:
     // TODO(port): when arcane_workbench_charger is above this block, pull vis from the surrounding 3x3 chunk area instead of only local chunk aura.
     // TODO(port): Replace generic vanilla RecipeType.CRAFTING gating with real arcane recipe parity (research stage checks, exact vis costs, and crystal requirements per recipe definition).
+    // TODO(port): Move vis-discount-aware recipe preview into player-scoped menu/container state for full multi-viewer parity.
 
     public static final int OUTPUT_SLOT = 0;
     public static final int INPUT_SLOT_START = 1;
@@ -129,8 +132,11 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         if (!(this.level instanceof ServerLevel serverLevel)) {
             return false;
         }
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return false;
+        }
 
-        int visCost = this.currentVisCost;
+        int visCost = getEffectiveVisCost(serverPlayer);
         String requiredCrystalId = this.currentRequiredCrystalId;
         if (visCost > 0) {
             if (requiredCrystalId.isEmpty()) {
@@ -196,7 +202,7 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
                 String requiredCrystalId = determineRequiredCrystal(craftingInput);
                 this.currentVisCost = visCost;
                 this.currentRequiredCrystalId = requiredCrystalId;
-                if (!(canAffordVis(visCost) && hasRequiredCrystal(requiredCrystalId))) {
+                if (!hasRequiredCrystal(requiredCrystalId)) {
                     result = ItemStack.EMPTY;
                 }
             }
@@ -205,8 +211,11 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         super.setItem(OUTPUT_SLOT, result);
     }
 
-    public boolean canTakeCurrentResult() {
+    public boolean canTakeCurrentResult(Player player) {
         if (!(this.level instanceof ServerLevel)) {
+            return false;
+        }
+        if (!(player instanceof ServerPlayer serverPlayer)) {
             return false;
         }
 
@@ -218,11 +227,16 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         if (visCost <= 0) {
             return this.currentRequiredCrystalId.isEmpty();
         }
-        return canAffordVis(visCost) && hasRequiredCrystal(this.currentRequiredCrystalId);
+        int effectiveVisCost = getEffectiveVisCost(serverPlayer);
+        return canAffordVis(effectiveVisCost) && hasRequiredCrystal(this.currentRequiredCrystalId);
     }
 
     public int getCurrentVisCost() {
         return this.currentVisCost;
+    }
+
+    public int getEffectiveVisCost(ServerPlayer player) {
+        return VisDiscountManager.applyDiscountToCost(this.currentVisCost, player);
     }
 
     public String getCurrentRequiredCrystalId() {

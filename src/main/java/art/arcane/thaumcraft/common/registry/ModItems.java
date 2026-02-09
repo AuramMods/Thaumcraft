@@ -5,6 +5,8 @@ import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
 import art.arcane.thaumcraft.common.item.BathSaltsItem;
 import art.arcane.thaumcraft.common.item.armor.CultistBootsItem;
 import art.arcane.thaumcraft.common.item.armor.CultistRobeArmorItem;
+import art.arcane.thaumcraft.common.item.armor.GogglesItem;
+import art.arcane.thaumcraft.common.item.armor.RobeArmorItem;
 import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
 import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
 import art.arcane.thaumcraft.common.item.SanityCheckerItem;
@@ -95,9 +97,9 @@ public final class ModItems {
     private static Item createArmorItem(String id) {
         // TODO(port): Replace these baseline vanilla-material mappings with proper Thaumcraft armor classes/materials/textures + behaviors.
         return switch (id) {
-            case "cloth_boots" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "cloth_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "cloth_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "cloth_boots" -> new RobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, 2, new Item.Properties());
+            case "cloth_chest" -> new RobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, 3, new Item.Properties());
+            case "cloth_legs" -> new RobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, new Item.Properties());
 
             case "thaumium_boots" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties());
             case "thaumium_chest" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties());
@@ -105,20 +107,19 @@ public final class ModItems {
             case "thaumium_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
             case "traveller_boots" -> new TravellerBootsItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties());
-            case "goggles" -> new ArmorItem(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties());
 
             case "fortress_chest" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, new Item.Properties());
             case "fortress_helm" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, new Item.Properties());
             case "fortress_legs" -> new ArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, 1, new Item.Properties());
-            case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, 1, new Item.Properties());
-            case "void_helm" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, 1, new Item.Properties());
-            case "void_legs" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, 1, new Item.Properties());
+            case "void_boots" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.BOOTS, 1, 0, new Item.Properties());
+            case "void_chest" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.CHESTPLATE, 1, 0, new Item.Properties());
+            case "void_helm" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.HELMET, 1, 0, new Item.Properties());
+            case "void_legs" -> new VoidArmorItem(ArmorMaterials.NETHERITE, ArmorItem.Type.LEGGINGS, 1, 0, new Item.Properties());
 
-            case "void_robe_chest" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, 3, new Item.Properties());
-            case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, 3, new Item.Properties());
-            case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, new Item.Properties());
+            case "void_robe_chest" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, 3, 5, new Item.Properties());
+            case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, 3, 5, new Item.Properties());
+            case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, 5, new Item.Properties());
 
             case "crimson_boots" -> new CultistBootsItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
             case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());
@@ -132,6 +133,7 @@ public final class ModItems {
             case "crimson_robe_chest" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
             case "crimson_robe_helm" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
             case "crimson_robe_legs" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "goggles" -> new GogglesItem(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties());
             default -> null;
         };
     }

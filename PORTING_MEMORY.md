@@ -221,8 +221,19 @@ This file captures migration state so work can continue safely after context com
   - `crimson_boots` now maps to `CultistBootsItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
   - `crimson_robe_chest` / `crimson_robe_helm` / `crimson_robe_legs` now map to `CultistRobeArmorItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
   - removed temporary fallback mapping for crimson armor warp in `WarpGearManager` now that dedicated classes exist
+- Added vis-discount gear baseline scaffolding and first gear mappings:
+  - new `VisDiscountGearItem` + `VisDiscountManager` collect armor vis-discount values (legacy-shaped baseline, armor-only for now)
+  - added dedicated `GogglesItem` baseline with vis discount `5`
+  - added dedicated `RobeArmorItem` baseline and mapped `cloth_*` to legacy-shaped discounts (`boots=2`, `chest/legs=3`)
+  - `VoidArmorItem` now carries vis-discount value; `void_robe_*` mapped to discount `5` while `void_*` remains `0`
+  - cultist/crimson armor classes now provide vis-discount `1` (boots + robe pieces)
+- Extended arcane workbench vis flow toward legacy parity:
+  - workbench vis spend now applies player-specific vis discount at craft-take time
+  - workbench preview/result gating now no longer hard-hides output on raw vis shortage; final pickup validation uses discounted vis for the taking player
 - Expanded warp debug tooling:
   - `/thaumcraft debug warp gear` now shows per-slot warp breakdown (main hand + armor), which improves parity validation when porting additional warping equipment
+- Expanded vis debug tooling:
+  - `/thaumcraft debug vis discount` now shows total armor discount and per-slot discount contributions
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
@@ -258,8 +269,11 @@ This file captures migration state so work can continue safely after context com
   - replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Continue armor parity after cultist warp baseline:
-  - add vis-discount hooks for cultist/robe/goggles families
+  - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)
   - port cultist/void/fortress model + texture parity and set/slot behavior
+- Continue arcane workbench parity after vis-discount baseline:
+  - move preview/cost state to per-menu-player context for multi-viewer parity
+  - tune vis/crystal balance and exact recipe parity against legacy arcane recipe definitions
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:
