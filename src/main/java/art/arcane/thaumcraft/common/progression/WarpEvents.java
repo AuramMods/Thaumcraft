@@ -14,10 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 public final class WarpEvents {
     // TODO(port): Replace this baseline ticker with full legacy warp event table/progression gating/event categories.
     // TODO(port): Add client FX/audio hallucination events and proper sync packet flow.
-    // TODO(port): Tune baseline counter/event cadence against legacy checkWarpEvent pacing and probability model.
+    // TODO(port): Add gear warp modifiers and research-unlock milestone hooks to match legacy checkWarpEvent behavior.
 
-    private static final int COUNTER_THRESHOLD = 1000;
     private static final int TEMPORARY_WARP_DECAY_INTERVAL_TICKS = 2000;
+    private static final int MIN_COUNTER_DECAY_ON_EVENT = 5;
 
     private WarpEvents() {
     }
@@ -39,32 +39,36 @@ public final class WarpEvents {
             return;
         }
 
-        if ((player.tickCount % TEMPORARY_WARP_DECAY_INTERVAL_TICKS) == 0) {
-            int temporary = PlayerKnowledgeManager.getWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY);
-            if (temporary > 0) {
-                PlayerKnowledgeManager.addWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY, -1);
-            }
-        }
-
-        int totalWarp = PlayerKnowledgeManager.getTotalWarp(player);
-        if (totalWarp <= 0) {
+        if ((player.tickCount % TEMPORARY_WARP_DECAY_INTERVAL_TICKS) != 0) {
             return;
         }
 
-        if ((player.tickCount % 20) != 0) {
-            return;
+        // Legacy-shaped baseline: temporary warp passively decays on each periodic warp check.
+        int temporary = PlayerKnowledgeManager.getWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY);
+        if (temporary > 0) {
+            PlayerKnowledgeManager.addWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY, -1);
         }
 
+        PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
+        int totalWarp = warp.total();
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
-        counter += totalWarp;
-        if (counter < COUNTER_THRESHOLD) {
-            PlayerKnowledgeManager.setWarpEventCounter(player, counter);
+
+        if (counter <= 0 || totalWarp <= 0) {
             return;
         }
 
-        counter -= COUNTER_THRESHOLD;
+        int roll = player.getRandom().nextInt(100);
+        double threshold = Math.sqrt(counter);
+        if (roll > threshold) {
+            return;
+        }
+
+        int effectiveWarp = Math.min(100, (totalWarp + totalWarp + counter) / 3);
+        int counterDecay = Math.max(MIN_COUNTER_DECAY_ON_EVENT, (int) (Math.sqrt(counter) * 2.0D));
+        counter = Math.max(0, counter - counterDecay);
         PlayerKnowledgeManager.setWarpEventCounter(player, counter);
-        triggerWarpEvent(player, totalWarp);
+
+        triggerWarpEvent(player, effectiveWarp);
     }
 
     private static void triggerWarpEvent(ServerPlayer player, int totalWarp) {

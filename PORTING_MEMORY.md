@@ -208,6 +208,9 @@ This file captures migration state so work can continue safely after context com
 - Extended baseline warp ticker toward legacy Warp Ward interaction:
   - warp ticker now skips event accumulation/rolls while `warp_ward` is active
   - temporary warp now decays by `1` every `2000` ticks when the player is not warded
+- Extended baseline warp ticker cadence/probability toward legacy `checkWarpEvent`:
+  - warp checks now run every `2000` ticks (legacy cadence shape) instead of per-second threshold accumulation
+  - event trigger chance now rolls from `sqrt(warp_counter)` (0-99 roll), with effective-warp scaling and legacy-shaped counter decay floor (`max(5, sqrt(counter) * 2)`)
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
@@ -240,7 +243,7 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - continue tuning warp-event cadence/probability model toward legacy behavior (current baseline still simplified)
+  - add remaining legacy warp modifiers/parity (gear warp contribution, milestone/research unlock hooks, richer event table)
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:

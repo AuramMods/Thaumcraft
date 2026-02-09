@@ -305,9 +305,10 @@ Exit criteria:
 - `sanity_soap` now has a baseline legacy-shaped use flow (200 tick use duration), clears temporary warp, and can reduce normal warp with Warp Ward/purifying-fluid chance bonuses.
 - `bath_salts` now has baseline legacy-shaped dropped-lifespan timing and water conversion hooks as part of the insanity/purification loop scaffolding.
 - `spa` now provides a first-pass purification loop baseline with mix toggle support and non-mix fluid-source spreading.
-- baseline warp ticker now suppresses warp event rolls while `warp_ward` is active and applies periodic temporary-warp decay (`-1` every `2000` ticks) when not warded.
+- baseline warp ticker now suppresses checks while `warp_ward` is active, performs a legacy-shaped periodic check every `2000` ticks, applies temporary-warp decay (`-1` per check), and rolls event triggers from `sqrt(event_counter)` probability.
+- baseline event-counter decay now follows a legacy-shaped floor (`max(5, sqrt(counter) * 2)`) when an event fires.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) for testing the insanity loop.
-- Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
+- Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
