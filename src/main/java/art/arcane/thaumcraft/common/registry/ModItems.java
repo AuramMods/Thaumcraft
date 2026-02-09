@@ -34,13 +34,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class ModItems {
     // TODO(port): replace generic placeholder Item registrations with functional item classes (thaumometer, thaumonomicon, phials, scribing tools, foci, etc.).
-    // TODO(port): migrate legacy sub-item/meta behavior into explicit item/data-component models for 1.20.1 parity.
-    // TODO(port): split legacy variant containers (`nuggets`, `ingots`, `plate`, `gear`, etc.) into explicit subtype/data-component handling so quartz sliver (`nuggetQuartz`) and other recipe-critical variants are addressable.
+    // TODO(port): continue migrating legacy sub-item/meta behavior into explicit item/data-component models for 1.20.1 parity.
+    // TODO(port): extend explicit split-ID handling from `nugget_*` to additional variant containers (`ingots`, `plate`, `gear`, etc.).
     // TODO(port): replace placeholder armor ids with real ArmorItem implementations and legacy behaviors (vis discounts, warping values, void self-repair, traveller boots movement/recharge, fortress mask set bonuses, goggles reveal support).
     // TODO(port): replace placeholder tool ids with real tiered tool implementations (thaumium/void/elemental/crimson/primal) and legacy effects (void self-repair + warp, elemental active abilities, crimson/primal special logic).
     // TODO(port): replace placeholder consumable/system items for insanity loop (`sanity_checker`, `sanity_soap`, `bath_salts`, `bucket_pure`, `bucket_death`) once warp + fluid systems are in place.
@@ -48,6 +49,18 @@ public final class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Thaumcraft.MODID);
     public static final Map<String, RegistryObject<Item>> BLOCK_ITEMS_BY_ID = new LinkedHashMap<>();
     public static final Map<String, RegistryObject<Item>> ITEMS_BY_ID = new LinkedHashMap<>();
+    private static final List<String> NUGGET_VARIANT_IDS = List.of(
+            "nugget_brass",
+            "nugget_copper",
+            "nugget_iron",
+            "nugget_lead",
+            "nugget_quartz",
+            "nugget_quicksilver",
+            "nugget_silver",
+            "nugget_thaumium",
+            "nugget_tin",
+            "nugget_void"
+    );
 
     static {
         registerLegacyBlockItems();
@@ -68,7 +81,12 @@ public final class ModItems {
             ITEMS_BY_ID.put(id, ITEMS.register(id, () -> createItem(id)));
         }
 
-        // Transitional parity item for legacy nuggetQuartz catalyst behavior.
+        // Split-ID baseline for legacy nugget variants used by recipe-critical paths.
+        for (String id : NUGGET_VARIANT_IDS) {
+            ITEMS_BY_ID.put(id, ITEMS.register(id, () -> new Item(new Item.Properties())));
+        }
+
+        // Compatibility item retained for legacy transitional datapacks/worlds.
         ITEMS_BY_ID.put("quartz_sliver", ITEMS.register("quartz_sliver", () -> new Item(new Item.Properties())));
     }
 

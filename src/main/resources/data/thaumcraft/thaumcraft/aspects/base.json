@@ -19,6 +19,12 @@
       }
     },
     {
+      "item": "thaumcraft:nugget_quartz",
+      "aspects": {
+        "vitreus": 1
+      }
+    },
+    {
       "item": "thaumcraft:alumentum",
       "aspects": {
         "ignis": 6,

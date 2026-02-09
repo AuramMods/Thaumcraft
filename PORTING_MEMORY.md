@@ -271,8 +271,15 @@ This file captures migration state so work can continue safely after context com
   - shift-right-click with empty hand toggles spa mix mode
   - non-mix mode can consume loaded fluid directly (`water`, `bucket_pure`, `bucket_death`) for placement/spreading
   - empty bucket extraction now returns the loaded fluid as the corresponding bucket item
+- Added quartz-sliver catalyst migration baseline toward nugget parity:
+  - registered split-ID nugget variants (`nugget_brass`, `nugget_copper`, `nugget_iron`, `nugget_lead`, `nugget_quartz`, `nugget_quicksilver`, `nugget_silver`, `nugget_thaumium`, `nugget_tin`, `nugget_void`)
+  - moved quartz catalyst canonical path to `thaumcraft:nugget_quartz`
+  - retained `thaumcraft:quartz_sliver` compatibility in `thaumcraft:catalysts/quartz_slivers`
+  - updated quartz conversion recipes so quartz recombination accepts the catalyst tag and added legacy-to-canonical migration recipe (`quartz_sliver` -> `nugget_quartz`)
+  - mirrored quartz nugget aspect mapping so catalyst dissolution behavior remains consistent
 - Verified:
-  - `./gradlew classes -q` passes after these changes
+  - `./gradlew compileJava -q` passes
+  - `./gradlew runData --no-daemon` passes
 
 ## Overall Plan (Condensed)
 
@@ -287,6 +294,10 @@ This file captures migration state so work can continue safely after context com
 
 ## Immediate Next Steps
 
+- Continue variant-container parity after quartz catalyst migration:
+  - design canonical `thaumcraft:nuggets` subtype/data-component model and migration path from split-ID baseline
+  - expand the same split-ID-to-variant strategy to other containers (`ingots`, `plate`, `gear`) or move directly to unified component-backed containers
+  - retire `thaumcraft:quartz_sliver` compatibility item once save/datapack migration handling is in place
 - Finalize bath-salts + spa parity audit against legacy behavior:
   - validate exact conversion surfaces (source-water/cauldron expectations) and tune to intended TC6 semantics
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model

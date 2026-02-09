@@ -19,14 +19,23 @@ public class ThaumcraftLanguageProvider extends LanguageProvider {
         add("container.thaumcraft.research_table", "Research Table");
         add("container.thaumcraft.crucible", "Crucible");
         add("container.thaumcraft.infusion_matrix", "Infusion Matrix");
+        add("enchantment.special.sapgreat", "Greatwood Sap");
 
         for (String id : ModBlocks.BLOCKS_BY_ID.keySet()) {
             add("block.thaumcraft." + id, toTitle(id));
         }
 
         for (String id : ModItems.ITEMS_BY_ID.keySet()) {
-            add("item.thaumcraft." + id, toTitle(id));
+            add("item.thaumcraft." + id, getItemTitle(id));
         }
+    }
+
+    private static String getItemTitle(String id) {
+        return switch (id) {
+            case "nugget_quartz" -> "Quartz Sliver";
+            case "quartz_sliver" -> "Quartz Sliver (Legacy)";
+            default -> toTitle(id);
+        };
     }
 
     private static String toTitle(String value) {

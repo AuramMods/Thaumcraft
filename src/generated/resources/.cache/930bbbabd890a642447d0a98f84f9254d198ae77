@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-06T05:02:56.064462	Item Models: thaumcraft
+// 1.20.1	2026-02-09T00:58:54.326756	Item Models: thaumcraft
 8f7395512bf9d9dc878f2f6f6e5eac868047562c assets/thaumcraft/models/item/alumentum.json
 0278ca722d24e23f648ef5654bdc5b7fa4e9ac22 assets/thaumcraft/models/item/amber.json
 5cb080de3002c2e0bcdf6388478e3855f7700a4d assets/thaumcraft/models/item/amulet_vis.json
@@ -56,12 +56,23 @@ af6c4676e6ceaf36f595c4ff5ebf63a6692defab assets/thaumcraft/models/item/loot_bag.
 96d1ae01f7f3f613a00a0885cbdfa274bc733626 assets/thaumcraft/models/item/mirrored_glass.json
 6e2d75a72eaea0b18490719085e8b57f68724d99 assets/thaumcraft/models/item/modules.json
 93635415f6cfb3711aa2cbf311f95c2ffb02ce85 assets/thaumcraft/models/item/morphic_resonator.json
+58b75689aeb1dfacaf297a16344659db54d8aa62 assets/thaumcraft/models/item/nugget_brass.json
+5b52707e36e247cc176078fe21e70aa0c44291f2 assets/thaumcraft/models/item/nugget_copper.json
+d254f129e8896c0a64f290d3f587509eb25ba70f assets/thaumcraft/models/item/nugget_iron.json
+1c85184d36b4277553729b582dd346d60c96fcfc assets/thaumcraft/models/item/nugget_lead.json
+277ce146cd50c3ad86babc852e77ca53020042ac assets/thaumcraft/models/item/nugget_quartz.json
+88adc097eb0cb83b837aed06efa9f78942d446a4 assets/thaumcraft/models/item/nugget_quicksilver.json
+0db2de3554bc58c8798094da3c959b15279e3ca3 assets/thaumcraft/models/item/nugget_silver.json
+e443c424ffc6efafdd70ccff5bba77a77dcb4d84 assets/thaumcraft/models/item/nugget_thaumium.json
+56f4ef96f3e1a74d2f9c19b40f61ca1f04f63009 assets/thaumcraft/models/item/nugget_tin.json
+66e51c4ba1126f1685a4f2a0b866d732b5e9b729 assets/thaumcraft/models/item/nugget_void.json
 e443c424ffc6efafdd70ccff5bba77a77dcb4d84 assets/thaumcraft/models/item/nuggets.json
 77862e90ab8298180d1ef18d126056117d6a8c4f assets/thaumcraft/models/item/pech_wand.json
 79de0a4723094a473bbe18f70b1fabeef86c1e9c assets/thaumcraft/models/item/phial.json
 49ffb5f73b5e800adc274cf0458aed757309be84 assets/thaumcraft/models/item/plate.json
 1e9998af4233aa872c4ff837ebf4ad685b05989c assets/thaumcraft/models/item/primal_crusher.json
 3d3dea04218db8d32898e6f458d1f9a94253125f assets/thaumcraft/models/item/primordial_pearl.json
+277ce146cd50c3ad86babc852e77ca53020042ac assets/thaumcraft/models/item/quartz_sliver.json
 35f006d3c2e25a689180292aa59c744f4a77ec8f assets/thaumcraft/models/item/quicksilver.json
 233abdf7806b63e5b8323b0a7585f2d0d960134c assets/thaumcraft/models/item/resonator.json
 02683d685c40a0bf40e59144860d2d518924ea21 assets/thaumcraft/models/item/salis_mundus.json

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "thaumcraft:nugget_quartz",
     "thaumcraft:quartz_sliver"
   ]
 }

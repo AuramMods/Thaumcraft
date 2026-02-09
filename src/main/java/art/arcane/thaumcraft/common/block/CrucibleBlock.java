@@ -26,8 +26,8 @@ public class CrucibleBlock extends StationBlock {
     // TODO(port): add full particle/sound event parity for smelting, spills, and boil state transitions.
     // TODO(port): preserve thrower/context metadata for recipe ownership/research attribution where needed by progression.
     // TODO(port): complete full quartz-sliver parity:
-    // TODO(port): current port uses explicit `thaumcraft:quartz_sliver` + item tag catalysts, while legacy uses `nuggetQuartz` from the nuggets variant container.
-    // TODO(port): once nugget subtype/data-component parity exists, remap catalysts and player-facing references from compatibility item id to canonical nugget variant semantics.
+    // TODO(port): catalyst path now targets canonical `thaumcraft:nugget_quartz` with compatibility via `thaumcraft:catalysts/quartz_slivers`.
+    // TODO(port): once data migration is finalized, retire direct player-facing compatibility references to `thaumcraft:quartz_sliver`.
 
     public static final BooleanProperty WATER = BooleanProperty.create("water");
     public static final BooleanProperty HEATED = BooleanProperty.create("heated");
