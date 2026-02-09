@@ -2,6 +2,7 @@ package art.arcane.thaumcraft.common.item;
 
 import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
 import art.arcane.thaumcraft.common.registry.ModBlocks;
+import art.arcane.thaumcraft.common.registry.ModMobEffects;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,9 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SanitySoapItem extends Item {
     // TODO(port): Port legacy particle/sound timing and full warp-ward interactions from ItemSanitySoap.
-    // TODO(port): Tie chance modifiers to true Warp Ward effect instead of temporary resistance placeholder.
 
-    private static final int USE_DURATION_TICKS = 40;
+    private static final int USE_DURATION_TICKS = 200;
 
     public SanitySoapItem() {
         super(new Properties().stacksTo(16));
@@ -47,7 +47,7 @@ public class SanitySoapItem extends Item {
         }
 
         float chance = 0.33F;
-        if (player.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE)) {
+        if (player.hasEffect(ModMobEffects.WARP_WARD.get())) {
             chance += 0.25F;
         }
 

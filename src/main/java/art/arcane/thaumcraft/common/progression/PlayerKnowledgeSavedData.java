@@ -154,6 +154,25 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return updated;
     }
 
+    public int setWarp(UUID playerId, PlayerKnowledgeManager.WarpType type, int value) {
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        int clamped = clampWarp(value);
+
+        int previous = getWarp(playerId, type);
+        if (previous == clamped) {
+            return clamped;
+        }
+
+        switch (type) {
+            case PERMANENT -> entry.warpPermanent = clamped;
+            case NORMAL -> entry.warpNormal = clamped;
+            case TEMPORARY -> entry.warpTemporary = clamped;
+        }
+
+        setDirty();
+        return clamped;
+    }
+
     public int getWarpEventCounter(UUID playerId) {
         return getOrCreate(playerId).warpEventCounter;
     }

@@ -6,6 +6,7 @@ import art.arcane.thaumcraft.common.registry.ModBlocks;
 import art.arcane.thaumcraft.common.registry.ModCreativeTabs;
 import art.arcane.thaumcraft.common.registry.ModItems;
 import art.arcane.thaumcraft.common.registry.ModMenus;
+import art.arcane.thaumcraft.common.registry.ModMobEffects;
 import art.arcane.thaumcraft.common.registry.ModRecipes;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -27,6 +28,7 @@ public class Thaumcraft {
         ModMenus.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModMobEffects.register(modEventBus);
 
         LOGGER.info("Thaumcraft bootstrap initialized");
     }

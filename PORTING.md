@@ -197,13 +197,13 @@ Exit criteria:
 - Current 1.20.1 port has baseline bucket/fluid placeholder behavior:
 - `bucket_pure` and `bucket_death` are now functional custom bucket items that place their matching blocks and return an empty bucket.
 - empty-bucket pickup into `bucket_pure` / `bucket_death` is wired through Forge `FillBucketEvent` for both placeholder fluid blocks.
-- `purifying_fluid` currently applies a temporary resistance effect and consumes the block (temporary Warp Ward stand-in).
-- `purifying_fluid` now trims temporary warp by one on contact as a baseline interaction hook.
+- `purifying_fluid` now grants a registered `warp_ward` effect and consumes the source block.
+- current `warp_ward` duration baseline follows legacy scaling from permanent warp (`min(32000, 200000 / sqrt(permanent_warp_or_1))`).
 - `liquid_death` currently damages living entities on contact at a fixed interval/value (no depth scaling yet).
 - bath salts now have baseline expired-item cauldron conversion (`full water cauldron` -> `purifying_fluid` block placeholder), matching legacy trigger shape.
 - TODO(port): replace placeholder block-based fluid handling with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
 - TODO(port): restore source/flow-depth semantics for pickup/place behavior parity.
-- TODO(port): wire purifying fluid to warp/insanity systems (`Warp Ward` interaction) once warp capability is ported.
+- TODO(port): complete Warp Ward parity (effect icon/texture, balance pass, full interaction coverage in remaining warp events/systems).
 - TODO(port): port bath-salts conversion and Spa mixing flow that produces/propagates purifying fluid.
 
 ### Model Parity Backlog (Explicit IDs)
@@ -289,7 +289,8 @@ Exit criteria:
 - `sanity_checker` now has baseline functionality:
 - right-click prints current warp pools in chat (debug feedback),
 - while held, a basic client sanity HUD overlay renders warp pool bars from synced stack data.
-- `sanity_soap` now has a baseline use flow that clears temporary warp and has a chance to reduce normal warp (with placeholder chance bonuses from resistance effect/purifying fluid).
+- `sanity_soap` now has a baseline legacy-shaped use flow (200 tick use duration), clears temporary warp, and can reduce normal warp with Warp Ward/purifying-fluid chance bonuses.
+- `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) for testing the insanity loop.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.

@@ -5,6 +5,9 @@ import art.arcane.thaumcraft.common.aspect.AspectList;
 import art.arcane.thaumcraft.common.aspect.AspectRegistry;
 import art.arcane.thaumcraft.common.aspect.AspectType;
 import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -24,6 +27,8 @@ public final class ThaumcraftCommandEvents {
     // TODO(port): Add pagination/filtering for large recipe trees and optional JSON dump output for tooling.
 
     private static final int MAX_TRACE_LINES = 120;
+    private static final int MAX_WARP_VALUE = 100_000;
+    private static final int MAX_COUNTER_VALUE = 1_000_000;
 
     private ThaumcraftCommandEvents() {
     }
@@ -36,13 +41,62 @@ public final class ThaumcraftCommandEvents {
                                 .then(Commands.literal("hand")
                                         .requires(source -> source.getEntity() instanceof ServerPlayer)
                                         .executes(context -> runDebugHand(context.getSource())))
-                                .then(Commands.literal("warp")
-                                        .requires(source -> source.getEntity() instanceof ServerPlayer)
-                                        .executes(context -> runDebugWarp(context.getSource()))))
+                                .then(createWarpDebugCommand()))
         );
     }
 
-    private static int runDebugHand(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+    private static LiteralArgumentBuilder<CommandSourceStack> createWarpDebugCommand() {
+        return Commands.literal("warp")
+                .requires(source -> source.getEntity() instanceof ServerPlayer)
+                .executes(context -> runDebugWarp(context.getSource()))
+                .then(Commands.literal("add")
+                        .then(createWarpAmountLiteral("permanent", PlayerKnowledgeManager.WarpType.PERMANENT, -MAX_WARP_VALUE, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpAdd))
+                        .then(createWarpAmountLiteral("normal", PlayerKnowledgeManager.WarpType.NORMAL, -MAX_WARP_VALUE, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpAdd))
+                        .then(createWarpAmountLiteral("temporary", PlayerKnowledgeManager.WarpType.TEMPORARY, -MAX_WARP_VALUE, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpAdd)))
+                .then(Commands.literal("set")
+                        .then(createWarpAmountLiteral("permanent", PlayerKnowledgeManager.WarpType.PERMANENT, 0, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpSet))
+                        .then(createWarpAmountLiteral("normal", PlayerKnowledgeManager.WarpType.NORMAL, 0, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpSet))
+                        .then(createWarpAmountLiteral("temporary", PlayerKnowledgeManager.WarpType.TEMPORARY, 0, MAX_WARP_VALUE, ThaumcraftCommandEvents::runWarpSet)))
+                .then(Commands.literal("clear")
+                        .executes(context -> runWarpClearAll(context.getSource()))
+                        .then(createWarpLiteral("permanent", PlayerKnowledgeManager.WarpType.PERMANENT, ThaumcraftCommandEvents::runWarpClear))
+                        .then(createWarpLiteral("normal", PlayerKnowledgeManager.WarpType.NORMAL, ThaumcraftCommandEvents::runWarpClear))
+                        .then(createWarpLiteral("temporary", PlayerKnowledgeManager.WarpType.TEMPORARY, ThaumcraftCommandEvents::runWarpClear)))
+                .then(Commands.literal("counter")
+                        .executes(context -> runDebugWarp(context.getSource()))
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("value", IntegerArgumentType.integer(0, MAX_COUNTER_VALUE))
+                                        .executes(context -> runWarpCounterSet(context.getSource(), IntegerArgumentType.getInteger(context, "value")))))
+                        .then(Commands.literal("reset")
+                                .executes(context -> runWarpCounterSet(context.getSource(), 0))));
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> createWarpAmountLiteral(
+            String literalName,
+            PlayerKnowledgeManager.WarpType type,
+            int minValue,
+            int maxValue,
+            WarpTypeAmountExecutor executor
+    ) {
+        return Commands.literal(literalName)
+                .then(Commands.argument("amount", IntegerArgumentType.integer(minValue, maxValue))
+                        .executes(context -> executor.run(
+                                context.getSource(),
+                                type,
+                                IntegerArgumentType.getInteger(context, "amount")
+                        )));
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> createWarpLiteral(
+            String literalName,
+            PlayerKnowledgeManager.WarpType type,
+            WarpTypeExecutor executor
+    ) {
+        return Commands.literal(literalName)
+                .executes(context -> executor.run(context.getSource(), type));
+    }
+
+    private static int runDebugHand(CommandSourceStack source) throws CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
         ItemStack stack = player.getMainHandItem();
         if (stack.isEmpty()) {
@@ -72,8 +126,56 @@ public final class ThaumcraftCommandEvents {
         return 1;
     }
 
-    private static int runDebugWarp(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+    private static int runDebugWarp(CommandSourceStack source) throws CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runWarpAdd(CommandSourceStack source, PlayerKnowledgeManager.WarpType type, int amount) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        int value = PlayerKnowledgeManager.addWarp(player, type, amount);
+        source.sendSuccess(() -> Component.literal("warp." + warpTypeName(type) + " += " + amount + " -> " + value), false);
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runWarpSet(CommandSourceStack source, PlayerKnowledgeManager.WarpType type, int amount) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        int value = PlayerKnowledgeManager.setWarp(player, type, amount);
+        source.sendSuccess(() -> Component.literal("warp." + warpTypeName(type) + " = " + value), false);
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runWarpClear(CommandSourceStack source, PlayerKnowledgeManager.WarpType type) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.setWarp(player, type, 0);
+        source.sendSuccess(() -> Component.literal("warp." + warpTypeName(type) + " cleared."), false);
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runWarpClearAll(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.setWarp(player, PlayerKnowledgeManager.WarpType.PERMANENT, 0);
+        PlayerKnowledgeManager.setWarp(player, PlayerKnowledgeManager.WarpType.NORMAL, 0);
+        PlayerKnowledgeManager.setWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY, 0);
+        PlayerKnowledgeManager.setWarpEventCounter(player, 0);
+        source.sendSuccess(() -> Component.literal("All warp pools and warp event counter cleared."), false);
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static int runWarpCounterSet(CommandSourceStack source, int value) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.setWarpEventCounter(player, value);
+        source.sendSuccess(() -> Component.literal("warp.event_counter = " + value), false);
+        sendWarpSummary(source, player);
+        return 1;
+    }
+
+    private static void sendWarpSummary(CommandSourceStack source, ServerPlayer player) {
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
 
@@ -83,7 +185,14 @@ public final class ThaumcraftCommandEvents {
                 + ", temporary=" + warp.temporary()
                 + ", total=" + warp.total()), false);
         source.sendSuccess(() -> Component.literal("event_counter=" + counter), false);
-        return 1;
+    }
+
+    private static String warpTypeName(PlayerKnowledgeManager.WarpType type) {
+        return switch (type) {
+            case PERMANENT -> "permanent";
+            case NORMAL -> "normal";
+            case TEMPORARY -> "temporary";
+        };
     }
 
     private static String formatAspectSummary(AspectList aspects) {
@@ -101,5 +210,15 @@ public final class ThaumcraftCommandEvents {
             builder.append(entry.getKey().getTag()).append("=").append(entry.getValue());
         }
         return builder.toString();
+    }
+
+    @FunctionalInterface
+    private interface WarpTypeAmountExecutor {
+        int run(CommandSourceStack source, PlayerKnowledgeManager.WarpType type, int value) throws CommandSyntaxException;
+    }
+
+    @FunctionalInterface
+    private interface WarpTypeExecutor {
+        int run(CommandSourceStack source, PlayerKnowledgeManager.WarpType type) throws CommandSyntaxException;
     }
 }

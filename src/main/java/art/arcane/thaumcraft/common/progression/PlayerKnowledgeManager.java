@@ -79,8 +79,13 @@ public final class PlayerKnowledgeManager {
         return data.addWarp(player.getUUID(), type, delta);
     }
 
+    public static int setWarp(ServerPlayer player, WarpType type, int value) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.setWarp(player.getUUID(), type, value);
+    }
+
     public static void clearTemporaryWarp(ServerPlayer player) {
-        addWarp(player, WarpType.TEMPORARY, -getWarp(player, WarpType.TEMPORARY));
+        setWarp(player, WarpType.TEMPORARY, 0);
     }
 
     public static int getTotalWarp(ServerPlayer player) {
