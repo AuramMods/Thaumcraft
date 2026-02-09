@@ -24,18 +24,27 @@ public class ResearchTableMenu extends AbstractStationMenu {
     public static final int BUTTON_DRAFT_THEORY = 1;
     public static final int BUTTON_COMPLETE_THEORY = 2;
     private final ResearchTableBlockEntity blockEntity;
+    private final ContainerData menuData;
 
     public ResearchTableMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
-        this(containerId, playerInventory, playerInventory.player.level(), extraData.readBlockPos(), new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
+        this(
+                containerId,
+                playerInventory,
+                playerInventory.player.level(),
+                extraData.readBlockPos(),
+                new SimpleContainer(SLOT_COUNT),
+                new SimpleContainerData(ResearchTableBlockEntity.MENU_DATA_COUNT)
+        );
     }
 
     public ResearchTableMenu(int containerId, Inventory playerInventory, ResearchTableBlockEntity blockEntity) {
-        this(containerId, playerInventory, blockEntity.getLevel(), blockEntity.getBlockPos(), blockEntity, blockEntity.getMenuData());
+        this(containerId, playerInventory, blockEntity.getLevel(), blockEntity.getBlockPos(), blockEntity, blockEntity.getResearchMenuData());
     }
 
     private ResearchTableMenu(int containerId, Inventory playerInventory, Level level, BlockPos blockPos, Container container, ContainerData data) {
         super(ModMenus.RESEARCH_TABLE.get(), containerId, playerInventory, level, blockPos, container, data, SLOT_COUNT);
         this.blockEntity = container instanceof ResearchTableBlockEntity researchTable ? researchTable : null;
+        this.menuData = data;
     }
 
     @Override
@@ -80,5 +89,29 @@ public class ResearchTableMenu extends AbstractStationMenu {
             case BUTTON_COMPLETE_THEORY -> this.blockEntity.completeTheory(serverPlayer);
             default -> false;
         };
+    }
+
+    public boolean isTheorySessionActive() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_SESSION_ACTIVE) > 0;
+    }
+
+    public int getTheoryInspiration() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_INSPIRATION);
+    }
+
+    public int getTheoryInspirationStart() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_INSPIRATION_START);
+    }
+
+    public int getTheoryDraftCount() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_DRAFT_COUNT);
+    }
+
+    public int getTheoryCategoryCount() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_CATEGORY_COUNT);
+    }
+
+    public boolean canCompleteTheory() {
+        return this.menuData.get(ResearchTableBlockEntity.DATA_INDEX_COMPLETE_READY) > 0;
     }
 }

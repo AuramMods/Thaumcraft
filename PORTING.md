@@ -97,6 +97,7 @@ Phase 2 status:
 - [x] Research Table now has a baseline theory-session action loop (`Draft` + `Complete` buttons):
 - [x] drafting consumes paper + scribing context, spends observation knowledge, writes into persisted per-category note totals, and consumes inspiration
 - [x] completing converts persisted note totals into theory knowledge gains (with highest-category bonus) and clears the active session
+- [x] Research Table menu now syncs theory-session state to clients (active flag, inspiration values, draft count, category count, completion readiness) so UI button gating reflects server session state
 - [x] Crucible baseline tick mechanics added (heat detection, water bucket fill, hot-state item processing, persisted water/heat/essentia state)
 - [x] Arcane Workbench now gates recipe output by local aura vis and spends vis when crafting output is taken
 - [x] Infusion Matrix now performs baseline altar structure scans (central + ring pedestal detection) and syncs readiness/activity state
@@ -111,7 +112,7 @@ Phase 2 status:
 - [ ] Arcane Workbench crystal/vis balancing and exact legacy parity tuning are still pending
 - [ ] Arcane Workbench menu preview/cost state is still global-per-block and should be migrated to player-scoped view parity for multi-viewer correctness
 - [ ] Arcane Workbench charger-area drain policy still needs parity tuning for edge cases (drain order/preservation behavior)
-- [ ] Research Table card draw/aid selection UI + packet sync is still pending (current theory session model is server-side only with actionbar feedback)
+- [ ] Research Table card draw/aid selection UI is still pending (current synced session model has no card-choice state or aid mutator selection yet)
 - [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table theorycraft/inspiration/card flow)
 
 Exit criteria:

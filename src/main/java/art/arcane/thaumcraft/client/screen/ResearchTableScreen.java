@@ -1,6 +1,7 @@
 package art.arcane.thaumcraft.client.screen;
 
 import art.arcane.thaumcraft.common.menu.ResearchTableMenu;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -49,10 +50,26 @@ public class ResearchTableScreen extends StationScreen<ResearchTableMenu> {
         if (this.draftTheoryButton != null) {
             boolean hasScribing = this.menu.getSlot(0).hasItem();
             boolean hasPaper = this.menu.getSlot(1).hasItem();
-            this.draftTheoryButton.active = hasScribing && hasPaper;
+            boolean hasInspiration = !this.menu.isTheorySessionActive() || this.menu.getTheoryInspiration() > 0;
+            this.draftTheoryButton.active = hasScribing && hasPaper && hasInspiration;
         }
         if (this.completeTheoryButton != null) {
-            this.completeTheoryButton.active = true;
+            this.completeTheoryButton.active = this.menu.canCompleteTheory();
         }
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(guiGraphics, mouseX, mouseY);
+
+        int inspiration = this.menu.getTheoryInspiration();
+        int inspirationStart = this.menu.getTheoryInspirationStart();
+        int draftCount = this.menu.getTheoryDraftCount();
+        int categoryCount = this.menu.getTheoryCategoryCount();
+        String sessionLabel = this.menu.isTheorySessionActive() ? "active" : "idle";
+
+        guiGraphics.drawString(this.font, Component.literal("Theory Session: " + sessionLabel), 8, 44, 0xB8D7C1, false);
+        guiGraphics.drawString(this.font, Component.literal("Inspiration: " + inspiration + "/" + inspirationStart), 8, 56, 0xB8D7C1, false);
+        guiGraphics.drawString(this.font, Component.literal("Drafts: " + draftCount + " | Categories: " + categoryCount), 8, 68, 0xB8D7C1, false);
     }
 }

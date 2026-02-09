@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,12 +42,50 @@ public class ResearchTableBlockEntity extends StationBlockEntity {
     private static final String TAG_THEORY_CATEGORY_TOTALS = "theory_category_totals";
     private static final String TAG_CATEGORY = "category";
     private static final String TAG_TOTAL = "total";
+    public static final int MENU_DATA_COUNT = 8;
+    public static final int DATA_INDEX_SESSION_ACTIVE = 2;
+    public static final int DATA_INDEX_INSPIRATION = 3;
+    public static final int DATA_INDEX_INSPIRATION_START = 4;
+    public static final int DATA_INDEX_DRAFT_COUNT = 5;
+    public static final int DATA_INDEX_CATEGORY_COUNT = 6;
+    public static final int DATA_INDEX_COMPLETE_READY = 7;
 
     private final Map<String, Integer> theoryCategoryTotals = new LinkedHashMap<>();
     private boolean theorySessionActive;
     private int theoryInspiration;
     private int theoryInspirationStart;
     private int theoryDraftCount;
+    private final ContainerData researchMenuData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> ResearchTableBlockEntity.this.getServerTicksValue();
+                case 1 -> ResearchTableBlockEntity.this.getActivityValue();
+                case DATA_INDEX_SESSION_ACTIVE -> ResearchTableBlockEntity.this.theorySessionActive ? 1 : 0;
+                case DATA_INDEX_INSPIRATION -> ResearchTableBlockEntity.this.theoryInspiration;
+                case DATA_INDEX_INSPIRATION_START -> ResearchTableBlockEntity.this.theoryInspirationStart;
+                case DATA_INDEX_DRAFT_COUNT -> ResearchTableBlockEntity.this.theoryDraftCount;
+                case DATA_INDEX_CATEGORY_COUNT -> ResearchTableBlockEntity.this.theoryCategoryTotals.size();
+                case DATA_INDEX_COMPLETE_READY -> ResearchTableBlockEntity.this.hasCompletableTheory() ? 1 : 0;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0 -> ResearchTableBlockEntity.this.setServerTicksValue(value);
+                case 1 -> ResearchTableBlockEntity.this.setActivityValue(value);
+                default -> {
+                }
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return MENU_DATA_COUNT;
+        }
+    };
 
     public ResearchTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.RESEARCH_TABLE.get(), pos, state, "container.thaumcraft.research_table", 2);
@@ -55,6 +94,15 @@ public class ResearchTableBlockEntity extends StationBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new ResearchTableMenu(containerId, playerInventory, this);
+    }
+
+    @Override
+    public void serverTick() {
+        incrementServerTicks();
+        setActivityValue(this.theorySessionActive ? this.theoryInspiration : 0);
+        if ((getServerTicksValue() % 20) == 0) {
+            setChanged();
+        }
     }
 
     public boolean draftTheory(ServerPlayer player) {
@@ -201,6 +249,10 @@ public class ResearchTableBlockEntity extends StationBlockEntity {
 
     public boolean hasCompletableTheory() {
         return this.theorySessionActive && this.theoryInspiration <= 0 && !this.theoryCategoryTotals.isEmpty();
+    }
+
+    public ContainerData getResearchMenuData() {
+        return this.researchMenuData;
     }
 
     private void ensureTheorySession(ServerPlayer player) {

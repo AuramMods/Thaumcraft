@@ -112,6 +112,9 @@ This file captures migration state so work can continue safely after context com
   - drafting consumes paper + scribing context, spends observation knowledge, and writes persisted note totals per research category
   - drafting now consumes inspiration from an active theory session (session is created on first draft with a baseline available-inspiration value)
   - completing a spent-inspiration session converts note totals into theory knowledge rewards (plus highest-category bonus), then clears the session
+- Added Research Table menu/session sync baseline:
+  - dedicated menu data sync now mirrors theory session state to clients (active, inspiration current/start, draft count, category count, completion-ready flag)
+  - research table screen now gates `Draft`/`Complete` buttons from server-synced session state and renders live session stats
 - Added Crucible baseline mechanics:
   - heat rises/falls based on heat-source block beneath crucible
   - water can be filled by placing a water bucket in the crucible slot
@@ -292,7 +295,7 @@ This file captures migration state so work can continue safely after context com
   - expand current key/stage/flag/knowledge scaffolding into full research progression parity (auto-unlock graph + real theorycraft card draw/aid selection + stage reward consumption)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Continue research table parity after session baseline:
-  - sync active note/session state to client UI (category totals, inspiration, current choices) instead of actionbar-only status
+  - expand client sync from current session counters to full note/card payloads (drawn choices, selected card, aid mutators, blocked categories)
   - implement legacy card-choice draw/activate flow and surrounding-aid discovery/selection hooks
 - Continue armor parity after cultist warp baseline:
   - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)
