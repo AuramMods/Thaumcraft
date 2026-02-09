@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "thaumcraft:block/lamp_stand"
+      }
+    },
+    {
+      "apply": {
+        "model": "thaumcraft:block/lamp_arcane"
+      }
+    }
+  ]
+}

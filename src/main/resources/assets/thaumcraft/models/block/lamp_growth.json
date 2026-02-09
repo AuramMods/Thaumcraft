@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/lamp",
+  "textures": {
+    "side": "thaumcraft:block/lamp_grow_off",
+    "particle": "thaumcraft:block/lamp_grow_off"
+  }
+}

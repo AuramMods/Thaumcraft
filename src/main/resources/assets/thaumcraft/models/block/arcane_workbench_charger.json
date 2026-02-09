@@ -1,0 +1,8 @@
+{
+  "loader": "forge:obj",
+  "model": "thaumcraft:models/block/arcane_workbench_charger.obj",
+  "flip_v": true,
+  "textures": {
+    "texture": "thaumcraft:block/arcane_workbench_charger"
+  }
+}

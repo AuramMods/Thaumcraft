@@ -1,0 +1,8 @@
+{
+  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "thaumcraft:block/greatwood_sapling",
+    "particle": "thaumcraft:block/greatwood_sapling"
+  }
+}

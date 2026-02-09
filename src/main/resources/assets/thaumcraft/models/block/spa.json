@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "thaumcraft:block/spa_side",
+    "south": "thaumcraft:block/spa_side",
+    "east": "thaumcraft:block/spa_side",
+    "west": "thaumcraft:block/spa_side",
+    "up": "thaumcraft:block/spa_top",
+    "down": "minecraft:block/furnace_top",
+    "particle": "thaumcraft:block/spa_side"
+  }
+}

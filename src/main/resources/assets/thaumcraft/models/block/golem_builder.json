@@ -1,0 +1,8 @@
+{
+  "loader": "forge:obj",
+  "model": "thaumcraft:models/block/golembuilder.obj",
+  "flip_v": true,
+  "textures": {
+    "texture": "thaumcraft:block/golembuilder"
+  }
+}

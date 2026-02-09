@@ -1,0 +1,8 @@
+{
+  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "thaumcraft:block/shimmerleaf",
+    "particle": "thaumcraft:block/shimmerleaf"
+  }
+}

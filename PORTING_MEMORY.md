@@ -77,9 +77,44 @@ This file captures migration state so work can continue safely after context com
 - Verified after migration:
   - `./gradlew classes -q` passes
   - `./gradlew runData --no-daemon` passes
+- Added a third block-model migration batch for the remaining placeholder-heavy IDs requested in the latest parity pass:
+  - `activator_rail`
+  - `arcane_ear`
+  - `arcane_workbench_charger`
+  - `cinderpearl`
+  - `golem_builder`
+  - `lamp_arcane`
+  - `lamp_fertility`
+  - `lamp_growth`
+  - `leaf`
+  - `levitator`
+  - `mirror`
+  - `mirror_essentia`
+  - `nitor`
+  - `pattern_crafter`
+  - `pillar`
+  - `research_table`
+  - `sapling`
+  - `shimmerleaf`
+  - `smelter_aux`
+  - `smelter_thaumium`
+  - `smelter_vent`
+  - `smelter_void`
+  - `spa`
+- Added and wired legacy model dependencies for that batch:
+  - copied JSON block models (rails/ears/lamps/levitator/pattern-crafter/research-table/smelters),
+  - added static-safe cross/leaves/cube wrappers (`cinderpearl`, `shimmerleaf`, `sapling`, `leaf`, `nitor`, `mirror`, `mirror_essentia`, `spa`),
+  - added Forge OBJ model wrappers + copied OBJ/MTL assets for `arcane_workbench_charger`, `golem_builder`, `pillar`.
+- Expanded `ThaumcraftBlockStateProvider.CUSTOM_MODEL_BLOCKS` again so datagen no longer emits generated cube fallback blockstate/model/item files for those IDs.
+- Added custom main-resource blockstates + item models for the batch and removed generated collisions.
+- Verified after third migration:
+  - `./gradlew classes -q` passes
+  - `./gradlew runData --no-daemon` passes
 - Immediate model follow-up targets:
   - port block classes/properties for dynamic model states (`facing`, `enabled`, `type`, tube connectivity) and then restore full legacy blockstate logic
-  - port remaining OBJ-backed/non-static parity models (`arcane_workbench_charger`, `golem_builder`, `thaumatorium`, `pillar`) and dynamic non-OBJ parity models (`arcane_ear`, `levitator`, `pattern_crafter`, infernal furnace facing parity)
+  - complete remaining explicit model backlog IDs (`infernal_furnace`, `vishroom`, `smelter_basic`, `taint_fibre`, `wand_workbench`)
+  - validate runtime OBJ loader behavior for `arcane_workbench_charger`, `golem_builder`, and `pillar` in-client and tune loader flags/transforms if render mismatches remain
+  - wearable visual parity is still pending: player-worn armor and `goggles` continue using baseline biped geometry (textures/item models are restored, custom wearable geometry is not yet ported)
 
 ### Phase 2 (Functional Station Scaffolding)
 

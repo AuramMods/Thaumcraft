@@ -78,9 +78,13 @@ Phase 1 status:
 - [x] updated item-model datagen to skip those custom armor/goggle model ids so generated/main resources no longer collide.
 - [x] Second non-cube block model conversion pass completed for static-safe legacy placeholders: `alembic`, `bellows`, `brain_box`, `candle`, `centrifuge`, `dioptra`, `essentia_input`, `essentia_output`, `everfull_urn`, `loot_crate`, `loot_urn`, `recharge_pedestal`, `redstone_relay`, `tube`, `tube_buffer`, `tube_filter`, `tube_oneway`, `tube_restrict`, `tube_valve`
 - [x] Migrated the above blockstate/block-model/item-model ids from generated placeholders into `src/main/resources` custom assets and updated blockstate datagen custom-id exclusions so `runData` no longer recreates cube fallbacks for this batch
+- [x] Third block-model conversion pass completed for remaining high-priority placeholder IDs: `activator_rail`, `arcane_ear`, `arcane_workbench_charger`, `bellows`, `brain_box`, `candle`, `cinderpearl`, `golem_builder`, `lamp_arcane`, `lamp_fertility`, `lamp_growth`, `leaf`, `levitator`, `mirror`, `mirror_essentia`, `nitor`, `pattern_crafter`, `pillar`, `research_table`, `sapling`, `shimmerleaf`, `smelter_aux`, `smelter_thaumium`, `smelter_vent`, `smelter_void`, `spa`
+- [x] Added OBJ-backed resource wrappers and copied legacy OBJ/MTL assets for `arcane_workbench_charger`, `golem_builder`, and `pillar` into `src/main/resources/assets/thaumcraft/models/block`
+- [x] Migrated the above ids from generated placeholders into custom main-resource blockstates/block models/item models and expanded datagen custom-id exclusions so generated cube fallback models are no longer emitted for those IDs
 - [ ] Follow-up model parity requires block-class/property porting for dynamic states (`facing`, `enabled`, `type`, tube connectivity) before full legacy variant behavior can be restored
-- [ ] Remaining OBJ-backed and dynamic-orientation parity models are still pending (`arcane_workbench_charger`, `golem_builder`, `thaumatorium`, `pillar`, `arcane_ear`, `levitator`, `pattern_crafter`, infernal furnace facing parity)
+- [ ] Remaining dynamic-state behavior parity is still pending for converted models that currently run in static-safe fallback mode (`facing`/`enabled`/`type`/tube-connectivity property sets are not yet ported on placeholder block classes)
 - [ ] Full legacy custom armor geometry parity is still pending (`ModelRobe`/`ModelFortressArmor`/`ModelLeaderArmor`-equivalent 1.20.1 layer definitions)
+- [ ] Player-worn armor and `goggles` still use baseline biped geometry in-world (legacy wearable shape parity remains pending even though texture routing/item models are restored)
 
 ### Phase 2: Functional Block Entities and Menus
 
@@ -246,55 +250,17 @@ Exit criteria:
 ### Model Parity Backlog (Explicit IDs)
 
 - Legacy blockstate references are under `old-1.12.2/assets/thaumcraft/blockstates/<id>.json`.
-- Activator Rail: `activator_rail`
-- Alembic: `alembic`
-- Arcane Ear: `arcane_ear`
-- Workbench Charger: `arcane_workbench_charger`
-- Bellows: `bellows`
-- Brain Box: `brain_box`
-- Candle: `candle`
-- Centrifuge: `centrifuge`
-- Dioptra: `dioptra`
-- Essentia Input: `essentia_input`
-- Essentia Output: `essentia_output`
-- Everfull Urn: `everfull_urn`
-- Golem Builder: `golem_builder`
 - Infernal Furnace: `infernal_furnace`
-- Lamp of Arcana: `lamp_arcane`
-- Lamp of Fertility: `lamp_fertility`
-- Lamp of Growth: `lamp_growth`
-- Levitator: `levitator`
-- Loot Crate: `loot_crate`
-- Loot Urn: `loot_urn`
-- Mirror: `mirror`
-- Essentia Mirror: `mirror_essentia`
-- Pattern Crafter: `pattern_crafter`
-- Pillar: `pillar`
-- Recharge Pedestal: `recharge_pedestal`
-- Redstone Relay: `redstone_relay`
-- Research Table: `research_table`
-- Sapling: `sapling`
-- Shimmerleaf: `shimmerleaf`
 - Vishroom: `vishroom`
-- Smelter Aux: `smelter_aux`
 - Smelter Basic: `smelter_basic`
-- Smelter Thaumium: `smelter_thaumium`
-- Smelter Vent: `smelter_vent`
-- Smelter Void: `smelter_void`
-- Spa: `spa`
 - Taint Fibre: `taint_fibre`
-- Tube: `tube`
-- Tube Buffer: `tube_buffer`
-- Tube Filter: `tube_filter`
-- Tube Oneway: `tube_oneway`
-- Tube Restrict: `tube_restrict`
-- Tube Valve: `tube_valve`
 - Wand Workbench: `wand_workbench`
 
 ### Armor Porting Backlog
 
 - Current 1.20.1 registration now maps armor ids to equipable `ArmorItem` baseline instances so armor slots/equip flow works in-game.
 - Current baseline still uses vanilla materials/stats as a compatibility bridge; Thaumcraft-specific armor materials/behavior are still pending.
+- Player-worn armor and `goggles` currently use baseline biped geometry in-world; legacy wearable model shapes are not yet ported.
 - `void_*` and `void_robe_*` now use a custom baseline class with passive self-repair ticks (inventory + worn) as a first behavior parity step.
 - `traveller_boots` now use a custom baseline class with movement/fall assist placeholder behavior (non-charge-based for now).
 - `crimson_boots` and `crimson_robe_*` now use dedicated baseline cultist armor classes with legacy-shaped warp values (`1`) and iron-ingot repair compatibility.
