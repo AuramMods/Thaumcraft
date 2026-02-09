@@ -1,6 +1,7 @@
 package art.arcane.thaumcraft.common.progression;
 
 import art.arcane.thaumcraft.Thaumcraft;
+import art.arcane.thaumcraft.common.registry.ModMobEffects;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -13,8 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 public final class WarpEvents {
     // TODO(port): Replace this baseline ticker with full legacy warp event table/progression gating/event categories.
     // TODO(port): Add client FX/audio hallucination events and proper sync packet flow.
+    // TODO(port): Tune baseline counter/event cadence against legacy checkWarpEvent pacing and probability model.
 
     private static final int COUNTER_THRESHOLD = 1000;
+    private static final int TEMPORARY_WARP_DECAY_INTERVAL_TICKS = 2000;
 
     private WarpEvents() {
     }
@@ -29,6 +32,18 @@ public final class WarpEvents {
         }
         if (player.isCreative() || player.isSpectator()) {
             return;
+        }
+
+        // Legacy parity baseline: warp events are suppressed while Warp Ward is active.
+        if (player.hasEffect(ModMobEffects.WARP_WARD.get())) {
+            return;
+        }
+
+        if ((player.tickCount % TEMPORARY_WARP_DECAY_INTERVAL_TICKS) == 0) {
+            int temporary = PlayerKnowledgeManager.getWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY);
+            if (temporary > 0) {
+                PlayerKnowledgeManager.addWarp(player, PlayerKnowledgeManager.WarpType.TEMPORARY, -1);
+            }
         }
 
         int totalWarp = PlayerKnowledgeManager.getTotalWarp(player);

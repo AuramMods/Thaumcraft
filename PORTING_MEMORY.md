@@ -205,6 +205,9 @@ This file captures migration state so work can continue safely after context com
   - `/thaumcraft debug warp clear [pool]`
   - `/thaumcraft debug warp counter set|reset`
   - added direct warp setters in player knowledge data/manager for test/debug flows
+- Extended baseline warp ticker toward legacy Warp Ward interaction:
+  - warp ticker now skips event accumulation/rolls while `warp_ward` is active
+  - temporary warp now decays by `1` every `2000` ticks when the player is not warded
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
@@ -229,7 +232,7 @@ This file captures migration state so work can continue safely after context com
 - Port Spa mixing/spreading baseline that consumes `bath_salts` and produces/propagates `purifying_fluid`
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - gate/modify warp-event effects where legacy behavior expects Warp Ward interaction
+  - continue tuning warp-event cadence/probability model toward legacy behavior (current baseline still simplified)
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:

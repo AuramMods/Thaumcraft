@@ -294,6 +294,7 @@ Exit criteria:
 - while held, a basic client sanity HUD overlay renders warp pool bars from synced stack data.
 - `sanity_soap` now has a baseline legacy-shaped use flow (200 tick use duration), clears temporary warp, and can reduce normal warp with Warp Ward/purifying-fluid chance bonuses.
 - `bath_salts` now has baseline legacy-shaped dropped-lifespan timing and water conversion hooks as part of the insanity/purification loop scaffolding.
+- baseline warp ticker now suppresses warp event rolls while `warp_ward` is active and applies periodic temporary-warp decay (`-1` every `2000` ticks) when not warded.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) for testing the insanity loop.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
