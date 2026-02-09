@@ -76,7 +76,10 @@ Phase 1 status:
 - [x] wired armor texture routing for thaumium/void/robes/cultist/fortress/traveller/goggles to replace vanilla placeholder material textures,
 - [x] replaced generated placeholder armor/goggle item models with legacy multi-layer item model JSONs (including robe/void-robe overlay layers),
 - [x] updated item-model datagen to skip those custom armor/goggle model ids so generated/main resources no longer collide.
-- [ ] Remaining non-cube model parity and advanced render polish are still pending
+- [x] Second non-cube block model conversion pass completed for static-safe legacy placeholders: `alembic`, `bellows`, `brain_box`, `candle`, `centrifuge`, `dioptra`, `essentia_input`, `essentia_output`, `everfull_urn`, `loot_crate`, `loot_urn`, `recharge_pedestal`, `redstone_relay`, `tube`, `tube_buffer`, `tube_filter`, `tube_oneway`, `tube_restrict`, `tube_valve`
+- [x] Migrated the above blockstate/block-model/item-model ids from generated placeholders into `src/main/resources` custom assets and updated blockstate datagen custom-id exclusions so `runData` no longer recreates cube fallbacks for this batch
+- [ ] Follow-up model parity requires block-class/property porting for dynamic states (`facing`, `enabled`, `type`, tube connectivity) before full legacy variant behavior can be restored
+- [ ] Remaining OBJ-backed and dynamic-orientation parity models are still pending (`arcane_workbench_charger`, `golem_builder`, `thaumatorium`, `pillar`, `arcane_ear`, `levitator`, `pattern_crafter`, infernal furnace facing parity)
 - [ ] Full legacy custom armor geometry parity is still pending (`ModelRobe`/`ModelFortressArmor`/`ModelLeaderArmor`-equivalent 1.20.1 layer definitions)
 
 ### Phase 2: Functional Block Entities and Menus

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "thaumcraft:block/loot_crate_side_0"
-  }
-}

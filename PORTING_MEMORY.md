@@ -45,6 +45,41 @@ This file captures migration state so work can continue safely after context com
   - names/items register
   - content appears in creative tab
   - non-cube blocks still visually incorrect (expected at this stage)
+- Added a second block-model parity batch (custom assets moved from generated placeholders to main resources) for:
+  - `alembic`
+  - `bellows`
+  - `brain_box`
+  - `candle`
+  - `centrifuge`
+  - `dioptra`
+  - `essentia_input`
+  - `essentia_output`
+  - `everfull_urn`
+  - `loot_crate`
+  - `loot_urn`
+  - `recharge_pedestal`
+  - `redstone_relay`
+  - `tube`
+  - `tube_buffer`
+  - `tube_filter`
+  - `tube_oneway`
+  - `tube_restrict`
+  - `tube_valve`
+- Added supporting custom block model resources for that batch:
+  - relay state variants (`redstone_relay_off`, `redstone_relay_on`)
+  - loot rarity variants (`loot_crate_common/uncommon/rare`, `loot_urn_common/uncommon/rare`)
+  - tube component models (`tube_core`, `tube_side`, `tube_side_restrict`, `tube_buffer_core`, `tube_filter_core`, `tube_core_valve`)
+- Expanded `ThaumcraftBlockStateProvider.CUSTOM_MODEL_BLOCKS` to include those IDs so datagen no longer regenerates cube placeholder blockstates/models/items for this model batch.
+- Added property-safe blockstates for current placeholder block classes:
+  - static `variants` for blocks that do not yet expose legacy state properties (`facing`, `enabled`, `type`)
+  - unconditional `multipart` composition for tube-family blocks so they render as non-cube fixtures before connectivity-property porting
+- Added custom block-item model JSONs for the migrated IDs so inventory/hand renders use block geometry instead of generated flat models.
+- Verified after migration:
+  - `./gradlew classes -q` passes
+  - `./gradlew runData --no-daemon` passes
+- Immediate model follow-up targets:
+  - port block classes/properties for dynamic model states (`facing`, `enabled`, `type`, tube connectivity) and then restore full legacy blockstate logic
+  - port remaining OBJ-backed/non-static parity models (`arcane_workbench_charger`, `golem_builder`, `thaumatorium`, `pillar`) and dynamic non-OBJ parity models (`arcane_ear`, `levitator`, `pattern_crafter`, infernal furnace facing parity)
 
 ### Phase 2 (Functional Station Scaffolding)
 
