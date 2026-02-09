@@ -286,11 +286,13 @@ Exit criteria:
 - Legacy insanity is implemented as a multi-type warp system (`PERMANENT`, `NORMAL`, `TEMPORARY`) with periodic warp event rolls and effects.
 - Legacy sanity checker drives dedicated warp HUD readout; sanity soap removes temporary warp and can reduce normal warp; purifying fluid and Warp Ward interact with this loop.
 - Current 1.20.1 port now has baseline warp persistence in player knowledge data (`permanent`, `normal`, `temporary`, and a basic warp event counter field).
-- `sanity_checker` now has a baseline use action that prints current warp pools in chat for debugging/gameplay feedback.
+- `sanity_checker` now has baseline functionality:
+- right-click prints current warp pools in chat (debug feedback),
+- while held, a basic client sanity HUD overlay renders warp pool bars from synced stack data.
 - `sanity_soap` now has a baseline use flow that clears temporary warp and has a chance to reduce normal warp (with placeholder chance bonuses from resistance effect/purifying fluid).
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
-- TODO(port): add sanity checker UI/HUD behavior and synchronize values client-side.
+- TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 
 ### Phase 5: Infusion
