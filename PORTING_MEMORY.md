@@ -215,6 +215,10 @@ This file captures migration state so work can continue safely after context com
   - accepts water buckets into internal water storage (`5000` max) and accepts `bath_salts` as consumable input
   - every `40` ticks (when not redstone-powered), consumes `bath_salts` + water (`1000`) to place/spread `purifying_fluid`
   - supports first-pass spread behavior around existing purifying-fluid cells in a 5x5 area above the spa
+- Extended spa baseline with initial legacy mix/non-mix behavior:
+  - shift-right-click with empty hand toggles spa mix mode
+  - non-mix mode can consume loaded fluid directly (`water`, `bucket_pure`, `bucket_death`) for placement/spreading
+  - empty bucket extraction now returns the loaded fluid as the corresponding bucket item
 - Verified:
   - `./gradlew classes -q` passes after these changes
 
@@ -233,7 +237,7 @@ This file captures migration state so work can continue safely after context com
 
 - Finalize bath-salts + spa parity audit against legacy behavior:
   - validate exact conversion surfaces (source-water/cauldron expectations) and tune to intended TC6 semantics
-  - port full spa tank/container interactions and optional non-mix behavior beyond the current baseline counters model
+  - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
   - continue tuning warp-event cadence/probability model toward legacy behavior (current baseline still simplified)

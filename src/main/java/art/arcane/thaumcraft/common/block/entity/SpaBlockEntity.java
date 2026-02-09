@@ -7,19 +7,28 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SpaBlockEntity extends net.minecraft.world.level.block.entity.BlockEntity implements TickingStationBlockEntity {
-    // TODO(port): Replace this baseline internal counters model with full legacy spa tank + inventory/menu parity.
-    // TODO(port): Add configurable non-mix mode and fluid-source selection parity once proper fluids and spa UI exist.
+    // TODO(port): Replace this baseline counters model with full legacy spa tank/inventory/menu parity.
+    // TODO(port): Port full container compatibility and fluid capability behavior once real fluid stacks are in place.
 
-    public static final int MAX_WATER = 5000;
+    public static final int MAX_FLUID = 5000;
+    public static final int MAX_WATER = MAX_FLUID;
     public static final int MAX_BATH_SALTS = 64;
-    public static final int WATER_COST_PER_OPERATION = 1000;
+    public static final int FLUID_COST_PER_OPERATION = 1000;
     public static final int OPERATION_INTERVAL_TICKS = 40;
 
-    private int waterAmount;
+    private static final String TAG_MIX = "spa_mix";
+    private static final String TAG_FLUID_AMOUNT = "spa_fluid_amount";
+    private static final String TAG_FLUID_MODE = "spa_fluid_mode";
+    private static final String TAG_BATH_SALTS = "spa_bath_salts";
+
+    private int fluidAmount;
+    private FluidMode fluidMode;
+    private boolean mix = true;
     private int bathSaltsCount;
 
     public SpaBlockEntity(BlockPos pos, BlockState state) {
@@ -41,23 +50,71 @@ public class SpaBlockEntity extends net.minecraft.world.level.block.entity.Block
             return;
         }
 
-        if (tryPlacePurifyingFluid(serverLevel)) {
-            this.bathSaltsCount = Math.max(0, this.bathSaltsCount - 1);
-            this.waterAmount = Math.max(0, this.waterAmount - WATER_COST_PER_OPERATION);
+        Block targetBlock = resolveTargetBlock(serverLevel);
+        if (targetBlock == null) {
+            return;
+        }
+
+        if (tryPlaceTargetFluid(serverLevel, targetBlock)) {
+            consumeIngredients();
             setChanged();
         }
     }
 
-    public int addWater(int amount) {
-        if (amount <= 0) {
+    public int addFluid(FluidMode mode, int amount) {
+        if (mode == null || amount <= 0) {
             return 0;
         }
-        int added = Math.min(amount, MAX_WATER - this.waterAmount);
+        if (this.fluidAmount > 0 && this.fluidMode != mode) {
+            return 0;
+        }
+
+        int added = Math.min(amount, MAX_FLUID - this.fluidAmount);
         if (added > 0) {
-            this.waterAmount += added;
+            this.fluidAmount += added;
+            this.fluidMode = mode;
             setChanged();
         }
         return added;
+    }
+
+    public int addWater(int amount) {
+        return addFluid(FluidMode.WATER, amount);
+    }
+
+    public FluidMode extractBucketFluid() {
+        if (this.fluidMode == null || this.fluidAmount < FLUID_COST_PER_OPERATION) {
+            return null;
+        }
+        FluidMode extracted = this.fluidMode;
+        this.fluidAmount -= FLUID_COST_PER_OPERATION;
+        if (this.fluidAmount <= 0) {
+            this.fluidAmount = 0;
+            this.fluidMode = null;
+        }
+        setChanged();
+        return extracted;
+    }
+
+    public void toggleMixMode() {
+        this.mix = !this.mix;
+        setChanged();
+    }
+
+    public int getFluidAmount() {
+        return this.fluidAmount;
+    }
+
+    public String getFluidModeId() {
+        return this.fluidMode == null ? "empty" : this.fluidMode.id;
+    }
+
+    public FluidMode getFluidMode() {
+        return this.fluidMode;
+    }
+
+    public boolean isMixMode() {
+        return this.mix;
     }
 
     public int addBathSalts(int amount) {
@@ -73,7 +130,7 @@ public class SpaBlockEntity extends net.minecraft.world.level.block.entity.Block
     }
 
     public int getWaterAmount() {
-        return this.waterAmount;
+        return this.fluidMode == FluidMode.WATER ? this.fluidAmount : 0;
     }
 
     public int getBathSaltsCount() {
@@ -81,38 +138,69 @@ public class SpaBlockEntity extends net.minecraft.world.level.block.entity.Block
     }
 
     public boolean hasIngredients() {
-        return this.bathSaltsCount > 0 && this.waterAmount >= WATER_COST_PER_OPERATION;
+        if (this.fluidAmount < FLUID_COST_PER_OPERATION || this.fluidMode == null) {
+            return false;
+        }
+        if (!this.mix) {
+            return true;
+        }
+        return this.fluidMode == FluidMode.WATER && this.bathSaltsCount > 0;
     }
 
-    private boolean tryPlacePurifyingFluid(ServerLevel level) {
-        Block purifyingFluid = ModBlocks.get("purifying_fluid").get();
+    private Block resolveTargetBlock(ServerLevel level) {
+        if (this.mix) {
+            return ModBlocks.get("purifying_fluid").get();
+        }
+        if (this.fluidMode == null) {
+            return null;
+        }
+        Block block = this.fluidMode.targetBlock();
+        if (block == Blocks.WATER && level.dimensionType().ultraWarm()) {
+            return null;
+        }
+        return block;
+    }
+
+    private void consumeIngredients() {
+        this.fluidAmount = Math.max(0, this.fluidAmount - FLUID_COST_PER_OPERATION);
+        if (this.fluidAmount == 0) {
+            this.fluidMode = null;
+        }
+        if (this.mix) {
+            this.bathSaltsCount = Math.max(0, this.bathSaltsCount - 1);
+        }
+    }
+
+    private boolean tryPlaceTargetFluid(ServerLevel level, Block targetBlock) {
         BlockPos above = this.worldPosition.above();
         BlockState aboveState = level.getBlockState(above);
 
-        if (aboveState.is(purifyingFluid)) {
+        if (aboveState.is(targetBlock)) {
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dz = -2; dz <= 2; dz++) {
                     BlockPos candidate = this.worldPosition.offset(dx, 1, dz);
-                    if (canPlaceAt(level, candidate, purifyingFluid, true)) {
-                        level.setBlockAndUpdate(candidate, purifyingFluid.defaultBlockState());
+                    if (canPlaceAt(level, candidate, targetBlock, true)) {
+                        level.setBlockAndUpdate(candidate, targetBlock.defaultBlockState());
                         return true;
                     }
                 }
             }
         }
 
-        if (canPlaceAt(level, above, purifyingFluid, false)) {
-            level.setBlockAndUpdate(above, purifyingFluid.defaultBlockState());
+        if (canPlaceAt(level, above, targetBlock, false)) {
+            level.setBlockAndUpdate(above, targetBlock.defaultBlockState());
             return true;
         }
 
         return false;
     }
 
-    private static boolean canPlaceAt(ServerLevel level, BlockPos pos, Block purifyingFluid, boolean requireAdjacentPurifyingFluid) {
+    private static boolean canPlaceAt(ServerLevel level, BlockPos pos, Block targetBlock, boolean requireAdjacentTarget) {
         BlockState targetState = level.getBlockState(pos);
         boolean sourceWater = targetState.getFluidState().is(FluidTags.WATER) && targetState.getFluidState().isSource();
-        if (targetState.is(purifyingFluid) || (!targetState.canBeReplaced() && !sourceWater)) {
+        boolean replaceable = targetState.canBeReplaced() || (sourceWater && targetBlock != Blocks.WATER);
+
+        if (targetState.is(targetBlock) || !replaceable) {
             return false;
         }
 
@@ -121,12 +209,12 @@ public class SpaBlockEntity extends net.minecraft.world.level.block.entity.Block
             return false;
         }
 
-        if (!requireAdjacentPurifyingFluid) {
+        if (!requireAdjacentTarget) {
             return true;
         }
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
-            if (level.getBlockState(pos.relative(direction)).is(purifyingFluid)) {
+            if (level.getBlockState(pos.relative(direction)).is(targetBlock)) {
                 return true;
             }
         }
@@ -136,14 +224,60 @@ public class SpaBlockEntity extends net.minecraft.world.level.block.entity.Block
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putInt("spa_water", this.waterAmount);
-        tag.putInt("spa_bath_salts", this.bathSaltsCount);
+        tag.putBoolean(TAG_MIX, this.mix);
+        tag.putInt(TAG_FLUID_AMOUNT, this.fluidAmount);
+        tag.putString(TAG_FLUID_MODE, this.fluidMode == null ? "" : this.fluidMode.id);
+        tag.putInt(TAG_BATH_SALTS, this.bathSaltsCount);
+
+        // Compatibility fallback for older snapshots that read only this key.
+        tag.putInt("spa_water", this.fluidAmount);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.waterAmount = Math.max(0, Math.min(MAX_WATER, tag.getInt("spa_water")));
-        this.bathSaltsCount = Math.max(0, Math.min(MAX_BATH_SALTS, tag.getInt("spa_bath_salts")));
+        this.mix = !tag.contains(TAG_MIX) || tag.getBoolean(TAG_MIX);
+        this.bathSaltsCount = Math.max(0, Math.min(MAX_BATH_SALTS, tag.getInt(TAG_BATH_SALTS)));
+
+        int storedAmount = tag.contains(TAG_FLUID_AMOUNT) ? tag.getInt(TAG_FLUID_AMOUNT) : tag.getInt("spa_water");
+        this.fluidAmount = Math.max(0, Math.min(MAX_FLUID, storedAmount));
+
+        String modeId = tag.getString(TAG_FLUID_MODE);
+        this.fluidMode = FluidMode.byId(modeId);
+        if (this.fluidMode == null && this.fluidAmount > 0) {
+            this.fluidMode = FluidMode.WATER;
+        }
+        if (this.fluidAmount <= 0) {
+            this.fluidMode = null;
+        }
+    }
+
+    public enum FluidMode {
+        WATER("water"),
+        PURIFYING_FLUID("purifying_fluid"),
+        LIQUID_DEATH("liquid_death");
+
+        private final String id;
+
+        FluidMode(String id) {
+            this.id = id;
+        }
+
+        private Block targetBlock() {
+            return switch (this) {
+                case WATER -> Blocks.WATER;
+                case PURIFYING_FLUID -> ModBlocks.get("purifying_fluid").get();
+                case LIQUID_DEATH -> ModBlocks.get("liquid_death").get();
+            };
+        }
+
+        private static FluidMode byId(String id) {
+            for (FluidMode mode : values()) {
+                if (mode.id.equals(id)) {
+                    return mode;
+                }
+            }
+            return null;
+        }
     }
 }
