@@ -3,6 +3,7 @@ package art.arcane.thaumcraft.common.progression;
 public final class WarpPortingNotes {
     // TODO(port): Port legacy warp/insanity system as first-class progression state:
     // TODO(port): persistent pools for PERMANENT, NORMAL, TEMPORARY warp plus warp counters and sync packets.
+    // TODO(port): current baseline includes gear warp contribution (main hand + armor) and persisted milestone flags.
 
     // TODO(port): Port legacy insanity gameplay loop:
     // TODO(port): periodic warp-event roll logic (debuffs, hallucination-style events, guardians/spiders, research unlock triggers).

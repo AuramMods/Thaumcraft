@@ -63,6 +63,8 @@ public final class ThaumcraftCommandEvents {
                         .then(createWarpLiteral("permanent", PlayerKnowledgeManager.WarpType.PERMANENT, ThaumcraftCommandEvents::runWarpClear))
                         .then(createWarpLiteral("normal", PlayerKnowledgeManager.WarpType.NORMAL, ThaumcraftCommandEvents::runWarpClear))
                         .then(createWarpLiteral("temporary", PlayerKnowledgeManager.WarpType.TEMPORARY, ThaumcraftCommandEvents::runWarpClear)))
+                .then(Commands.literal("gear")
+                        .executes(context -> runDebugWarpGear(context.getSource())))
                 .then(Commands.literal("counter")
                         .executes(context -> runDebugWarp(context.getSource()))
                         .then(Commands.literal("set")
@@ -176,6 +178,31 @@ public final class ThaumcraftCommandEvents {
         return 1;
     }
 
+    private static int runDebugWarpGear(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+
+        ItemStack mainHand = player.getMainHandItem();
+        int mainHandWarp = WarpGearManager.getWarpFromStack(mainHand, player);
+
+        source.sendSuccess(() -> Component.literal("Thaumcraft Debug Warp Gear"), false);
+        source.sendSuccess(() -> Component.literal("main_hand: " + formatStackLabel(mainHand) + " -> " + mainHandWarp), false);
+
+        String[] armorSlotNames = {"boots", "leggings", "chestplate", "helmet"};
+        int totalArmorWarp = 0;
+        for (int i = 0; i < player.getInventory().armor.size(); i++) {
+            ItemStack armorStack = player.getInventory().armor.get(i);
+            int armorWarp = WarpGearManager.getWarpFromStack(armorStack, player);
+            totalArmorWarp += armorWarp;
+
+            String slotName = i < armorSlotNames.length ? armorSlotNames[i] : ("armor_" + i);
+            source.sendSuccess(() -> Component.literal(slotName + ": " + formatStackLabel(armorStack) + " -> " + armorWarp), false);
+        }
+
+        int totalGearWarp = mainHandWarp + totalArmorWarp;
+        source.sendSuccess(() -> Component.literal("gear_total=" + totalGearWarp), false);
+        return 1;
+    }
+
     private static void sendWarpSummary(CommandSourceStack source, ServerPlayer player) {
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
@@ -220,6 +247,19 @@ public final class ThaumcraftCommandEvents {
             builder.append(entry.getKey().getTag()).append("=").append(entry.getValue());
         }
         return builder.toString();
+    }
+
+    private static String formatStackLabel(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return "empty";
+        }
+
+        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        if (itemId == null) {
+            return "unknown";
+        }
+
+        return itemId.toString();
     }
 
     @FunctionalInterface

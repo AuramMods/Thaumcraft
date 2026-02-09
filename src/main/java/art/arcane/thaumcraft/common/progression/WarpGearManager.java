@@ -16,10 +16,7 @@ public final class WarpGearManager {
 
     // Baseline fallback for warping items that are still placeholder classes in the 1.20.1 port.
     private static final Map<String, Integer> FALLBACK_ITEM_WARP = Map.of(
-            "crimson_boots", 1,
-            "crimson_robe_chest", 1,
-            "crimson_robe_helm", 1,
-            "crimson_robe_legs", 1
+            // TODO(port): keep this mapping small and temporary; prefer dedicated item classes implementing WarpingGearItem.
     );
 
     private WarpGearManager() {

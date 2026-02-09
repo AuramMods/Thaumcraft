@@ -273,6 +273,7 @@ Exit criteria:
 - Current baseline still uses vanilla materials/stats as a compatibility bridge; Thaumcraft-specific armor materials/behavior are still pending.
 - `void_*` and `void_robe_*` now use a custom baseline class with passive self-repair ticks (inventory + worn) as a first behavior parity step.
 - `traveller_boots` now use a custom baseline class with movement/fall assist placeholder behavior (non-charge-based for now).
+- `crimson_boots` and `crimson_robe_*` now use dedicated baseline cultist armor classes with legacy-shaped warp values (`1`) and iron-ingot repair compatibility.
 - Legacy armor textures live under `old-1.12.2/assets/thaumcraft/textures/models/armor`.
 - Legacy armor item models live under `old-1.12.2/assets/thaumcraft/models/item`.
 - TODO(port): implement real armor classes and registration wiring for:
@@ -312,6 +313,7 @@ Exit criteria:
 - baseline event-counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`) when an event fires.
 - warp milestone flags are now persisted in player knowledge (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) and triggered from the periodic warp event flow.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + milestone flag state for testing.
+- `/thaumcraft debug warp gear` now prints per-slot gear warp contribution (main hand + armor) for legacy parity/debug validation.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
 - TODO(port): replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) once research is ported.

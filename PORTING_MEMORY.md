@@ -214,10 +214,15 @@ This file captures migration state so work can continue safely after context com
 - Extended baseline warp ticker with legacy-shaped gear and milestone hooks:
   - warp event effective total now includes warping gear from main-hand + armor (plus legacy `TC.WARP` item NBT support)
   - baseline warping values are now wired for `void_*` tools/armor, `void_robe_*`, `crimson_blade`, and `primal_crusher`
-  - fallback warping placeholders now cover `crimson_boots` and `crimson_robe_*` until dedicated classes land
   - warp counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`)
   - player knowledge now persists one-time warp milestones: `bath_salts_hint`, `eldritch_minor`, `eldritch_major`
   - `/thaumcraft debug warp` now prints gear warp totals and milestone flag states for validation
+- Added dedicated cultist/crimson warping armor baselines:
+  - `crimson_boots` now maps to `CultistBootsItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
+  - `crimson_robe_chest` / `crimson_robe_helm` / `crimson_robe_legs` now map to `CultistRobeArmorItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
+  - removed temporary fallback mapping for crimson armor warp in `WarpGearManager` now that dedicated classes exist
+- Expanded warp debug tooling:
+  - `/thaumcraft debug warp gear` now shows per-slot warp breakdown (main hand + armor), which improves parity validation when porting additional warping equipment
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
@@ -252,6 +257,9 @@ This file captures migration state so work can continue safely after context com
   - add localization/icon/UX polish for `warp_ward`
   - replace milestone-flag scaffolding with real research unlock integration (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
+- Continue armor parity after cultist warp baseline:
+  - add vis-discount hooks for cultist/robe/goggles families
+  - port cultist/void/fortress model + texture parity and set/slot behavior
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior
 - Extend Arcane Workbench from vanilla crafting to arcane crafting constraints:

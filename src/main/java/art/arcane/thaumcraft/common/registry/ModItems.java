@@ -3,6 +3,8 @@ package art.arcane.thaumcraft.common.registry;
 import art.arcane.thaumcraft.Thaumcraft;
 import art.arcane.thaumcraft.common.item.ThaumcraftFluidBucketItem;
 import art.arcane.thaumcraft.common.item.BathSaltsItem;
+import art.arcane.thaumcraft.common.item.armor.CultistBootsItem;
+import art.arcane.thaumcraft.common.item.armor.CultistRobeArmorItem;
 import art.arcane.thaumcraft.common.item.armor.TravellerBootsItem;
 import art.arcane.thaumcraft.common.item.armor.VoidArmorItem;
 import art.arcane.thaumcraft.common.item.SanityCheckerItem;
@@ -118,7 +120,7 @@ public final class ModItems {
             case "void_robe_helm" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, 3, new Item.Properties());
             case "void_robe_legs" -> new VoidArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, 3, new Item.Properties());
 
-            case "crimson_boots" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
+            case "crimson_boots" -> new CultistBootsItem(ArmorMaterials.IRON, ArmorItem.Type.BOOTS, new Item.Properties());
             case "crimson_plate_chest" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties());
             case "crimson_plate_helm" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET, new Item.Properties());
             case "crimson_plate_legs" -> new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.LEGGINGS, new Item.Properties());
@@ -127,9 +129,9 @@ public final class ModItems {
             case "crimson_praetor_helm" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties());
             case "crimson_praetor_legs" -> new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties());
 
-            case "crimson_robe_chest" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
-            case "crimson_robe_helm" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
-            case "crimson_robe_legs" -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
+            case "crimson_robe_chest" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties());
+            case "crimson_robe_helm" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
+            case "crimson_robe_legs" -> new CultistRobeArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties());
             default -> null;
         };
     }
