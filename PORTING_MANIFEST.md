@@ -5,7 +5,7 @@ Generated from `old-1.12.2` registration and asset roots for Phase 0 planning.
 Progress checkpoints and forward-looking porting operations are tracked in:
 - `PORTING.md`
 - `PORTING_MEMORY.md`
-- Latest implementation checkpoint: see `PORTING.md` snapshot dated `2026-02-09` (includes spa mix-mode baseline, legacy-shaped warp cadence with gear/research-unlock hooks plus milestone-to-research migration, baseline research stage/flag/knowledge scaffolding + debug command tooling, thaumometer-driven observation/epiphany knowledge gain baseline, cultist/crimson warping armor baselines, vis-discount gear/workbench integration, and restored workbench charger 3x3 aura behavior baseline).
+- Latest implementation checkpoint: see `PORTING.md` snapshot dated `2026-02-09` (includes spa mix-mode baseline, legacy-shaped warp cadence with gear/research-unlock hooks plus milestone-to-research migration, baseline research stage/flag/knowledge scaffolding + debug command tooling, thaumometer-driven observation/epiphany knowledge gain baseline, research-table persisted theory-session baseline (`Draft`/`Complete` loop), cultist/crimson warping armor baselines, vis-discount gear/workbench integration, and restored workbench charger 3x3 aura behavior baseline).
 
 ## Inventory Counts
 

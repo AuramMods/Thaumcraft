@@ -107,6 +107,11 @@ This file captures migration state so work can continue safely after context com
 - Added Research Table baseline slot rules:
   - slot 0 accepts `scribing_tools` only (single-stack)
   - slot 1 accepts `paper` only
+- Added Research Table theory-session baseline actions:
+  - new screen/menu action buttons (`Draft`, `Complete`) routed through menu button click handling
+  - drafting consumes paper + scribing context, spends observation knowledge, and writes persisted note totals per research category
+  - drafting now consumes inspiration from an active theory session (session is created on first draft with a baseline available-inspiration value)
+  - completing a spent-inspiration session converts note totals into theory knowledge rewards (plus highest-category bonus), then clears the session
 - Added Crucible baseline mechanics:
   - heat rises/falls based on heat-source block beneath crucible
   - water can be filled by placing a water bucket in the crucible slot
@@ -284,8 +289,11 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - expand current key/stage/flag/knowledge scaffolding into full research progression parity (auto-unlock graph + research-table/stage reward spend/gain flows)
+  - expand current key/stage/flag/knowledge scaffolding into full research progression parity (auto-unlock graph + real theorycraft card draw/aid selection + stage reward consumption)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
+- Continue research table parity after session baseline:
+  - sync active note/session state to client UI (category totals, inspiration, current choices) instead of actionbar-only status
+  - implement legacy card-choice draw/activate flow and surrounding-aid discovery/selection hooks
 - Continue armor parity after cultist warp baseline:
   - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)
   - port cultist/void/fortress model + texture parity and set/slot behavior

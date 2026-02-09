@@ -94,6 +94,9 @@ Phase 2 status:
 - [x] Phase 2B complete: split shared station container/menu path into per-station menu and block-entity menu bindings
 - [x] Arcane Workbench now has functional 3x3 crafting flow (computed output slot + ingredient consumption + remainder handling)
 - [x] Research Table baseline slot constraints added (`scribing_tools` slot + `paper` slot)
+- [x] Research Table now has a baseline theory-session action loop (`Draft` + `Complete` buttons):
+- [x] drafting consumes paper + scribing context, spends observation knowledge, writes into persisted per-category note totals, and consumes inspiration
+- [x] completing converts persisted note totals into theory knowledge gains (with highest-category bonus) and clears the active session
 - [x] Crucible baseline tick mechanics added (heat detection, water bucket fill, hot-state item processing, persisted water/heat/essentia state)
 - [x] Arcane Workbench now gates recipe output by local aura vis and spends vis when crafting output is taken
 - [x] Infusion Matrix now performs baseline altar structure scans (central + ring pedestal detection) and syncs readiness/activity state
@@ -108,7 +111,8 @@ Phase 2 status:
 - [ ] Arcane Workbench crystal/vis balancing and exact legacy parity tuning are still pending
 - [ ] Arcane Workbench menu preview/cost state is still global-per-block and should be migrated to player-scoped view parity for multi-viewer correctness
 - [ ] Arcane Workbench charger-area drain policy still needs parity tuning for edge cases (drain order/preservation behavior)
-- [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table progression)
+- [ ] Research Table card draw/aid selection UI + packet sync is still pending (current theory session model is server-side only with actionbar feedback)
+- [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table theorycraft/inspiration/card flow)
 
 Exit criteria:
 
@@ -145,6 +149,7 @@ Phase 3 status:
 - [x] Added baseline research stage/flag persistence scaffolding (per-key stage values + `PAGE`/`RESEARCH`/`POPUP` flags) and debug command support (`/thaumcraft debug research ...`)
 - [x] Added baseline research knowledge-point scaffolding (`THEORY`/`OBSERVATION`/`EPIPHANY`, category-aware raw totals and progression points) plus debug command support (`/thaumcraft debug research knowledge ...`)
 - [x] Thaumometer first-time scans now grant baseline category observation knowledge (all main legacy research categories) and grant epiphany raw when new aspects are discovered
+- [x] Research Table now has a persisted theory session baseline (draft observation into note totals, then complete into theory knowledge rewards)
 - [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
 - [ ] Salis Mundus trigger set is still incomplete (legacy multiblock variant parity is still pending, especially infusion altar stone/pillar/pedestal variants and exact placeholder transformation semantics)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
