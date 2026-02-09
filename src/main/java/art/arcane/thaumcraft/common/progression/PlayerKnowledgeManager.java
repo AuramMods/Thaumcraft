@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.Set;
 
 public final class PlayerKnowledgeManager {
-    // TODO(port): Expand baseline research-key support to legacy IPlayerKnowledge parity (stages/flags and category knowledge points).
+    // TODO(port): Expand baseline research key/stage/flag support to legacy IPlayerKnowledge parity (category knowledge points and full research entry flow).
     // TODO(port): reintroduce player sync packet flow once research UI/thaumonomicon and server-authoritative progression are ported.
     // TODO(port): expose research completion helpers that also trigger popup/page flags once thaumonomicon UI exists.
 
@@ -41,9 +41,44 @@ public final class PlayerKnowledgeManager {
         return data.unlockResearch(player.getUUID(), researchKey);
     }
 
+    public static boolean removeResearch(ServerPlayer player, String researchKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.removeResearch(player.getUUID(), researchKey);
+    }
+
     public static Set<String> getResearchKeys(ServerPlayer player) {
         PlayerKnowledgeSavedData data = getData(player.serverLevel());
         return data.getResearchKeys(player.getUUID());
+    }
+
+    public static int getResearchStage(ServerPlayer player, String researchKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchStage(player.getUUID(), researchKey);
+    }
+
+    public static boolean setResearchStage(ServerPlayer player, String researchKey, int stage) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.setResearchStage(player.getUUID(), researchKey, stage);
+    }
+
+    public static boolean hasResearchFlag(ServerPlayer player, String researchKey, ResearchFlag flag) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.hasResearchFlag(player.getUUID(), researchKey, flag);
+    }
+
+    public static boolean setResearchFlag(ServerPlayer player, String researchKey, ResearchFlag flag) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.setResearchFlag(player.getUUID(), researchKey, flag);
+    }
+
+    public static boolean clearResearchFlag(ServerPlayer player, String researchKey, ResearchFlag flag) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.clearResearchFlag(player.getUUID(), researchKey, flag);
+    }
+
+    public static Set<ResearchFlag> getResearchFlags(ServerPlayer player, String researchKey) {
+        PlayerKnowledgeSavedData data = getData(player.serverLevel());
+        return data.getResearchFlags(player.getUUID(), researchKey);
     }
 
     public static ScanResult recordBlockScan(ServerPlayer player, ResourceLocation blockId, AspectList aspects) {
@@ -141,6 +176,12 @@ public final class PlayerKnowledgeManager {
         PERMANENT,
         NORMAL,
         TEMPORARY
+    }
+
+    public enum ResearchFlag {
+        PAGE,
+        RESEARCH,
+        POPUP
     }
 
     public record WarpSnapshot(int permanent, int normal, int temporary) {

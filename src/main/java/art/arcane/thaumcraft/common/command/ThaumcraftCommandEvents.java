@@ -8,6 +8,7 @@ import art.arcane.thaumcraft.common.progression.WarpGearManager;
 import art.arcane.thaumcraft.common.progression.PlayerKnowledgeManager;
 import art.arcane.thaumcraft.common.progression.VisDiscountManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -21,7 +22,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ThaumcraftCommandEvents {
@@ -31,6 +36,8 @@ public final class ThaumcraftCommandEvents {
     private static final int MAX_TRACE_LINES = 120;
     private static final int MAX_WARP_VALUE = 100_000;
     private static final int MAX_COUNTER_VALUE = 1_000_000;
+    private static final int MAX_RESEARCH_STAGE = 256;
+    private static final int DEFAULT_RESEARCH_SUMMARY_LINES = 12;
 
     private ThaumcraftCommandEvents() {
     }
@@ -44,7 +51,8 @@ public final class ThaumcraftCommandEvents {
                                         .requires(source -> source.getEntity() instanceof ServerPlayer)
                                         .executes(context -> runDebugHand(context.getSource())))
                                 .then(createVisDebugCommand())
-                                .then(createWarpDebugCommand()))
+                                .then(createWarpDebugCommand())
+                                .then(createResearchDebugCommand()))
         );
     }
 
@@ -79,8 +87,65 @@ public final class ThaumcraftCommandEvents {
                         .then(Commands.literal("set")
                                 .then(Commands.argument("value", IntegerArgumentType.integer(0, MAX_COUNTER_VALUE))
                                         .executes(context -> runWarpCounterSet(context.getSource(), IntegerArgumentType.getInteger(context, "value")))))
-                        .then(Commands.literal("reset")
+                                .then(Commands.literal("reset")
                                 .executes(context -> runWarpCounterSet(context.getSource(), 0))));
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> createResearchDebugCommand() {
+        return Commands.literal("research")
+                .requires(source -> source.getEntity() instanceof ServerPlayer)
+                .executes(context -> runDebugResearchSummary(context.getSource(), false))
+                .then(Commands.literal("list")
+                        .executes(context -> runDebugResearchSummary(context.getSource(), true)))
+                .then(Commands.literal("unlock")
+                        .then(Commands.argument("key", StringArgumentType.word())
+                                .executes(context -> runResearchUnlock(
+                                        context.getSource(),
+                                        StringArgumentType.getString(context, "key")
+                                ))))
+                .then(Commands.literal("remove")
+                        .then(Commands.argument("key", StringArgumentType.word())
+                                .executes(context -> runResearchRemove(
+                                        context.getSource(),
+                                        StringArgumentType.getString(context, "key")
+                                ))))
+                .then(Commands.literal("stage")
+                        .then(Commands.argument("key", StringArgumentType.word())
+                                .executes(context -> runResearchStageGet(
+                                        context.getSource(),
+                                        StringArgumentType.getString(context, "key")
+                                ))
+                                .then(Commands.argument("value", IntegerArgumentType.integer(0, MAX_RESEARCH_STAGE))
+                                        .executes(context -> runResearchStageSet(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "key"),
+                                                IntegerArgumentType.getInteger(context, "value")
+                                        )))))
+                .then(Commands.literal("flag")
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("key", StringArgumentType.word())
+                                        .then(Commands.argument("flag", StringArgumentType.word())
+                                                .executes(context -> runResearchFlagSet(
+                                                        context.getSource(),
+                                                        StringArgumentType.getString(context, "key"),
+                                                        StringArgumentType.getString(context, "flag")
+                                                )))))
+                        .then(Commands.literal("clear")
+                                .then(Commands.argument("key", StringArgumentType.word())
+                                        .then(Commands.argument("flag", StringArgumentType.word())
+                                                .executes(context -> runResearchFlagClear(
+                                                        context.getSource(),
+                                                        StringArgumentType.getString(context, "key"),
+                                                        StringArgumentType.getString(context, "flag")
+                                                )))))
+                        .then(Commands.literal("check")
+                                .then(Commands.argument("key", StringArgumentType.word())
+                                        .then(Commands.argument("flag", StringArgumentType.word())
+                                                .executes(context -> runResearchFlagCheck(
+                                                        context.getSource(),
+                                                        StringArgumentType.getString(context, "key"),
+                                                        StringArgumentType.getString(context, "flag")
+                                                ))))));
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> createWarpAmountLiteral(
@@ -230,6 +295,104 @@ public final class ThaumcraftCommandEvents {
         return 1;
     }
 
+    private static int runDebugResearchSummary(CommandSourceStack source, boolean verbose) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        Set<String> keys = PlayerKnowledgeManager.getResearchKeys(player);
+        List<String> sorted = new ArrayList<>(keys);
+        sorted.sort(String::compareTo);
+
+        source.sendSuccess(() -> Component.literal("Thaumcraft Debug Research"), false);
+        source.sendSuccess(() -> Component.literal("known_keys=" + sorted.size()), false);
+
+        if (sorted.isEmpty()) {
+            return 1;
+        }
+
+        int maxLines = verbose ? sorted.size() : Math.min(DEFAULT_RESEARCH_SUMMARY_LINES, sorted.size());
+        for (int i = 0; i < maxLines; i++) {
+            String key = sorted.get(i);
+            int stage = PlayerKnowledgeManager.getResearchStage(player, key);
+            Set<PlayerKnowledgeManager.ResearchFlag> flags = PlayerKnowledgeManager.getResearchFlags(player, key);
+            source.sendSuccess(() -> Component.literal(formatResearchEntry(key, stage, flags)), false);
+        }
+
+        if (!verbose && sorted.size() > maxLines) {
+            int remaining = sorted.size() - maxLines;
+            source.sendSuccess(() -> Component.literal("... " + remaining + " more key(s). Use /thaumcraft debug research list"), false);
+        }
+        return 1;
+    }
+
+    private static int runResearchUnlock(CommandSourceStack source, String key) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        boolean changed = PlayerKnowledgeManager.unlockResearch(player, key);
+        source.sendSuccess(() -> Component.literal("research unlock " + key + " -> " + (changed ? "added" : "unchanged")), false);
+        return runDebugResearchSummary(source, false);
+    }
+
+    private static int runResearchRemove(CommandSourceStack source, String key) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        boolean changed = PlayerKnowledgeManager.removeResearch(player, key);
+        source.sendSuccess(() -> Component.literal("research remove " + key + " -> " + (changed ? "removed" : "not_found")), false);
+        return runDebugResearchSummary(source, false);
+    }
+
+    private static int runResearchStageGet(CommandSourceStack source, String key) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        int stage = PlayerKnowledgeManager.getResearchStage(player, key);
+        source.sendSuccess(() -> Component.literal("research stage " + key + " = " + stage), false);
+        return 1;
+    }
+
+    private static int runResearchStageSet(CommandSourceStack source, String key, int stage) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        boolean changed = PlayerKnowledgeManager.setResearchStage(player, key, stage);
+        source.sendSuccess(() -> Component.literal("research stage set " + key + " -> " + stage + " (" + (changed ? "updated" : "unchanged_or_unknown") + ")"), false);
+        return runResearchStageGet(source, key);
+    }
+
+    private static int runResearchFlagSet(CommandSourceStack source, String key, String rawFlag) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchFlag flag = parseResearchFlag(rawFlag);
+        if (flag == null) {
+            source.sendFailure(Component.literal("Unknown research flag: " + rawFlag + " (valid: page, research, popup)"));
+            return 0;
+        }
+
+        boolean changed = PlayerKnowledgeManager.setResearchFlag(player, key, flag);
+        source.sendSuccess(() -> Component.literal("research flag set " + key + "." + flag.name().toLowerCase(Locale.ROOT)
+                + " -> " + (changed ? "added" : "unchanged_or_unknown")), false);
+        return 1;
+    }
+
+    private static int runResearchFlagClear(CommandSourceStack source, String key, String rawFlag) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchFlag flag = parseResearchFlag(rawFlag);
+        if (flag == null) {
+            source.sendFailure(Component.literal("Unknown research flag: " + rawFlag + " (valid: page, research, popup)"));
+            return 0;
+        }
+
+        boolean changed = PlayerKnowledgeManager.clearResearchFlag(player, key, flag);
+        source.sendSuccess(() -> Component.literal("research flag clear " + key + "." + flag.name().toLowerCase(Locale.ROOT)
+                + " -> " + (changed ? "removed" : "unchanged_or_unknown")), false);
+        return 1;
+    }
+
+    private static int runResearchFlagCheck(CommandSourceStack source, String key, String rawFlag) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerKnowledgeManager.ResearchFlag flag = parseResearchFlag(rawFlag);
+        if (flag == null) {
+            source.sendFailure(Component.literal("Unknown research flag: " + rawFlag + " (valid: page, research, popup)"));
+            return 0;
+        }
+
+        boolean hasFlag = PlayerKnowledgeManager.hasResearchFlag(player, key, flag);
+        source.sendSuccess(() -> Component.literal("research flag check " + key + "." + flag.name().toLowerCase(Locale.ROOT)
+                + " = " + hasFlag), false);
+        return 1;
+    }
+
     private static void sendWarpSummary(CommandSourceStack source, ServerPlayer player) {
         PlayerKnowledgeManager.WarpSnapshot warp = PlayerKnowledgeManager.getWarpSnapshot(player);
         int counter = PlayerKnowledgeManager.getWarpEventCounter(player);
@@ -289,6 +452,45 @@ public final class ThaumcraftCommandEvents {
         }
 
         return itemId.toString();
+    }
+
+    private static String formatResearchEntry(String key, int stage, Set<PlayerKnowledgeManager.ResearchFlag> flags) {
+        return key + " (stage=" + stage + ", flags=" + formatResearchFlags(flags) + ")";
+    }
+
+    private static String formatResearchFlags(Set<PlayerKnowledgeManager.ResearchFlag> flags) {
+        if (flags == null || flags.isEmpty()) {
+            return "-";
+        }
+
+        List<String> names = new ArrayList<>();
+        for (PlayerKnowledgeManager.ResearchFlag flag : flags) {
+            names.add(flag.name().toLowerCase(Locale.ROOT));
+        }
+        names.sort(String::compareTo);
+
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for (String name : names) {
+            if (!first) {
+                builder.append(",");
+            }
+            first = false;
+            builder.append(name);
+        }
+        return builder.toString();
+    }
+
+    private static PlayerKnowledgeManager.ResearchFlag parseResearchFlag(String rawFlag) {
+        if (rawFlag == null || rawFlag.isBlank()) {
+            return null;
+        }
+
+        try {
+            return PlayerKnowledgeManager.ResearchFlag.valueOf(rawFlag.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 
     @FunctionalInterface

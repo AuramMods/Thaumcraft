@@ -220,7 +220,15 @@ This file captures migration state so work can continue safely after context com
   - warp counter decay now follows legacy-shaped gear pressure (`max(5, sqrt(counter) * 2 - gearWarp * 2)`)
   - player knowledge now persists baseline research keys and warp progression unlocks legacy keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
   - player-knowledge load now migrates old milestone tags (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) into those research keys for compatibility
+  - player knowledge now persists baseline research stage/flag scaffolding (`stage`, `PAGE`/`RESEARCH`/`POPUP`) keyed by research id
+  - warp-triggered research unlocks now set baseline legacy-shaped research flags (`RESEARCH`, plus `POPUP` on `!BATHSALTS`)
   - `/thaumcraft debug warp` now prints gear warp totals and research-key states for validation
+- Added baseline research debug command tooling:
+  - `/thaumcraft debug research`
+  - `/thaumcraft debug research list`
+  - `/thaumcraft debug research unlock|remove <key>`
+  - `/thaumcraft debug research stage <key> [value]`
+  - `/thaumcraft debug research flag set|clear|check <key> <flag>`
 - Added dedicated cultist/crimson warping armor baselines:
   - `crimson_boots` now maps to `CultistBootsItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
   - `crimson_robe_chest` / `crimson_robe_helm` / `crimson_robe_legs` now map to `CultistRobeArmorItem` (warp `1`, uncommon rarity, iron-ingot repair parity baseline)
@@ -270,7 +278,7 @@ This file captures migration state so work can continue safely after context com
   - port full spa UI/container interactions and fluid capability parity beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
-  - expand current key-only research unlocks into full research-stage/flag/category progression parity
+  - expand current key/stage/flag scaffolding into full research progression parity (auto-unlock graph + category knowledge point requirements)
   - expand remaining legacy warp parity (full event table, client FX/audio/sync, and accessory-slot warp sources)
 - Continue armor parity after cultist warp baseline:
   - add remaining non-baseline vis-discount sources (baubles/curios equivalents and any item NBT-driven modifiers)

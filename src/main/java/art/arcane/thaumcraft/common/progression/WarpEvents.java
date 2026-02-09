@@ -106,13 +106,15 @@ public final class WarpEvents {
 
         if (actualWarp > 10 && !knowsBathSalts
                 && PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT)) {
+            PlayerKnowledgeManager.setResearchFlag(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT, PlayerKnowledgeManager.ResearchFlag.RESEARCH);
+            PlayerKnowledgeManager.setResearchFlag(player, PlayerKnowledgeManager.RESEARCH_BATH_SALTS_HINT, PlayerKnowledgeManager.ResearchFlag.POPUP);
             player.displayClientMessage(Component.literal("A cleansing thought surfaces: perhaps bath salts could calm this corruption."), false);
         }
-        if (actualWarp > 25) {
-            PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR);
+        if (actualWarp > 25 && PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR)) {
+            PlayerKnowledgeManager.setResearchFlag(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MINOR, PlayerKnowledgeManager.ResearchFlag.RESEARCH);
         }
-        if (actualWarp > 50) {
-            PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR);
+        if (actualWarp > 50 && PlayerKnowledgeManager.unlockResearch(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR)) {
+            PlayerKnowledgeManager.setResearchFlag(player, PlayerKnowledgeManager.RESEARCH_ELDRITCH_MAJOR, PlayerKnowledgeManager.ResearchFlag.RESEARCH);
         }
     }
 }

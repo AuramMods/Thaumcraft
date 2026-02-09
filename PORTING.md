@@ -142,6 +142,7 @@ Phase 3 status:
 - [x] Added player knowledge persistence baseline (`PlayerKnowledgeSavedData`) and first thaumometer scan hook for block scanning
 - [x] Expanded thaumometer scanning baseline to entity and item surfaces, including persisted unique scan tracking for blocks/items/entities
 - [x] Added baseline research-key persistence APIs (`hasResearch`/`unlockResearch`) with migration from older warp-milestone flags into legacy research keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`)
+- [x] Added baseline research stage/flag persistence scaffolding (per-key stage values + `PAGE`/`RESEARCH`/`POPUP` flags) and debug command support (`/thaumcraft debug research ...`)
 - [ ] Full legacy object-tag migration from `ConfigAspects` is still pending (remaining direct vanilla `ItemStack(...)` mappings and edge-case parity audit)
 - [ ] Salis Mundus trigger set is still incomplete (legacy multiblock variant parity is still pending, especially infusion altar stone/pillar/pedestal variants and exact placeholder transformation semantics)
 - [ ] Full research/knowledge progression model is still pending (current hook is baseline-only)
@@ -322,10 +323,12 @@ Exit criteria:
 - baseline warp progression now unlocks/persists legacy research keys (`!BATHSALTS`, `ELDRITCHMINOR`, `ELDRITCHMAJOR`) from periodic warp checks.
 - player knowledge load now migrates old milestone flags (`bath_salts_hint`, `eldritch_minor`, `eldritch_major`) into those research keys for save compatibility.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) and shows computed gear warp + research key state for testing.
+- baseline research unlocks now mark legacy-shaped research flags (`RESEARCH`, plus `POPUP` for `!BATHSALTS`) when granted by warp progression.
+- `/thaumcraft debug research` now supports listing/unlocking/removing keys and stage/flag inspection/mutation for progression debugging.
 - `/thaumcraft debug warp gear` now prints per-slot gear warp contribution (main hand + armor) for legacy parity/debug validation.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies simplified negative effects using effective warp thresholds.
 - TODO(port): expand server-side warp event scheduler/effects to full legacy parity and progression triggers.
-- TODO(port): expand key-only research unlock integration into full research-entry completion/state parity (stages/flags/category knowledge gates).
+- TODO(port): expand research scaffolding into full legacy research-entry completion parity (auto-unlocks, stage progression rules, and category knowledge point gates).
 - TODO(port): replace sanity checker baseline overlay with legacy texture/UI parity and direct capability packet sync.
 - TODO(port): complete sanity soap, bath salts, and purifying fluid parity against Warp Ward + full warp event loop behavior.
 

@@ -4,6 +4,7 @@ import art.arcane.thaumcraft.common.aspect.AspectList;
 import art.arcane.thaumcraft.common.aspect.AspectType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 
@@ -33,6 +34,10 @@ public final class PlayerKnowledgeSavedData extends SavedData {
     private static final String WARP_TEMPORARY_TAG = "warp_temporary";
     private static final String WARP_EVENT_COUNTER_TAG = "warp_event_counter";
     private static final String RESEARCH_KEYS_TAG = "research_keys";
+    private static final String RESEARCH_STAGES_TAG = "research_stages";
+    private static final String RESEARCH_FLAGS_TAG = "research_flags";
+    private static final String RESEARCH_STAGE_VALUE_TAG = "stage";
+    private static final String RESEARCH_FLAG_VALUES_TAG = "flags";
     private static final String WARP_MILESTONES_TAG = "warp_milestones";
     private static final String LEGACY_BATH_SALTS_MILESTONE = "bath_salts_hint";
     private static final String LEGACY_ELDRITCH_MINOR_MILESTONE = "eldritch_minor";
@@ -213,8 +218,146 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return added;
     }
 
+    public boolean removeResearch(UUID playerId, String researchKey) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        boolean removed = entry.researchKeys.remove(normalized);
+        if (!removed) {
+            return false;
+        }
+
+        entry.researchStages.remove(normalized);
+        entry.researchFlags.remove(normalized);
+        setDirty();
+        return true;
+    }
+
     public Set<String> getResearchKeys(UUID playerId) {
         return Set.copyOf(getOrCreate(playerId).researchKeys);
+    }
+
+    public int getResearchStage(UUID playerId, String researchKey) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return -1;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        if (!entry.researchKeys.contains(normalized)) {
+            return -1;
+        }
+
+        return entry.researchStages.getOrDefault(normalized, 0);
+    }
+
+    public boolean setResearchStage(UUID playerId, String researchKey, int stage) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null || stage < 0) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        if (!entry.researchKeys.contains(normalized)) {
+            return false;
+        }
+
+        Integer previous = entry.researchStages.get(normalized);
+        if (stage == 0) {
+            if (previous == null) {
+                return false;
+            }
+            entry.researchStages.remove(normalized);
+            setDirty();
+            return true;
+        }
+
+        if (previous != null && previous == stage) {
+            return false;
+        }
+
+        entry.researchStages.put(normalized, stage);
+        setDirty();
+        return true;
+    }
+
+    public boolean hasResearchFlag(UUID playerId, String researchKey, PlayerKnowledgeManager.ResearchFlag flag) {
+        if (flag == null) {
+            return false;
+        }
+
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        Set<PlayerKnowledgeManager.ResearchFlag> flags = entry.researchFlags.get(normalized);
+        return flags != null && flags.contains(flag);
+    }
+
+    public boolean setResearchFlag(UUID playerId, String researchKey, PlayerKnowledgeManager.ResearchFlag flag) {
+        if (flag == null) {
+            return false;
+        }
+
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        if (!entry.researchKeys.contains(normalized)) {
+            return false;
+        }
+
+        Set<PlayerKnowledgeManager.ResearchFlag> flags = entry.researchFlags.computeIfAbsent(normalized, key -> new HashSet<>());
+        boolean added = flags.add(flag);
+        if (added) {
+            setDirty();
+        }
+        return added;
+    }
+
+    public boolean clearResearchFlag(UUID playerId, String researchKey, PlayerKnowledgeManager.ResearchFlag flag) {
+        if (flag == null) {
+            return false;
+        }
+
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return false;
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        Set<PlayerKnowledgeManager.ResearchFlag> flags = entry.researchFlags.get(normalized);
+        if (flags == null || !flags.remove(flag)) {
+            return false;
+        }
+
+        if (flags.isEmpty()) {
+            entry.researchFlags.remove(normalized);
+        }
+        setDirty();
+        return true;
+    }
+
+    public Set<PlayerKnowledgeManager.ResearchFlag> getResearchFlags(UUID playerId, String researchKey) {
+        String normalized = normalizeResearchKey(researchKey);
+        if (normalized == null) {
+            return Set.of();
+        }
+
+        PlayerKnowledgeEntry entry = getOrCreate(playerId);
+        Set<PlayerKnowledgeManager.ResearchFlag> flags = entry.researchFlags.get(normalized);
+        if (flags == null || flags.isEmpty()) {
+            return Set.of();
+        }
+
+        return Set.copyOf(flags);
     }
 
     private PlayerKnowledgeEntry getOrCreate(UUID playerId) {
@@ -246,6 +389,18 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         return normalized;
     }
 
+    private static PlayerKnowledgeManager.ResearchFlag parseResearchFlag(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        try {
+            return PlayerKnowledgeManager.ResearchFlag.valueOf(value.trim().toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
+    }
+
     private static final class PlayerKnowledgeEntry {
         private boolean salisUnlocked;
         private int scanCount;
@@ -258,6 +413,8 @@ public final class PlayerKnowledgeSavedData extends SavedData {
         private int warpTemporary;
         private int warpEventCounter;
         private final Set<String> researchKeys = new HashSet<>();
+        private final Map<String, Integer> researchStages = new HashMap<>();
+        private final Map<String, Set<PlayerKnowledgeManager.ResearchFlag>> researchFlags = new HashMap<>();
 
         private CompoundTag toTag() {
             CompoundTag tag = new CompoundTag();
@@ -309,6 +466,37 @@ public final class PlayerKnowledgeSavedData extends SavedData {
             }
             tag.put(RESEARCH_KEYS_TAG, researchKeysTag);
 
+            ListTag researchStagesTag = new ListTag();
+            for (Map.Entry<String, Integer> stageEntry : this.researchStages.entrySet()) {
+                if (stageEntry.getValue() == null || stageEntry.getValue() <= 0) {
+                    continue;
+                }
+                CompoundTag single = new CompoundTag();
+                single.putString("id", stageEntry.getKey());
+                single.putInt(RESEARCH_STAGE_VALUE_TAG, stageEntry.getValue());
+                researchStagesTag.add(single);
+            }
+            tag.put(RESEARCH_STAGES_TAG, researchStagesTag);
+
+            ListTag researchFlagsTag = new ListTag();
+            for (Map.Entry<String, Set<PlayerKnowledgeManager.ResearchFlag>> flagsEntry : this.researchFlags.entrySet()) {
+                Set<PlayerKnowledgeManager.ResearchFlag> flags = flagsEntry.getValue();
+                if (flags == null || flags.isEmpty()) {
+                    continue;
+                }
+                CompoundTag single = new CompoundTag();
+                single.putString("id", flagsEntry.getKey());
+
+                ListTag values = new ListTag();
+                for (PlayerKnowledgeManager.ResearchFlag flag : flags) {
+                    values.add(StringTag.valueOf(flag.name()));
+                }
+
+                single.put(RESEARCH_FLAG_VALUES_TAG, values);
+                researchFlagsTag.add(single);
+            }
+            tag.put(RESEARCH_FLAGS_TAG, researchFlagsTag);
+
             return tag;
         }
 
@@ -359,6 +547,41 @@ public final class PlayerKnowledgeSavedData extends SavedData {
                 String researchKey = normalizeResearchKey(researchKeysTag.getCompound(i).getString("id"));
                 if (researchKey != null) {
                     entry.researchKeys.add(researchKey);
+                }
+            }
+
+            ListTag researchStagesTag = tag.getList(RESEARCH_STAGES_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < researchStagesTag.size(); i++) {
+                CompoundTag stageTag = researchStagesTag.getCompound(i);
+                String researchKey = normalizeResearchKey(stageTag.getString("id"));
+                if (researchKey == null || !entry.researchKeys.contains(researchKey)) {
+                    continue;
+                }
+
+                int stage = stageTag.getInt(RESEARCH_STAGE_VALUE_TAG);
+                if (stage > 0) {
+                    entry.researchStages.put(researchKey, stage);
+                }
+            }
+
+            ListTag researchFlagsTag = tag.getList(RESEARCH_FLAGS_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < researchFlagsTag.size(); i++) {
+                CompoundTag flagsTag = researchFlagsTag.getCompound(i);
+                String researchKey = normalizeResearchKey(flagsTag.getString("id"));
+                if (researchKey == null || !entry.researchKeys.contains(researchKey)) {
+                    continue;
+                }
+
+                ListTag values = flagsTag.getList(RESEARCH_FLAG_VALUES_TAG, Tag.TAG_STRING);
+                Set<PlayerKnowledgeManager.ResearchFlag> parsed = new HashSet<>();
+                for (int j = 0; j < values.size(); j++) {
+                    PlayerKnowledgeManager.ResearchFlag flag = parseResearchFlag(values.getString(j));
+                    if (flag != null) {
+                        parsed.add(flag);
+                    }
+                }
+                if (!parsed.isEmpty()) {
+                    entry.researchFlags.put(researchKey, parsed);
                 }
             }
 
