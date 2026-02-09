@@ -7,6 +7,7 @@ import art.arcane.thaumcraft.common.block.PedestalBlock;
 import art.arcane.thaumcraft.common.block.PurifyingFluidBlock;
 import art.arcane.thaumcraft.common.block.StationBlock;
 import art.arcane.thaumcraft.common.block.CrucibleBlock;
+import art.arcane.thaumcraft.common.block.SpaBlock;
 import art.arcane.thaumcraft.common.block.entity.ArcaneWorkbenchBlockEntity;
 import art.arcane.thaumcraft.common.block.entity.CrucibleBlockEntity;
 import art.arcane.thaumcraft.common.block.entity.InfusionMatrixBlockEntity;
@@ -52,6 +53,7 @@ public final class ModBlocks {
             case "infusion_matrix" -> new StationBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), InfusionMatrixBlockEntity::new);
             case "jar_normal", "jar_void", "jar_brain" -> new JarBlock(jarProperties());
             case "pedestal" -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(3.0F).noOcclusion());
+            case "spa" -> new SpaBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK));
             case "purifying_fluid" -> new PurifyingFluidBlock(fluidPlaceholderProperties());
             case "liquid_death" -> new LiquidDeathBlock(fluidPlaceholderProperties());
             default -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE));

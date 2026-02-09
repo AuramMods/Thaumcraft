@@ -7,6 +7,7 @@ import art.arcane.thaumcraft.common.block.entity.InfusionMatrixBlockEntity;
 import art.arcane.thaumcraft.common.block.entity.JarBlockEntity;
 import art.arcane.thaumcraft.common.block.entity.PedestalBlockEntity;
 import art.arcane.thaumcraft.common.block.entity.ResearchTableBlockEntity;
+import art.arcane.thaumcraft.common.block.entity.SpaBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -33,6 +34,8 @@ public final class ModBlockEntities {
                     ModBlocks.get("jar_brain").get()).build(null));
     public static final RegistryObject<BlockEntityType<PedestalBlockEntity>> PEDESTAL = BLOCK_ENTITIES.register("pedestal",
             () -> BlockEntityType.Builder.of(PedestalBlockEntity::new, ModBlocks.get("pedestal").get()).build(null));
+    public static final RegistryObject<BlockEntityType<SpaBlockEntity>> SPA = BLOCK_ENTITIES.register("spa",
+            () -> BlockEntityType.Builder.of(SpaBlockEntity::new, ModBlocks.get("spa").get()).build(null));
 
     private ModBlockEntities() {
     }

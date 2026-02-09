@@ -211,6 +211,10 @@ This file captures migration state so work can continue safely after context com
 - Added dedicated `bath_salts` item class baseline:
   - dropped entity lifespan now matches legacy quick-expire behavior (`200` ticks)
   - expired bath salts now convert source water blocks and full water cauldrons into `purifying_fluid` placeholders
+- Promoted `spa` from placeholder block to functional baseline block entity:
+  - accepts water buckets into internal water storage (`5000` max) and accepts `bath_salts` as consumable input
+  - every `40` ticks (when not redstone-powered), consumes `bath_salts` + water (`1000`) to place/spread `purifying_fluid`
+  - supports first-pass spread behavior around existing purifying-fluid cells in a 5x5 area above the spa
 - Verified:
   - `./gradlew classes -q` passes after these changes
 
@@ -227,9 +231,9 @@ This file captures migration state so work can continue safely after context com
 
 ## Immediate Next Steps
 
-- Finalize bath-salts conversion parity audit against legacy behavior:
-  - validate exact conversion surfaces (source-water/cauldron expectations) and tune to match intended TC6 semantics
-- Port Spa mixing/spreading baseline that consumes `bath_salts` and produces/propagates `purifying_fluid`
+- Finalize bath-salts + spa parity audit against legacy behavior:
+  - validate exact conversion surfaces (source-water/cauldron expectations) and tune to intended TC6 semantics
+  - port full spa tank/container interactions and optional non-mix behavior beyond the current baseline counters model
 - Extend Warp Ward integration beyond current baseline:
   - add localization/icon/UX polish for `warp_ward`
   - continue tuning warp-event cadence/probability model toward legacy behavior (current baseline still simplified)

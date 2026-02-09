@@ -169,6 +169,10 @@ Phase 4 status:
 - [x] Restored baseline vis-crystal crucible recipes (`crystal_aer`, `crystal_aqua`, `crystal_ignis`, `crystal_terra`, `crystal_ordo`, `crystal_perditio`, `crystal_vitium`) using quartz-sliver catalyst tag.
 - [x] Added dedicated `bath_salts` item class baseline with legacy short dropped lifespan (`200` ticks) for world conversion flow parity.
 - [x] Bath salts expired-item conversion now accepts both source water blocks and full water cauldrons as purifying-fluid conversion triggers.
+- [x] Promoted `spa` to a functional block-entity baseline:
+- [x] right-click accepts `bath_salts` and water buckets into internal counters,
+- [x] periodic server tick consumes `bath_salts` + water to place/spread `purifying_fluid` near the spa,
+- [x] redstone signal now pauses spa operation as a baseline control hook.
 - [ ] Quartz sliver full legacy parity is still pending:
 - [ ] legacy uses `nuggetQuartz` catalyst (quartz variant of `thaumcraft:nuggets`), not a dedicated standalone `quartz_sliver` item id.
 - [ ] migrate compatibility item path to variant-container parity for nuggets/data components while preserving catalyst tag compatibility.
@@ -204,10 +208,11 @@ Exit criteria:
 - `liquid_death` currently damages living entities on contact at a fixed interval/value (no depth scaling yet).
 - `bath_salts` now has a dedicated item class with legacy short dropped lifespan (`200` ticks) so world conversion happens quickly instead of vanilla despawn timing.
 - bath salts now have baseline expired-item conversion to `purifying_fluid` for source water blocks and full water cauldrons.
+- `spa` now has baseline server-side mixing/spreading behavior using internal water + bath-salts counters to place/spread `purifying_fluid`.
 - TODO(port): replace placeholder block-based fluid handling with real 1.20.1 fluid + bucket implementations for `purifying_fluid` and `liquid_death`.
 - TODO(port): restore source/flow-depth semantics for pickup/place behavior parity.
 - TODO(port): complete Warp Ward parity (effect icon/texture, balance pass, full interaction coverage in remaining warp events/systems).
-- TODO(port): complete bath-salts parity details (legacy exact conversion surface/auditing) and port Spa mixing flow that produces/propagates purifying fluid.
+- TODO(port): complete bath-salts + spa parity details (legacy exact conversion surfaces, tank/container semantics, and non-mix mode behavior).
 
 ### Model Parity Backlog (Explicit IDs)
 
@@ -294,6 +299,7 @@ Exit criteria:
 - while held, a basic client sanity HUD overlay renders warp pool bars from synced stack data.
 - `sanity_soap` now has a baseline legacy-shaped use flow (200 tick use duration), clears temporary warp, and can reduce normal warp with Warp Ward/purifying-fluid chance bonuses.
 - `bath_salts` now has baseline legacy-shaped dropped-lifespan timing and water conversion hooks as part of the insanity/purification loop scaffolding.
+- `spa` now provides a first-pass purification loop baseline by consuming bath salts + water to spread `purifying_fluid`.
 - baseline warp ticker now suppresses warp event rolls while `warp_ward` is active and applies periodic temporary-warp decay (`-1` every `2000` ticks) when not warded.
 - `/thaumcraft debug warp` now supports warp inspection plus mutation helpers (`add`, `set`, `clear`, `counter set/reset`) for testing the insanity loop.
 - Current 1.20.1 port now has a baseline server-side warp ticker that applies periodic negative effects based on total warp thresholds.
