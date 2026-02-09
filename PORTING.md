@@ -104,7 +104,10 @@ Phase 2 status:
 - [x] Arcane Workbench now requires and consumes a crystal item via dedicated crystal slot (required crystal derived from dominant recipe aspects)
 - [x] Arcane Workbench parity-tuning pass: vis/crystal costs now apply only to Thaumcraft-output crafting results; non-Thaumcraft crafting no longer hard-requires arcane resources
 - [x] Arcane Workbench vis consumption now applies player armor vis-discount totals (legacy-shaped baseline) at craft-take time
+- [x] Arcane Workbench charger behavior baseline restored: with `arcane_workbench_charger` above, vis availability/drain now uses surrounding 3x3 chunks instead of only local chunk aura
 - [ ] Arcane Workbench crystal/vis balancing and exact legacy parity tuning are still pending
+- [ ] Arcane Workbench menu preview/cost state is still global-per-block and should be migrated to player-scoped view parity for multi-viewer correctness
+- [ ] Arcane Workbench charger-area drain policy still needs parity tuning for edge cases (drain order/preservation behavior)
 - [ ] Exact legacy parity for station mechanics is still pending (arcane workbench balancing, full infusion recipe parity, full research table progression)
 
 Exit criteria:

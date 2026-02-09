@@ -101,6 +101,9 @@ This file captures migration state so work can continue safely after context com
   - added parity-tuning pass for generic crafting behavior:
     - vis/crystal costs now apply only when crafted output belongs to `thaumcraft` namespace
     - non-Thaumcraft crafting no longer hard-requires vis/crystal and behaves as normal 3x3 crafting
+  - restored arcane workbench charger vis behavior baseline:
+    - when `arcane_workbench_charger` is above the table, available vis now sums surrounding 3x3 chunks
+    - vis drain now distributes across the same 3x3 chunk region instead of draining only the local chunk
 - Added Research Table baseline slot rules:
   - slot 0 accepts `scribing_tools` only (single-stack)
   - slot 1 accepts `paper` only
@@ -273,6 +276,7 @@ This file captures migration state so work can continue safely after context com
   - port cultist/void/fortress model + texture parity and set/slot behavior
 - Continue arcane workbench parity after vis-discount baseline:
   - move preview/cost state to per-menu-player context for multi-viewer parity
+  - refine charger-area drain policy against legacy edge cases (chunk preservation/drain order tuning)
   - tune vis/crystal balance and exact recipe parity against legacy arcane recipe definitions
 - Finish remaining `ConfigAspects` migration gaps:
   - map non-parseable direct vanilla `ItemStack(...)` object tags and audit imported rule parity against legacy behavior

@@ -6,6 +6,7 @@ import art.arcane.thaumcraft.common.aspect.AspectType;
 import art.arcane.thaumcraft.common.menu.ArcaneWorkbenchMenu;
 import art.arcane.thaumcraft.common.progression.VisDiscountManager;
 import art.arcane.thaumcraft.common.registry.ModBlockEntities;
+import art.arcane.thaumcraft.common.registry.ModBlocks;
 import art.arcane.thaumcraft.common.registry.ModItems;
 import art.arcane.thaumcraft.common.world.aura.AuraManager;
 import net.minecraft.core.BlockPos;
@@ -21,16 +22,17 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
-    // TODO(port): Match legacy TileArcaneWorkbench charger behavior:
-    // TODO(port): when arcane_workbench_charger is above this block, pull vis from the surrounding 3x3 chunk area instead of only local chunk aura.
     // TODO(port): Replace generic vanilla RecipeType.CRAFTING gating with real arcane recipe parity (research stage checks, exact vis costs, and crystal requirements per recipe definition).
     // TODO(port): Move vis-discount-aware recipe preview into player-scoped menu/container state for full multi-viewer parity.
 
@@ -82,7 +84,7 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
         incrementServerTicks();
 
         if (this.level instanceof ServerLevel serverLevel) {
-            int vis = Mth.floor(AuraManager.getVis(serverLevel, this.worldPosition));
+            int vis = getAvailableWorkbenchVis(serverLevel);
             setActivityValue(Math.min(200, vis));
 
             if ((getServerTicksValue() % 20) == 0) {
@@ -332,11 +334,11 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
             return false;
         }
 
-        return AuraManager.drainVis(serverLevel, this.worldPosition, visCost, true) >= visCost;
+        return drainWorkbenchVis(serverLevel, visCost, true) >= visCost;
     }
 
     private boolean consumeVis(ServerLevel serverLevel, int visCost) {
-        return AuraManager.drainVis(serverLevel, this.worldPosition, visCost, false) >= visCost;
+        return drainWorkbenchVis(serverLevel, visCost, false) >= visCost;
     }
 
     private boolean hasRequiredCrystal(String crystalId) {
@@ -356,6 +358,77 @@ public class ArcaneWorkbenchBlockEntity extends StationBlockEntity {
 
         var crystalObject = ModItems.BLOCK_ITEMS_BY_ID.get(crystalId);
         return crystalObject != null && stack.is(crystalObject.get());
+    }
+
+    private int getAvailableWorkbenchVis(ServerLevel serverLevel) {
+        if (!hasAuraChargerAbove()) {
+            return Mth.floor(AuraManager.getVis(serverLevel, this.worldPosition));
+        }
+
+        int total = 0;
+        for (BlockPos auraProbePos : getChargerAuraProbePositions()) {
+            total += Mth.floor(AuraManager.getVis(serverLevel, auraProbePos));
+        }
+        return total;
+    }
+
+    private float drainWorkbenchVis(ServerLevel serverLevel, float amount, boolean simulate) {
+        if (amount <= 0.0F) {
+            return 0.0F;
+        }
+
+        if (!hasAuraChargerAbove()) {
+            return AuraManager.drainVis(serverLevel, this.worldPosition, amount, simulate);
+        }
+
+        float remaining = amount;
+        float drainedTotal = 0.0F;
+        float step = Math.max(1.0F, amount / 9.0F);
+
+        while (remaining > 0.0001F) {
+            float remainingBeforePass = remaining;
+            for (BlockPos auraProbePos : getChargerAuraProbePositions()) {
+                if (remaining <= 0.0001F) {
+                    break;
+                }
+
+                float request = Math.min(step, remaining);
+                float drained = AuraManager.drainVis(serverLevel, auraProbePos, request, simulate);
+                if (drained > 0.0F) {
+                    drainedTotal += drained;
+                    remaining -= drained;
+                }
+            }
+
+            // No chunk in the 3x3 area could provide more vis.
+            if (remaining >= (remainingBeforePass - 0.0001F)) {
+                break;
+            }
+        }
+
+        return drainedTotal;
+    }
+
+    private boolean hasAuraChargerAbove() {
+        if (this.level == null) {
+            return false;
+        }
+        return this.level.getBlockState(this.worldPosition.above()).is(ModBlocks.get("arcane_workbench_charger").get());
+    }
+
+    private List<BlockPos> getChargerAuraProbePositions() {
+        ChunkPos centerChunk = new ChunkPos(this.worldPosition);
+        List<BlockPos> positions = new ArrayList<>(9);
+        for (int chunkOffsetX = -1; chunkOffsetX <= 1; chunkOffsetX++) {
+            for (int chunkOffsetZ = -1; chunkOffsetZ <= 1; chunkOffsetZ++) {
+                int chunkX = centerChunk.x + chunkOffsetX;
+                int chunkZ = centerChunk.z + chunkOffsetZ;
+                int sampleX = (chunkX << 4) + 8;
+                int sampleZ = (chunkZ << 4) + 8;
+                positions.add(new BlockPos(sampleX, this.worldPosition.getY(), sampleZ));
+            }
+        }
+        return positions;
     }
 
     private static String crystalIdForAspect(AspectType aspect) {
